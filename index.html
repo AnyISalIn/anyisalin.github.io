@@ -346,40 +346,14 @@
 
       
         
-          
-            <p>重度依赖 tmux 的朋友可能会有这样的一个问题, 每次重新打开 tmux, 都需要重新手动创建 window, pane, 并运行各种程序, tmuxinator 就是为了解决这个问题而诞生的。</p>
-<blockquote>
-<p> 项目地址: <a href="https://github.com/tmuxinator/tmuxinator" target="_blank" rel="external">https://github.com/tmuxinator/tmuxinator</a></p>
-<p> tmux 的版本建议 &gt;= 1.8, 否则可能会出现诡异的错误</p>
-<p> 我的 tmuxinator 配置: <a href="https://github.com/AnyISalIn/hacker_files/tree/master/tmuxinator" target="_blank" rel="external">https://github.com/AnyISalIn/hacker_files/tree/master/tmuxinator</a></p>
-</blockquote>
-<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p>快速配置工作环境</p>
-<p><img src="/images/demo.gif" alt="demo"></p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>tmuxinator 是 ruby 的一个 gem 包, 首先要安装 gem</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ apt-get install gem	# ubuntu</div><div class="line">$ yum install -y rubygems # centos/rhel</div></pre></td></tr></table></figure>
-<p>通过 gem 来安装 tmuxinator</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ gem install tmuxinator</div></pre></td></tr></table></figure>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>tmuxinator 通过 yaml 格式的配置文件来定义一个 project</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ tmuxinator new demo #通过 new demo 命令来创建一个 demo 配置文件</div></pre></td></tr></table></figure>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><div class="line">$ cat ~/.tmuxinator/demo.yml</div><div class="line"></div><div class="line"><span class="comment"># ~/.tmuxinator/demo.yml</span></div><div class="line"><span class="attr">name:</span> demo <span class="comment">#tmux 会话名称</span></div><div class="line"><span class="attr">root:</span> ~/ <span class="comment">#全局根目录</span></div><div class="line"></div><div class="line"><span class="attr">windows:</span></div><div class="line"><span class="attr">  - editor:</span> <span class="comment">#window 名称</span></div><div class="line"><span class="attr">      layout:</span> main-vertical <span class="comment">#布局方式</span></div><div class="line"><span class="attr">      panes:</span></div><div class="line"><span class="bullet">        -</span> vim <span class="comment">#pane 执行的命令</span></div><div class="line"><span class="bullet">        -</span> guard</div><div class="line"><span class="attr">  - server:</span> bundle exec rails s <span class="comment">#window没有多个pane, 执行的命令</span></div><div class="line"><span class="attr">  - logs:</span> tail -f log/development.log</div></pre></td></tr></table></figure>
-<p>通过 <code>ls</code> 命令可以列出所有的 project</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ tmuxinator ls</div><div class="line">tmuxinator projects:</div><div class="line">demo   flask  hexo   work</div></pre></td></tr></table></figure>
-<p>可以通过 <code>edit</code> 命令编辑指定的 project, 但是得先指定 <code>$EDITOR</code> 环境变量</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ export EDITOR=&apos;vim&apos;</div><div class="line">$ tmuxinator edit demo</div></pre></td></tr></table></figure>
-<h3 id="自定义-project"><a href="#自定义-project" class="headerlink" title="自定义 project"></a>自定义 project</h3><p>默认的 project 肯定无法满足我们的需求, 我们需要自己定义 project, 首先我们需要了解 tmuxinator 配置文件中的选项</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><div class="line"><span class="attr">name:</span> custom_tmux <span class="comment">#默认会话名称</span></div><div class="line"><span class="attr">root:</span> ~/codes/flask-blog <span class="comment">#全局根目录</span></div><div class="line"></div><div class="line"><span class="attr">socket_name:</span> foo <span class="comment"># tmux socket 名称</span></div><div class="line"><span class="attr">pre:</span> systemctl start mysqld <span class="comment"># 启动项目前运行的命令</span></div><div class="line"><span class="attr">pre_window:</span> pyenv local <span class="number">3.5</span><span class="number">.3</span> <span class="comment"># 启动 window 前运行的命令</span></div><div class="line"><span class="attr">tmux_options:</span> -f ~/.tmux.conf.local <span class="comment"># tmux 运行的参数</span></div><div class="line"><span class="attr">tmux_command:</span> byobu <span class="comment"># 调用 tmux 的命令, 适用于 tmux 的衍生品/封装</span></div><div class="line"><span class="attr">startup_window:</span> logs <span class="comment"># 启动时所在的 window</span></div><div class="line"></div><div class="line"><span class="attr">windows:</span> <span class="comment"># 定义所有的window</span></div><div class="line"><span class="attr">  - editor:</span> <span class="comment"># window 名称</span></div><div class="line"><span class="attr">    root:</span> ~/ <span class="comment"># 可以单独为 window 指定目录</span></div><div class="line"><span class="attr">    layout:</span> main-vertical <span class="comment"># 布局</span></div><div class="line"><span class="attr">    panes:</span></div><div class="line"><span class="bullet">      -</span> vim <span class="comment"># 命令</span></div><div class="line"><span class="bullet">      -</span> guard</div><div class="line"><span class="attr">  - server:</span> python manage.py runserver</div><div class="line"><span class="attr">  - logs:</span> tail -f log/flask.log</div></pre></td></tr></table></figure>
-<h3 id="传递变量"><a href="#传递变量" class="headerlink" title="传递变量"></a>传递变量</h3><p>通过上面的配置虽然可以实现功能, 但是并不够通用, 如果项目的目录变了, 那就得重新修改项目配置文件</p>
-<h4 id="位置参数"><a href="#位置参数" class="headerlink" title="位置参数"></a>位置参数</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ tmuxinator project /var/www/foo</div></pre></td></tr></table></figure>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><div class="line"><span class="attr">name:</span> project</div><div class="line"><span class="attr">root:</span> &lt;%= @args[0] %&gt; <span class="comment"># 根目录通过 arg1 传入</span></div></pre></td></tr></table></figure>
-<h4 id="键值参数"><a href="#键值参数" class="headerlink" title="键值参数"></a>键值参数</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ tmuxinator project2 workspace=/var/www/foo2</div></pre></td></tr></table></figure>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><div class="line"><span class="attr">name:</span> project2</div><div class="line"><span class="attr">root:</span> &lt;%= @settings["workspace"] %&gt;</div></pre></td></tr></table></figure>
-<h3 id="Flask-项目配置示例"><a href="#Flask-项目配置示例" class="headerlink" title="Flask 项目配置示例"></a>Flask 项目配置示例</h3><figure class="highlight yaml"><table><tr><td class="code"><pre><div class="line"><span class="comment"># ~/.tmuxinator/flask.yml</span></div><div class="line"></div><div class="line"><span class="attr">name:</span> flask-dev</div><div class="line"><span class="attr">root:</span> &lt;%= @args[0] %&gt;</div><div class="line"></div><div class="line"><span class="attr">windows:</span></div><div class="line"><span class="attr">    - debug:</span></div><div class="line"><span class="attr">        layout:</span> even-horizontal</div><div class="line"><span class="attr">        panes:</span></div><div class="line"><span class="bullet">            -</span> vim</div><div class="line"><span class="bullet">            -</span> ipython</div><div class="line"><span class="attr">    - server:</span> python manage.py runserver</div></pre></td></tr></table></figure>
-<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>我们可以通过 <code>start</code> 命令来启动一个 project</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ tmuxinator start flask ~/codes/flask-blog</div></pre></td></tr></table></figure>
-<p>但是需要注意一个问题, 如果一个 window 中有多个 pane 的情况下, tmux 需要增加以下两条参数, 不然无法正常执行命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">set -g base-index 1</div><div class="line">set -g pane-base-index 1</div></pre></td></tr></table></figure>
-
-          
+          <p>重度依赖 tmux 的朋友可能会有这样的一个问题, 每次重新打开 tmux, 都需要重新手动创建 window, pane, 并运行各种程序, tmuxinator 就是为了解决这个问题而诞生的。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/06/tmuxinator/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -595,7 +569,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
