@@ -1,0 +1,755 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Fira Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python,development," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="装饰器是一种软件设计模式，可以动态的修改函数、方法、类的功能，而不需要修改原函数或者重写方法，PEP-0318 提出了对装饰器语法的支持，并在 Python 2.4 实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python - 装饰器介绍">
+<meta property="og:url" content="https:/anyisalin.github.io/2017/03/06/python-decorator/index.html">
+<meta property="og:site_name" content="新的开始">
+<meta property="og:description" content="装饰器是一种软件设计模式，可以动态的修改函数、方法、类的功能，而不需要修改原函数或者重写方法，PEP-0318 提出了对装饰器语法的支持，并在 Python 2.4 实现">
+<meta property="og:updated_time" content="2017-03-06T15:05:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python - 装饰器介绍">
+<meta name="twitter:description" content="装饰器是一种软件设计模式，可以动态的修改函数、方法、类的功能，而不需要修改原函数或者重写方法，PEP-0318 提出了对装饰器语法的支持，并在 Python 2.4 实现">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https:/anyisalin.github.io/2017/03/06/python-decorator/"/>
+
+
+
+
+
+  <title> Python - 装饰器介绍 | 新的开始 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-77446934-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">新的开始</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">痛改前非 重新做人</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https:/anyisalin.github.io/2017/03/06/python-decorator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnyISalIn">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="新的开始">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python - 装饰器介绍
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-06T20:28:44+08:00">
+                2017-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/06/python-decorator/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/06/python-decorator/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>装饰器是一种软件设计模式，可以动态的修改函数、方法、类的功能，而不需要修改原函数或者重写方法，<a href="https://www.python.org/dev/peps/pep-0318/" target="_blank" rel="external">PEP-0318</a> 提出了对装饰器语法的支持，并在 Python 2.4 实现</p>
+<a id="more"></a>
+<h2 id="嵌套函数"><a href="#嵌套函数" class="headerlink" title="嵌套函数"></a>嵌套函数</h2><p>Python 中函数是可以嵌套的，我们可以写出以下代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parent_func</span><span class="params">(number)</span>:</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">chilren_func1</span><span class="params">()</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="string">'hello, world, chilren1'</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">chilren_func2</span><span class="params">()</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="string">'hello, world, chilren2'</span></div><div class="line">    </div><div class="line">    <span class="keyword">if</span> number &gt; <span class="number">2</span>:</div><div class="line">        <span class="keyword">return</span> chilren_func2</div><div class="line">    <span class="keyword">return</span> chilren_func1</div></pre></td></tr></table></figure>
+<p>如果我们直接传入数字并调用 <code>parent_func</code>，它会返回一个函数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>parent_func(<span class="number">3</span>)</div><div class="line">&lt;function parent_func.&lt;locals&gt;.chilren_func2 at <span class="number">0x104f0b048</span>&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>parent_func(<span class="number">1</span>)</div><div class="line">&lt;function parent_func.&lt;locals&gt;.chilren_func1 at <span class="number">0x104ef3f28</span>&gt;</div></pre></td></tr></table></figure>
+<p>对其返回的函数再次调用</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>parent_func(<span class="number">1</span>)()</div><div class="line"><span class="string">'hello, world, chilren1'</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>parent_func(<span class="number">3</span>)()</div><div class="line"><span class="string">'hello, world, chilren2'</span></div></pre></td></tr></table></figure>
+<h2 id="将函数作为参数"><a href="#将函数作为参数" class="headerlink" title="将函数作为参数"></a>将函数作为参数</h2><p>符合以下两个条件之一就算是高阶函数</p>
+<ul>
+<li>将函数作为参数</li>
+<li>将函数作为返回值</li>
+</ul>
+<p>Python 中自然也可以支持将函数作为参数传入一个函数中，最经典的莫过于 <code>map</code>、<code>reduce</code>、<code>sort</code>、<code>max</code>、<code>filter</code> 等高阶函数</p>
+<p><code>d</code> 是一个 <code>key</code> 和 <code>value</code> 都是 <code>int</code> 的字典, 通过 <code>max</code> 函数取其最大值，默认只能通过对比 <code>key</code> 的值</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">d = &#123;</div><div class="line">  <span class="number">1</span>: <span class="number">2</span>,</div><div class="line">  <span class="number">2</span>: <span class="number">1</span>,</div><div class="line">  <span class="number">3</span>: <span class="number">0</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>max(d)</div><div class="line"><span class="number">3</span></div></pre></td></tr></table></figure>
+<p>但是可以传入一个函数，通过这个函数来进行对比, 这样我们就可以对比字典中 <code>value</code> 的值</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>max(d, key=<span class="keyword">lambda</span> x: d[x])</div><div class="line"><span class="number">1</span></div></pre></td></tr></table></figure>
+<h2 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h2><p>有了以上基础后，就可以介绍真正的装饰器了</p>
+<p>所谓 Python 的装饰器就是通过封装来动态修改一个函数或方法</p>
+<p>我们可以传入一个函数到另一个函数中，另一个函数对其的功能进行修改或扩展，并将修改过的函数返回</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">decroator_func</span><span class="params">(fn, *args, **kwargs)</span>:</span></div><div class="line">    </div><div class="line">    print(<span class="string">'start &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">    result = fn(*args, **kwargs)</div><div class="line">    print(<span class="string">'end &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">    <span class="keyword">return</span> result</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello, world'</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>decroator_func(p_hello)</div><div class="line">start p_hello</div><div class="line">hello, world</div><div class="line">end p_hello</div></pre></td></tr></table></figure>
+<p>但是上面这种方法不是正确的写法，我们需要嵌套一个 <code>wrapper</code> 函数来修改原函数，并返回修改后的函数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">decroator_func</span><span class="params">(fn)</span>:</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">        print(<span class="string">'start &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">        fn(*args, **kwargs)</div><div class="line">        print(<span class="string">'end &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">    <span class="keyword">return</span> wrapper</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello, world'</span>)</div><div class="line"></div><div class="line">p_hello = decroator_func(p_hello)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello()</div><div class="line">start p_hello</div><div class="line">hello, world</div><div class="line">end p_hello</div></pre></td></tr></table></figure>
+<h3 id="语法糖"><a href="#语法糖" class="headerlink" title="语法糖"></a>语法糖</h3><p>虽然上面这种  <code>p_hello = decroator_func(p_hello)</code>  在功能上没有问题，但是看起来非常的丑陋，Python 可以在定义函数时通过 <code>@</code> 这个语法糖来简化调用装饰器函数的步骤，使得代码更加简洁优雅</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">@decroator_func</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello, world'</span>)</div></pre></td></tr></table></figure>
+<h3 id="functools-wraps"><a href="#functools-wraps" class="headerlink" title="functools.wraps"></a>functools.wraps</h3><p>实际上，上面的代码还是有一些问题的，因为装饰器函数其实是返回 <code>wrapper</code> 函数，也就是封装过后的原函数，但是原函数的 <code>docstring</code>、<code>__name__</code> 等属性都被 <code>wrapper</code> 覆盖了</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello.__name__</div><div class="line"><span class="string">'wrapper'</span></div></pre></td></tr></table></figure>
+<p>那么这时候我们就可以通过 <code>functools</code> 中的 <code>wraps</code> 这个装饰器函数来解决这个问题，我们的代码可以这样写</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">decroator_func</span><span class="params">(fn)</span>:</span></div><div class="line">    </div><div class="line"><span class="meta">    @wraps(fn)</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">        print(<span class="string">'start &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">        fn(*args, **kwargs)</div><div class="line">        print(<span class="string">'end &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">    <span class="keyword">return</span> wrapper</div></pre></td></tr></table></figure>
+<p>再次尝试</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">@decroator_func</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello, world'</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello.__name__</div><div class="line"><span class="string">'p_hello'</span></div></pre></td></tr></table></figure>
+<h3 id="带参数的装饰器"><a href="#带参数的装饰器" class="headerlink" title="带参数的装饰器"></a>带参数的装饰器</h3><p>函数能接收参数，装饰器函数如果需要传入参数得多封装一层</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</div><div class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">sleep_decroator</span><span class="params">(second)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decroator</span><span class="params">(fn)</span>:</span></div><div class="line"><span class="meta">        @wraps(fn)</span></div><div class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">            print(<span class="string">'sleep &#123;&#125; s'</span>.format(second))</div><div class="line">            sleep(second)</div><div class="line">            fn(*args, **kwargs)</div><div class="line">        <span class="keyword">return</span> wrapper</div><div class="line">    <span class="keyword">return</span> decroator</div><div class="line"></div><div class="line"><span class="meta">@sleep_decroator(3)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello, world'</span>)</div><div class="line">    </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello()</div><div class="line">sleep <span class="number">3</span> s</div><div class="line">hello, world</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello.__name__</div><div class="line"><span class="string">'p_hello'</span></div></pre></td></tr></table></figure>
+<h3 id="类装饰器"><a href="#类装饰器" class="headerlink" title="类装饰器"></a>类装饰器</h3><p>Python 也可以使用类作为装饰器，可以让复杂的装饰器更加的优雅</p>
+<p>其实装饰器只需要是一个 <code>callable</code> 对象即可，所以我们需要定义一个 <code>__call__</code> 方法</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Decorator</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">pass</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, fn)</span>:</span></div><div class="line"><span class="meta">        @wraps(fn)</span></div><div class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">            print(<span class="string">'start &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">            fn(*args, **kwargs)</div><div class="line">            print(<span class="string">'end &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">        <span class="keyword">return</span> wrapper</div><div class="line"></div><div class="line"><span class="meta">@Decorator()</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello, world'</span>)</div><div class="line">    </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello()</div><div class="line">start p_hello</div><div class="line">hello, world</div><div class="line">end p_hello</div></pre></td></tr></table></figure>
+<p>这种情况下的代码看起来不是很好，但是如果我们定义一个需要传递参数的装饰器，代码就会很简洁</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SleepDecorator</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, second)</span>:</span></div><div class="line">        self.second = second</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, fn)</span>:</span></div><div class="line"><span class="meta">        @wraps(fn)</span></div><div class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">            print(<span class="string">'sleep &#123;&#125; s'</span>.format(self.second))</div><div class="line">            sleep(self.second)</div><div class="line">            fn(*args, **kwargs)</div><div class="line">        <span class="keyword">return</span> wrapper</div><div class="line"></div><div class="line"><span class="meta">@SleepDecorator(3)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello, world'</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello()</div><div class="line">sleep <span class="number">3</span> s</div><div class="line">hello, world</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/development/" rel="tag"># development</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/06/tmuxinator/" rel="next" title="Tmuxinator - 轻松管理复杂 tmux 会话">
+                <i class="fa fa-chevron-left"></i> Tmuxinator - 轻松管理复杂 tmux 会话
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/06/python-decorator/"
+           data-title="Python - 装饰器介绍" data-url="https:/anyisalin.github.io/2017/03/06/python-decorator/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png"
+               alt="AnyISalIn" />
+          <p class="site-author-name" itemprop="name">AnyISalIn</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/anyisalin" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌套函数"><span class="nav-number">1.</span> <span class="nav-text">嵌套函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将函数作为参数"><span class="nav-number">2.</span> <span class="nav-text">将函数作为参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#装饰器"><span class="nav-number">3.</span> <span class="nav-text">装饰器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法糖"><span class="nav-number">3.1.</span> <span class="nav-text">语法糖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#functools-wraps"><span class="nav-number">3.2.</span> <span class="nav-text">functools.wraps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#带参数的装饰器"><span class="nav-number">3.3.</span> <span class="nav-text">带参数的装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类装饰器"><span class="nav-number">3.4.</span> <span class="nav-text">类装饰器</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnyISalIn</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"anyisalin-reborn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
