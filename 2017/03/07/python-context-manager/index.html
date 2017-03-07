@@ -99,7 +99,7 @@
 <meta property="og:url" content="https:/anyisalin.github.io/2017/03/07/python-context-manager/index.html">
 <meta property="og:site_name" content="新的开始">
 <meta property="og:description" content="如果需要精确的分配和释放资源，就需要上下文管理 context manager ，上下文管理器在 Python 中最常见的例子就是 with 语句">
-<meta property="og:updated_time" content="2017-03-07T07:35:27.000Z">
+<meta property="og:updated_time" content="2017-03-07T07:41:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python - 上下文管理介绍">
 <meta name="twitter:description" content="如果需要精确的分配和释放资源，就需要上下文管理 context manager ，上下文管理器在 Python 中最常见的例子就是 with 语句">
@@ -361,7 +361,7 @@
 <h2 id="有状态资源的管理"><a href="#有状态资源的管理" class="headerlink" title="有状态资源的管理"></a>有状态资源的管理</h2><p>很多时候我们需要操作一些有状态的资源，例如 类文件、套接字等</p>
 <p>通常情况下我们会 建立连接 —&gt; 做一些事 —&gt; 释放连接</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><div class="line">f = open(<span class="string">'aaaa'</span>, <span class="string">'w'</span>)</div><div class="line">f.write(<span class="string">'hello, world'</span>)</div><div class="line">f.close()</div><div class="line"></div><div class="line"><span class="keyword">import</span> socket</div><div class="line"></div><div class="line">s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</div><div class="line">s.connect((<span class="string">'hello.org'</span>, <span class="number">20333</span>))</div><div class="line">s.sendall(<span class="string">'hello, world'</span>)</div><div class="line">print(s.recv(<span class="number">1024</span>))</div></pre></td></tr></table></figure>
-<p>如果没有 <code>close</code> ，只有程序中断或者服务端主动关闭才会释放资源，否认会一直占用资源，有兴趣的朋友可以试试下面的代码</p>
+<p>如果没有 <code>close</code> ，只有程序中断或者服务端主动关闭才会释放资源，否则会一直占用资源，有兴趣的朋友可以试试下面的代码</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><div class="line">files = []</div><div class="line">file = open(<span class="string">'aaaa'</span>, <span class="string">'w'</span>)</div><div class="line">file.write(<span class="string">'aaaaa'</span>)</div><div class="line">file.close()</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000009</span>):</div><div class="line">    files.append(open(<span class="string">'aaaa'</span>, <span class="string">'w'</span>))</div></pre></td></tr></table></figure>
 <p>在 macOS/Linux 上会抛出 <code>OS Error</code> 的异常，因为打开的 <code>file descriptor</code> 超过限制了，Windows 估计会蓝屏 😀</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><div class="line">OSError: [Errno <span class="number">24</span>] Too many open files</div></pre></td></tr></table></figure>
