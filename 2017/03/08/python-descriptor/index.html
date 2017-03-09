@@ -1,0 +1,766 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Fira Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python,development," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="很多时候我们可能需要对某个实例的属性加上除了修改、访问之外的其他处理逻辑，例如 类型检查、数值校验等，就需要用到描述器 《Python Cookbook》">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python - 描述器介绍">
+<meta property="og:url" content="https:/anyisalin.github.io/2017/03/08/python-descriptor/index.html">
+<meta property="og:site_name" content="新的开始">
+<meta property="og:description" content="很多时候我们可能需要对某个实例的属性加上除了修改、访问之外的其他处理逻辑，例如 类型检查、数值校验等，就需要用到描述器 《Python Cookbook》">
+<meta property="og:updated_time" content="2017-03-09T14:45:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python - 描述器介绍">
+<meta name="twitter:description" content="很多时候我们可能需要对某个实例的属性加上除了修改、访问之外的其他处理逻辑，例如 类型检查、数值校验等，就需要用到描述器 《Python Cookbook》">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6281484541139879000',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https:/anyisalin.github.io/2017/03/08/python-descriptor/"/>
+
+
+
+
+
+  <title> Python - 描述器介绍 | 新的开始 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-77446934-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">新的开始</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">痛改前非 重新做人</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https:/anyisalin.github.io/2017/03/08/python-descriptor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnyISalIn">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="新的开始">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python - 描述器介绍
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-08T20:26:52+08:00">
+                2017-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/08/python-descriptor/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/08/python-descriptor/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p> 很多时候我们可能需要对某个实例的属性加上除了修改、访问之外的其他处理逻辑，例如 类型检查、数值校验等，就需要用到描述器 《Python Cookbook》</p>
+</blockquote>
+<a id="more"></a>
+<p>我们可以使用 Python 自带的 <code>property</code> 装饰器 来控制属性的访问，下面这个例子通过 <code>property</code> 控制了 Person 的 age 属性的访问和修改</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name=None, age=None)</span>:</span></div><div class="line">        self.name = name</div><div class="line">        self._age = age</div><div class="line"></div><div class="line"><span class="meta">    @property</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">age</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self._age</div><div class="line"></div><div class="line"><span class="meta">    @age.setter</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">age</span><span class="params">(self, value)</span>:</span></div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(value, int):</div><div class="line">            <span class="keyword">raise</span> AttributeError(<span class="string">'Must be &#123;&#125;'</span>.format(int))</div><div class="line">        <span class="keyword">if</span> value &gt; <span class="number">200</span>:</div><div class="line">            <span class="keyword">raise</span> AttributeError(<span class="string">'Value Must &lt; 200'</span>)</div><div class="line">        self._age = value</div></pre></td></tr></table></figure>
+<p>试一试，的确如代码写的一样，对属性的类型进行了检查，而且使用了 <code>property</code> 装饰器之后，对 age 方法的访问和对属性的访问一样，不需要加 <code>()</code></p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">&gt;&gt;&gt; a = Person()</div><div class="line">&gt;&gt;&gt; a.age</div><div class="line">&gt;&gt;&gt; a.age = 10</div><div class="line">&gt;&gt;&gt; a.age</div><div class="line">10</div><div class="line">&gt;&gt;&gt; a.age = 'a'</div><div class="line">Traceback (most recent call last):</div><div class="line">  File "&lt;stdin&gt;", line 1, in &lt;module&gt;</div><div class="line">  File "person.py", line 14, in age</div><div class="line">    raise AttributeError('Must be &#123;&#125;'.format(int))</div><div class="line">AttributeError: Must be &lt;class 'int'&gt;</div><div class="line">&gt;&gt;&gt; a.age = 201</div><div class="line">Traceback (most recent call last):</div><div class="line">  File "&lt;stdin&gt;", line 1, in &lt;module&gt;</div><div class="line">  File "person.py", line 16, in age</div><div class="line">    raise AttributeError('Value Must &lt; 200')</div><div class="line">AttributeError: Value Must &lt; 200</div></pre></td></tr></table></figure>
+<p>那么 <code>property</code> 是怎么实现的呢，这就要说到本文的主题 描述器了</p>
+<h2 id="描述器"><a href="#描述器" class="headerlink" title="描述器"></a>描述器</h2><p>Python 有三个特殊方法，<code>__get__</code>、<code>__set__</code>、<code>__delete__</code>，用于覆盖属性的一些默认行为，如果一个类定义了其中一个方法，那么它的实例就是描述器</p>
+<p>下面是一个简单的描述器的示例，Descriptor 是一个实现了 <code>__get__</code>、<code>__set__</code> 的类，可以为其实例访问和修改时打印信息</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, initvar=None, name=<span class="string">'var'</span>)</span>:</span></div><div class="line">        self.initvar = initvar</div><div class="line">        self.name = name</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, cls)</span>:</span></div><div class="line">        print(<span class="string">'Get'</span>, self.name)</div><div class="line">        <span class="keyword">return</span> self.initvar</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></div><div class="line">        print(<span class="string">'Set'</span>, self.name, value)</div><div class="line">        self.initvar = value</div><div class="line">    </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">E</span>:</span></div><div class="line">    a = Descriptor(<span class="number">10</span>, <span class="string">'a'</span>)</div><div class="line">    b = Descriptor(<span class="number">20</span>, <span class="string">'b'</span>)</div><div class="line">    </div><div class="line">    </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>e = E()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>e.a</div><div class="line">Get a</div><div class="line"><span class="number">10</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>e.b</div><div class="line">Get b</div><div class="line"><span class="number">20</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>e.b = <span class="number">10</span></div><div class="line">Set b <span class="number">10</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>e.b = <span class="number">30</span></div><div class="line">Set b <span class="number">30</span></div></pre></td></tr></table></figure>
+<p>描述器是一种代理机制，对属性的操作由这个描述器来代理</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">访问: __get__(self, instance, cls) <span class="comment"># instance 代表实例本身，cls 表示类本身，使用类直接访问时，instance 为 None</span></div><div class="line">赋值: __set__(self, instance, value) <span class="comment"># instance 为实例，value 为值</span></div><div class="line">删除: __delete__(self, instance) <span class="comment"># instance 为实例</span></div></pre></td></tr></table></figure>
+<p>下面这个例子列出了不同情况下 <code>instance</code> 和 <code>cls</code> 的值</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestDescriptor</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, cls)</span>:</span></div><div class="line">        print(<span class="string">'instance'</span>, instance)</div><div class="line">        print(<span class="string">'class'</span>, cls)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></div><div class="line">        print(instance)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__delete__</span><span class="params">(self, instance)</span>:</span></div><div class="line">        print(instance)</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">F</span>:</span></div><div class="line">    f = TestDescriptor()</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">&gt;&gt;&gt; f = F()</div><div class="line">&gt;&gt;&gt; f.f</div><div class="line">instance &lt;__main__.F object at 0x10ff2fa20&gt;</div><div class="line">class &lt;class '__main__.F'&gt;</div><div class="line">&gt;&gt;&gt; f.f = 'c'</div><div class="line">&lt;__main__.F object at 0x10ff2fa20&gt;</div><div class="line">&gt;&gt;&gt; del f.f</div><div class="line">&lt;__main__.F object at 0x10ff2fa20&gt;</div><div class="line">&gt;&gt;&gt; F.f</div><div class="line">instance None</div><div class="line">class &lt;class '__main__.F'&gt;</div></pre></td></tr></table></figure>
+<h2 id="getattribute"><a href="#getattribute" class="headerlink" title="getattribute"></a><strong>getattribute</strong></h2><p>描述器的 <code>__get__</code> 是通过 <code>__getattribute__</code> 调用的，实际上，Python 中访问实例属性时，<code>__getattribute__</code> 就会被调用，<code>__getattribute__</code> 会查找整个继承链，直到找到属性，如果这时候定义了 <code>__getattr__</code> ，那么就会调用 <code>__getattr__</code> 去查找属性，否则抛出 <code>AttributeError</code></p>
+<p><code>__getattribute__</code> 的代码用 Python 实现如下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__getattribute__</span><span class="params">(self, key)</span>:</span></div><div class="line">    val = super().__getattribute__(key)</div><div class="line">    <span class="keyword">if</span> hasattr(val, <span class="string">'__get__'</span>):</div><div class="line">        <span class="keyword">return</span> val.__get__(<span class="keyword">None</span>, self)</div><div class="line">    <span class="keyword">return</span> val</div></pre></td></tr></table></figure>
+<p>可以做个测试，重写 <code>__getattribute__</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name=None)</span>:</span></div><div class="line">        self.name = name</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, cls)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.name</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></div><div class="line">        self.name = value</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>:</span></div><div class="line">    d = Descriptor(<span class="string">'d'</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getattribute__</span><span class="params">(self, key)</span>:</span></div><div class="line">        <span class="keyword">if</span> key == <span class="string">'d'</span>:</div><div class="line">            val = self.__class__.__dict__[<span class="string">'d'</span>]</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            val = super().__getattribute__(key)</div><div class="line">        <span class="keyword">if</span> hasattr(val, <span class="string">'__get__'</span>):</div><div class="line">            <span class="keyword">raise</span> AttributeError(<span class="string">'NO DESCRIPTOR !!!!!'</span>)</div><div class="line">        <span class="keyword">return</span> val</div></pre></td></tr></table></figure>
+<p>访问描述器被 <code>__getattribute__</code> 拦截了</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">&gt;&gt;&gt; c.d</div><div class="line">---------------------------------------------------------------------------</div><div class="line">AttributeError                            Traceback (most recent call last)</div><div class="line">&lt;ipython-input-3-c1e2befe291e&gt; in &lt;module&gt;()</div><div class="line">----&gt; 1 c.d</div><div class="line"></div><div class="line">&lt;ipython-input-1-1c75c3b76140&gt; in __getattribute__(self, key)</div><div class="line">     20             val = super().__getattribute__(key)</div><div class="line">     21         if hasattr(val, '__get__'):</div><div class="line">---&gt; 22             raise AttributeError('NO DESCRIPTOR !!!!!')</div><div class="line">     23         return val</div><div class="line">     24</div><div class="line"></div><div class="line">AttributeError: NO DESCRIPTOR !!!!!</div></pre></td></tr></table></figure>
+<h2 id="data-descriptor-and-no-data-descriptor"><a href="#data-descriptor-and-no-data-descriptor" class="headerlink" title="data-descriptor and no-data descriptor"></a>data-descriptor and no-data descriptor</h2><p>如果一个实例只定义了 <code>__get__</code> 那么，它就是一个非资料描述器 <code>no-data descriptor</code> ，如果同时定义了 <code>__get__</code> 和 <code>__set__</code> 那么就是资料描述器 <code>data descriptor</code></p>
+<p>它们的区别在于，如果实例字典中有与描述器同名的属性，如果是资料描述器，则优先使用资料描述器，否则使用实例字典中的属性</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AbsPriorityDescriptor</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name=None)</span>:</span></div><div class="line">        self.name = name</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, cls)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.name</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></div><div class="line">        self.name = value</div><div class="line">        </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">NoPriorityDescriptor</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name=None)</span>:</span></div><div class="line">        self.name = name</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, cls)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.name</div><div class="line">    </div><div class="line">    </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>:</span></div><div class="line">    a = AbsPriorityDescriptor(<span class="string">'a'</span>)</div><div class="line">    b = NoPriorityDescriptor(<span class="string">'b'</span>)</div></pre></td></tr></table></figure>
+<p>测试，可以看出来，资料描述器 <code>a</code> 忽略了实例字典的值，而非资料描述器则被覆盖</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>c = C()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c.a</div><div class="line"><span class="string">'a'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c.__dict__[<span class="string">'a'</span>]</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">KeyError: <span class="string">'a'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(c).__dict__[<span class="string">'a'</span>]</div><div class="line">&lt;__main__.AbsPriorityDescriptor object at <span class="number">0x1091336d8</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c.__dict__[<span class="string">'a'</span>] = <span class="string">'ccccc'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c.a</div><div class="line"><span class="string">'a'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c.b</div><div class="line"><span class="string">'b'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c.__dict__[<span class="string">'b'</span>]</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">KeyError: <span class="string">'b'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c.__dict__[<span class="string">'b'</span>] = <span class="string">'cccc'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c.b</div><div class="line"><span class="string">'cccc'</span></div></pre></td></tr></table></figure>
+<h2 id="一些例子"><a href="#一些例子" class="headerlink" title="一些例子"></a>一些例子</h2><h3 id="实现类型检查"><a href="#实现类型检查" class="headerlink" title="实现类型检查"></a>实现类型检查</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></div><div class="line">        self.name = name</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, cls)</span>:</span></div><div class="line">        <span class="keyword">return</span> instance.__dict__[self.name]</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></div><div class="line">        instance.__dict__[self.name] = value</div><div class="line">        </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Typed</span><span class="params">(Descriptor)</span>:</span></div><div class="line">    ty = object</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(value, self.ty):</div><div class="line">            <span class="keyword">raise</span> AttributeError(<span class="string">'Must be &#123;&#125;'</span>.format(self.ty))</div><div class="line">        super().__set__(instance, value)</div><div class="line">        </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Integer</span><span class="params">(Typed)</span>:</span></div><div class="line">    ty = int</div><div class="line">    </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Float</span><span class="params">(Typed)</span>:</span></div><div class="line">    ty = float</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">String</span><span class="params">(Typed)</span>:</span></div><div class="line">    ty = str</div><div class="line">    </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Boolean</span><span class="params">(Typed)</span>:</span></div><div class="line">    ty = bool</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>:</span></div><div class="line">    name = String(<span class="string">'name'</span>)</div><div class="line">    age = Integer(<span class="string">'age'</span>)</div></pre></td></tr></table></figure>
+<p>测试</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">&gt;&gt;&gt; c = Person()</div><div class="line"></div><div class="line">&gt;&gt;&gt; c.name = 1</div><div class="line"># ignore error</div><div class="line">AttributeError: Must be &lt;class 'str'&gt;</div><div class="line"></div><div class="line">&gt;&gt;&gt; c.name = 'aaaa'</div><div class="line"></div><div class="line">&gt;&gt;&gt; c.age = 'aaa'</div><div class="line"># ignore error</div><div class="line">AttributeError: Must be &lt;class 'int'&gt;</div><div class="line"></div><div class="line">&gt;&gt;&gt; c.age = 18</div></pre></td></tr></table></figure>
+<h3 id="property-的实现"><a href="#property-的实现" class="headerlink" title="property 的实现"></a>property 的实现</h3><p>虽然 <code>property</code> 是 C 代码实现的，但是我们可以模拟出 Python 的 Property </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Property</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, fget, fset=None, fdel=None)</span>:</span> <span class="comment">#no defined fdoc</span></div><div class="line">        self.fget = fget</div><div class="line">        self.fset = fset</div><div class="line">        self.fdel = fdel</div><div class="line">     </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, cls)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.fget(instance)</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></div><div class="line">        <span class="keyword">if</span> self.fset <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">            <span class="keyword">raise</span> AttributeError(<span class="string">'can not set'</span>)</div><div class="line">        self.fset(instance, value)</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__delete__</span><span class="params">(self, instance)</span>:</span></div><div class="line">        <span class="keyword">if</span> self.fdel <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">            <span class="keyword">raise</span> AttributeError(<span class="string">'can not delete'</span>)</div><div class="line">       	self.fdel(instance)</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setter</span><span class="params">(self, fset)</span>:</span></div><div class="line">        self.fset = fset</div><div class="line">        <span class="keyword">return</span> self</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">deleter</span><span class="params">(self, fdel)</span>:</span></div><div class="line">        self.fdel = fdel</div><div class="line">        <span class="keyword">return</span> self</div></pre></td></tr></table></figure>
+<p>使用自定义的 Property</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">geta</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self._a</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">seta</span><span class="params">(self, value)</span>:</span></div><div class="line">        self._a = value</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dela</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">del</span> self._a</div><div class="line">    a = Property(fget=geta, fset=seta, fdel=dela)</div></pre></td></tr></table></figure>
+<h3 id="staticmethod-实现"><a href="#staticmethod-实现" class="headerlink" title="staticmethod 实现"></a>staticmethod 实现</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">StaticMethod</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, func)</span>:</span></div><div class="line">        self.func = func</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, cls=None)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.func</div></pre></td></tr></table></figure>
+<h3 id="classmethod-实现"><a href="#classmethod-实现" class="headerlink" title="classmethod 实现"></a>classmethod 实现</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClassMethod</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, func)</span>:</span></div><div class="line">        self.func = func</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, cls=None)</span>:</span></div><div class="line">        <span class="keyword">if</span> cls <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">            cls = type(instance)</div><div class="line">        <span class="function"><span class="keyword">def</span> <span class="title">new_func</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">            <span class="keyword">return</span> self.func(cls, *args, **kwargs)</div><div class="line">        <span class="keyword">return</span> new_func</div></pre></td></tr></table></figure>
+<blockquote>
+<p>参考资料</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=sPiWg5jSoZI" target="_blank" rel="external">Python3 元编程 PyCon  David beazley</a></li>
+<li><a href="https://docs.python.org/3/howto/descriptor.html#static-methods-and-class-methods" target="_blank" rel="external">Python Descriptor How to Guide</a></li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/development/" rel="tag"># development</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/07/python-context-manager/" rel="next" title="Python - 上下文管理介绍">
+                <i class="fa fa-chevron-left"></i> Python - 上下文管理介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/08/python-descriptor/"
+           data-title="Python - 描述器介绍" data-url="https:/anyisalin.github.io/2017/03/08/python-descriptor/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png"
+               alt="AnyISalIn" />
+          <p class="site-author-name" itemprop="name">AnyISalIn</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/anyisalin" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#描述器"><span class="nav-number">1.</span> <span class="nav-text">描述器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getattribute"><span class="nav-number">2.</span> <span class="nav-text">getattribute</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-descriptor-and-no-data-descriptor"><span class="nav-number">3.</span> <span class="nav-text">data-descriptor and no-data descriptor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些例子"><span class="nav-number">4.</span> <span class="nav-text">一些例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现类型检查"><span class="nav-number">4.1.</span> <span class="nav-text">实现类型检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#property-的实现"><span class="nav-number">4.2.</span> <span class="nav-text">property 的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#staticmethod-实现"><span class="nav-number">4.3.</span> <span class="nav-text">staticmethod 实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#classmethod-实现"><span class="nav-number">4.4.</span> <span class="nav-text">classmethod 实现</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnyISalIn</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"anyisalin-reborn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
