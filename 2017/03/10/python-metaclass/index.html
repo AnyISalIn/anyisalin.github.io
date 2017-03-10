@@ -1,0 +1,771 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Fira Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python,development," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="元类是 Python 的黑魔法之一，大多数人都不需要掌握，但是可以用来装逼，所以写一篇元类的博客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python - 元类">
+<meta property="og:url" content="https:/anyisalin.github.io/2017/03/10/python-metaclass/index.html">
+<meta property="og:site_name" content="新的开始">
+<meta property="og:description" content="元类是 Python 的黑魔法之一，大多数人都不需要掌握，但是可以用来装逼，所以写一篇元类的博客">
+<meta property="og:updated_time" content="2017-03-10T05:48:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python - 元类">
+<meta name="twitter:description" content="元类是 Python 的黑魔法之一，大多数人都不需要掌握，但是可以用来装逼，所以写一篇元类的博客">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6281484541139879000',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https:/anyisalin.github.io/2017/03/10/python-metaclass/"/>
+
+
+
+
+
+  <title> Python - 元类 | 新的开始 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-77446934-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">新的开始</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">痛改前非 重新做人</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https:/anyisalin.github.io/2017/03/10/python-metaclass/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnyISalIn">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="新的开始">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python - 元类
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-10T11:12:02+08:00">
+                2017-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/10/python-metaclass/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/10/python-metaclass/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>元类是 Python 的黑魔法之一，大多数人都不需要掌握，但是可以用来装逼，所以写一篇元类的博客</p>
+<a id="more"></a>
+<h2 id="类是实例"><a href="#类是实例" class="headerlink" title="类是实例"></a>类是实例</h2><p>类是描述如何产生一个对象的代码段，就像下面的代码一样</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, age)</span>:</span></div><div class="line">        self.name = name</div><div class="line">        self.age = age</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_info</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'Name &#123;&#125;, Age &#123;&#125;'</span>.format(self.name, self.age))</div></pre></td></tr></table></figure>
+<p>然而 Python 中的类不止如此，在 Python 中类也是一个对象，是 <code>type</code> 的实例</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>Person.__class__</div><div class="line">type</div></pre></td></tr></table></figure>
+<p>既然类也是一个对象，我们就可以将它</p>
+<ul>
+<li>赋值给变量</li>
+<li>当参数传递</li>
+<li>复制</li>
+<li>添加属性</li>
+</ul>
+<p>就像下面的代码一样</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">cls_add_method</span><span class="params">(cls)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">haha</span><span class="params">()</span>:</span></div><div class="line">        print(<span class="string">'haha'</span>)</div><div class="line">        </div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> hasattr(cls, <span class="string">'haha'</span>):</div><div class="line">        setattr(cls, <span class="string">'haha'</span>, haha)</div><div class="line">    <span class="keyword">return</span> cls</div><div class="line"></div><div class="line"><span class="meta">@cls_add_method  # 等价于 A = cls_add_method(A)   </span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>A.haha()</div><div class="line">haha</div></pre></td></tr></table></figure>
+<h2 id="type-的神奇用法"><a href="#type-的神奇用法" class="headerlink" title="type 的神奇用法"></a>type 的神奇用法</h2><p><code>type</code> 是一个非常古老的函数，我们可以通过它来获取对象的类，但是它的神奇之处在于 可以通过参数来创建并返回一个类</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(<span class="string">'A'</span>, (), &#123;&#125;)</div><div class="line">__main__.A</div><div class="line"></div><div class="line"><span class="comment"># 上面的代码等价于</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<p><code>type</code> 接收三个参数，<code>类名</code>、<code>继承列表</code>、<code>类字典</code></p>
+<p><strong>继承</strong></p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">&gt;&gt;&gt; B = type('B', (), &#123;'a': 'c'&#125;)</div><div class="line"></div><div class="line">&gt;&gt;&gt; C = type('C', (B,), &#123;&#125;)</div><div class="line"></div><div class="line">&gt;&gt;&gt; C.__mro__</div><div class="line">(&lt;class '__main__.C'&gt;, &lt;class '__main__.B'&gt;, &lt;class 'object'&gt;)</div><div class="line"></div><div class="line">&gt;&gt;&gt; C.a</div><div class="line">'c'</div></pre></td></tr></table></figure>
+<p><strong>添加方法</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">b</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">'abbaa'</span>)</div><div class="line">    </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>C.b = b</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c = C()</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c.b()</div><div class="line"><span class="string">'abbaa'</span></div></pre></td></tr></table></figure>
+<h2 id="元类"><a href="#元类" class="headerlink" title="元类"></a>元类</h2><p>其实元类就是 类的类，<code>type</code> 就是一个元类，控制 Python 所有类的创建，无论是 <code>int</code> 、<code>str</code>、<code>list</code> 等类都是由 <code>type</code> 控制创建的，它们的元类都是 <code>type</code> </p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">&gt;&gt;&gt; lst = []</div><div class="line">&gt;&gt;&gt; lst.__class__</div><div class="line">&lt;class 'list'&gt;</div><div class="line">&gt;&gt;&gt; lst.__class__.__class__</div><div class="line">&lt;class 'type'&gt;</div></pre></td></tr></table></figure>
+<p>当然，我们也可以自定义元类</p>
+<p>其实元类不一定是一个类，只需要是一个 <code>callable</code> 对象即可，下面这个例子，定义了一个将一个类的所有属性变为大写的函数，通过 <code>metaclass</code> 来指定一个自定义的元类</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">upperclass</span><span class="params">(clsname, bases, clsdict)</span>:</span></div><div class="line">    upper_dict = &#123;&#125;</div><div class="line">    <span class="keyword">for</span> key, val <span class="keyword">in</span> clsdict.items():</div><div class="line">        <span class="keyword">if</span> key.startswith(<span class="string">'_'</span>):</div><div class="line">            upper_dict[key] = val</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            upper_dict[key.upper()] = val</div><div class="line">    <span class="keyword">return</span> type(clsname, bases, upper_dict)</div></pre></td></tr></table></figure>
+<p>测试</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span><span class="params">(metaclass=upperclass)</span>:</span></div><div class="line">    a = <span class="string">'c'</span></div><div class="line">    b = <span class="string">'d'</span></div><div class="line">    </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>d = D()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>d.a</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">AttributeError: <span class="string">'D'</span> object has no attribute <span class="string">'a'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>d.A</div><div class="line"><span class="string">'c'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>d.b</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">AttributeError: <span class="string">'D'</span> object has no attribute <span class="string">'b'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>d.A</div><div class="line"><span class="string">'c'</span></div></pre></td></tr></table></figure>
+<p>但是毕竟是元类嘛，当然要用类啊，标准的做法是定义一个类，通过 <code>__new__</code> 方法返回一个新的类，</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">UpperClass</span><span class="params">(type)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, clsname, bases, clsdict)</span>:</span></div><div class="line">        upper_dict = &#123;&#125;</div><div class="line">        <span class="keyword">for</span> key, val <span class="keyword">in</span> clsdict.items():</div><div class="line">            <span class="keyword">if</span> key.startswith(<span class="string">'_'</span>):</div><div class="line">                upper_dict[key] = val</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                upper_dict[key.upper()] = val</div><div class="line">        <span class="keyword">return</span> super().__new__(cls, clsname, bases, upper_dict)</div><div class="line">    </div><div class="line">    </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span><span class="params">(metaclass=UpperClass)</span>:</span></div><div class="line">    a = <span class="string">'c'</span></div><div class="line">    d = <span class="string">'e'</span></div><div class="line">    </div><div class="line">    </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.a</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">AttributeError: type object <span class="string">'D'</span> has no attribute <span class="string">'a'</span></div></pre></td></tr></table></figure>
+<p>为什么用类，不用函数</p>
+<ul>
+<li>使用 oop, 代码简洁明了</li>
+<li>可以使用 <code>__new__</code> 、<code>__init__</code>、<code>__call__</code> 干更多的事情</li>
+<li>元类可以从元类继承方法，或者使用元类，嗯，很高大上</li>
+<li>因为是元类，所以用类</li>
+</ul>
+<p>事实上，元类只做这几件事</p>
+<ul>
+<li>拦截类的创建</li>
+<li>修改类</li>
+<li>返回修改后的类</li>
+</ul>
+<blockquote>
+<p>参考资料:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python" target="_blank" rel="external"><a href="http://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python" target="_blank" rel="external">What is a metaclass in Python? Slackoverflow</a></a></li>
+<li><a href="https://www.youtube.com/watch?v=sPiWg5jSoZI" target="_blank" rel="external">Python3 元编程 PyCon  David beazley</a></li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/development/" rel="tag"># development</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/08/python-descriptor/" rel="next" title="Python - 描述器">
+                <i class="fa fa-chevron-left"></i> Python - 描述器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/10/python-metaclass/"
+           data-title="Python - 元类" data-url="https:/anyisalin.github.io/2017/03/10/python-metaclass/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png"
+               alt="AnyISalIn" />
+          <p class="site-author-name" itemprop="name">AnyISalIn</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/anyisalin" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类是实例"><span class="nav-number">1.</span> <span class="nav-text">类是实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#type-的神奇用法"><span class="nav-number">2.</span> <span class="nav-text">type 的神奇用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元类"><span class="nav-number">3.</span> <span class="nav-text">元类</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnyISalIn</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"anyisalin-reborn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
