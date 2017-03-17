@@ -1,0 +1,810 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Fira Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="web,python,development," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="所谓的动态网页就是会根据某些变量，渲染出不同的页面，曾经的 Web 后端开发主要就是通过服务端脚本生成 HTML 文档给用户，但是这已经过时了，现在流行前后端分离的架构，后端只提供 API，前端通过调用后端 API 获取数据，因为现在前端可以做很多事，是门大学问，坑也非常多，这里就不说了，本文主要介绍已经过时的 Web 开发的基础， CGI 协议
+嗯，我在胡说八道">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python Web 编程 - CGI">
+<meta property="og:url" content="https:/anyisalin.github.io/2017/03/16/python-cgi/index.html">
+<meta property="og:site_name" content="新的开始">
+<meta property="og:description" content="所谓的动态网页就是会根据某些变量，渲染出不同的页面，曾经的 Web 后端开发主要就是通过服务端脚本生成 HTML 文档给用户，但是这已经过时了，现在流行前后端分离的架构，后端只提供 API，前端通过调用后端 API 获取数据，因为现在前端可以做很多事，是门大学问，坑也非常多，这里就不说了，本文主要介绍已经过时的 Web 开发的基础， CGI 协议
+嗯，我在胡说八道">
+<meta property="og:image" content="https:/anyisalin.github.io/images/form1.png">
+<meta property="og:image" content="https:/anyisalin.github.io/images/form2.png">
+<meta property="og:image" content="https:/anyisalin.github.io/images/form3.png">
+<meta property="og:image" content="https:/anyisalin.github.io/images/form4.png">
+<meta property="og:image" content="https:/anyisalin.github.io/images/form5.png">
+<meta property="og:image" content="https:/anyisalin.github.io/images/form6.png">
+<meta property="og:image" content="https:/anyisalin.github.io/images/form7.png">
+<meta property="og:updated_time" content="2017-03-17T05:00:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python Web 编程 - CGI">
+<meta name="twitter:description" content="所谓的动态网页就是会根据某些变量，渲染出不同的页面，曾经的 Web 后端开发主要就是通过服务端脚本生成 HTML 文档给用户，但是这已经过时了，现在流行前后端分离的架构，后端只提供 API，前端通过调用后端 API 获取数据，因为现在前端可以做很多事，是门大学问，坑也非常多，这里就不说了，本文主要介绍已经过时的 Web 开发的基础， CGI 协议
+嗯，我在胡说八道">
+<meta name="twitter:image" content="https:/anyisalin.github.io/images/form1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6281484541139879000',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https:/anyisalin.github.io/2017/03/16/python-cgi/"/>
+
+
+
+
+
+  <title> Python Web 编程 - CGI | 新的开始 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-77446934-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">新的开始</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">痛改前非 重新做人</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https:/anyisalin.github.io/2017/03/16/python-cgi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnyISalIn">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="新的开始">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python Web 编程 - CGI
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-16T19:34:56+08:00">
+                2017-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/16/python-cgi/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/16/python-cgi/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>所谓的动态网页就是会根据某些变量，渲染出不同的页面，曾经的 Web 后端开发主要就是通过服务端脚本生成 HTML 文档给用户，但是这已经过时了，现在流行前后端分离的架构，后端只提供 API，前端通过调用后端 API 获取数据，因为现在前端可以做很多事，是门大学问，坑也非常多，这里就不说了，本文主要介绍已经过时的 Web 开发的基础， CGI 协议</p>
+<p>嗯，我在胡说八道</p>
+<a id="more"></a>
+<p>不知道该写啥，随便看个例子吧</p>
+<p>cgi 脚本一般通过 HTTP Server 调用，所以我先装个 httpd</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ yum install -y httpd	# centos 大法好</div></pre></td></tr></table></figure>
+<p>httpd 默认把 cgi 脚本放在 /var/www/cgi-bin</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="comment"># test.py</span></div><div class="line"><span class="string">"""</span></div><div class="line">第一行必须得写指定的解释器，因为 cgi 脚本并不限定语言，所以必须指定</div><div class="line">"""</div><div class="line">print(<span class="string">'Content-type: text/html'</span>) <span class="comment"># 设置 content-type 为 text/html </span></div><div class="line">print(<span class="string">''</span>) <span class="comment"># 结束头部，得打印空行</span></div><div class="line"></div><div class="line">print(<span class="string">'&lt;h1&gt;Life is short&lt;/h1&gt;'</span>) <span class="comment"># 这就是输出的 html</span></div></pre></td></tr></table></figure>
+<p>来，试一试</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ chmod +x test.py # 加个执行权限，当前在 cgi-bin 目录下</div><div class="line"></div><div class="line">$ curl localhost/cgi-bin/test.py</div><div class="line">&lt;h1&gt;Life is short&lt;/h1&gt; # 实在懒得开浏览器截图了，直接用 curl</div></pre></td></tr></table></figure>
+<p>说实话，第一次写这个的时候感觉 low 到爆</p>
+<h2 id="cgi-模块"><a href="#cgi-模块" class="headerlink" title="cgi 模块"></a>cgi 模块</h2><p>如果需要传递参数，提交表单啊 啥的就需要 cgi 模块来搞定了</p>
+<h3 id="传递参数"><a href="#传递参数" class="headerlink" title="传递参数"></a>传递参数</h3><p>先看看怎么用吧</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># cgi-module.py</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> cgi</div><div class="line"></div><div class="line">print(<span class="string">''</span>)</div><div class="line"></div><div class="line">args = cgi.FieldStorage()</div><div class="line">print(args)</div></pre></td></tr></table></figure>
+<p>发送带参数的请求试试</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ curl &apos;localhost/cgi-bin/cgi-module.py?name=AnyISalIn&amp;email=anyisalin@gmail.com&apos;</div><div class="line">FieldStorage(None, None, [MiniFieldStorage(&apos;name&apos;, &apos;AnyISalIn&apos;), MiniFieldStorage(&apos;email&apos;, &apos;anyisalin@gmail.com&apos;)])</div></pre></td></tr></table></figure>
+<h3 id="通过传递的参数渲染页面"><a href="#通过传递的参数渲染页面" class="headerlink" title="通过传递的参数渲染页面"></a>通过传递的参数渲染页面</h3><p>可以通过 <code>getvalue</code> 方法来获取参数的值</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># args2.py</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> cgi</div><div class="line"></div><div class="line">print(<span class="string">'Content-type: text/html'</span>)</div><div class="line">print(<span class="string">''</span>)</div><div class="line"></div><div class="line">args = cgi.FieldStorage()</div><div class="line">print(<span class="string">'&lt;h1&gt;Hello &#123;&#125;, Website &#123;&#125;&lt;/h1&gt;'</span>.format(args.getvalue(<span class="string">'name'</span>), args.getvalue(<span class="string">'url'</span>)))</div></pre></td></tr></table></figure>
+<p>测试，多个参数之前用 <code>&amp;</code> 符号分隔</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ curl &apos;localhost/cgi-bin/args2.py?name=aaa&amp;url=http://anyisalin.github.io&apos;</div><div class="line">&lt;h1&gt;Hello aaa, Website http://anyisalin.github.io&lt;/h1&gt;</div></pre></td></tr></table></figure>
+<h3 id="GET-表单测试"><a href="#GET-表单测试" class="headerlink" title="GET 表单测试"></a>GET 表单测试</h3><p>文档路径为 <code>/var/www/html/form1.html</code></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/cgi-bin/args2.py"</span> <span class="attr">method</span>=<span class="string">"GET"</span>&gt;</span></div><div class="line">    name: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span>/&gt;</span></div><div class="line">    url: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"url"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"submit"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>输入参数</p>
+<p><img src="/images/form1.png" alt="form1"></p>
+<p>点击 submit</p>
+<p><img src="/images/form2.png" alt="form2"></p>
+<h3 id="POST-表单测试"><a href="#POST-表单测试" class="headerlink" title="POST 表单测试"></a>POST 表单测试</h3><p>通过 POST 传递数据更加的安全，密码之类的字段不会明文显示在请求 url 上</p>
+<p>文档路径为 <code>/var/www/html/form2.html</code></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/cgi-bin/args3.py"</span> <span class="attr">method</span>=<span class="string">"POST"</span>&gt;</span></div><div class="line">	name: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span>/&gt;</span></div><div class="line">    url: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"url"</span> /&gt;</span></div><div class="line">    password: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"password"</span>/&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"submit"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>建一个 <code>args3.py</code> 的 cgi 脚本，简单的登录支持</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># args3.py</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> cgi</div><div class="line"></div><div class="line">print(<span class="string">'Content-type: text/html'</span>)</div><div class="line">print(<span class="string">''</span>)</div><div class="line"></div><div class="line">args = cgi.FieldStorage()</div><div class="line">print(<span class="string">'&lt;h1&gt;Hello &#123;&#125;, Website &#123;&#125;&lt;/h1&gt;'</span>.format(args.getvalue(<span class="string">'name'</span>), args.getvalue(<span class="string">'url'</span>)))</div><div class="line"></div><div class="line"><span class="keyword">if</span> args.getvalue(<span class="string">'password'</span>) == <span class="string">'password'</span>:</div><div class="line">    print(<span class="string">'Login Pass'</span>)</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    print(<span class="string">'Deny Login'</span>)</div></pre></td></tr></table></figure>
+<p>故意输错密码</p>
+<p><img src="/images/form3.png" alt=""></p>
+<p>拒绝登录</p>
+<p><img src="/images/form4.png" alt=""></p>
+<p>密码输入正确，登录成功</p>
+<p><img src="/images/form5.png" alt=""></p>
+<h3 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h3><p>还是通过表单的方式上传文件</p>
+<p>文档路径为 <code>/var/www/html/form3.html</code></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span> <span class="attr">action</span>=<span class="string">"/cgi-bin/upfile.py"</span> <span class="attr">method</span>=<span class="string">"POST"</span>&gt;</span></div><div class="line">    select file: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"file"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"submit"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>建一个 <code>upload</code> 目录来存上传的文件，并设置所有者为 <code>apache</code> 用户</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ pwd</div><div class="line">/var/www/cgi-bin</div><div class="line"></div><div class="line">$ install -d -g apache -o apache upload</div></pre></td></tr></table></figure>
+<p>编写一个 <code>upfile.py</code> 的 cgi 脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># upfile.py</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> cgi, os</div><div class="line"></div><div class="line">args = cgi.FieldStorage()</div><div class="line"></div><div class="line">print(<span class="string">''</span>)</div><div class="line"></div><div class="line">fileitem = args[<span class="string">'file'</span>]</div><div class="line"></div><div class="line"><span class="keyword">if</span> fileitem.filename:</div><div class="line">    f = os.path.join(<span class="string">'upload'</span>, fileitem.filename)</div><div class="line">    <span class="keyword">with</span> open(f, <span class="string">'wb'</span>) <span class="keyword">as</span> fd:</div><div class="line">        fd.write(fileitem.file.read())</div><div class="line">    print(<span class="string">'upload success'</span>)</div></pre></td></tr></table></figure>
+<p>选择文件</p>
+<p><img src="/images/form6.png" alt=""></p>
+<p>点击上传</p>
+<p><img src="/images/form7.png" alt=""></p>
+<p>查看 <code>upload</code> 目录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ ls upload/</div><div class="line">export.json</div></pre></td></tr></table></figure>
+<blockquote>
+<p>参考资料: </p>
+<p><a href="http://www.runoob.com/python/python-cgi.html" target="_blank" rel="external">Python CGI | 菜鸟教程</a></p>
+<p><a href="https://docs.python.org/3/library/cgi.html" target="_blank" rel="external">Python doc CGI</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/web/" rel="tag"># web</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/development/" rel="tag"># development</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/15/python-socket/" rel="next" title="Python 网络编程 - socket">
+                <i class="fa fa-chevron-left"></i> Python 网络编程 - socket
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/16/python-cgi/"
+           data-title="Python Web 编程 - CGI" data-url="https:/anyisalin.github.io/2017/03/16/python-cgi/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png"
+               alt="AnyISalIn" />
+          <p class="site-author-name" itemprop="name">AnyISalIn</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/anyisalin" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://flowsnow.net/" title="Flowsnow" target="_blank">Flowsnow</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://zantony.top/" title="A 姐" target="_blank">A 姐</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://magedu.org" title="最帅的凡哥" target="_blank">最帅的凡哥</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cgi-模块"><span class="nav-number">1.</span> <span class="nav-text">cgi 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传递参数"><span class="nav-number">1.1.</span> <span class="nav-text">传递参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过传递的参数渲染页面"><span class="nav-number">1.2.</span> <span class="nav-text">通过传递的参数渲染页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GET-表单测试"><span class="nav-number">1.3.</span> <span class="nav-text">GET 表单测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#POST-表单测试"><span class="nav-number">1.4.</span> <span class="nav-text">POST 表单测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上传文件"><span class="nav-number">1.5.</span> <span class="nav-text">上传文件</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnyISalIn</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"anyisalin-reborn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
