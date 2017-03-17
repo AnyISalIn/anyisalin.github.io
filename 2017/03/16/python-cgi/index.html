@@ -108,7 +108,8 @@
 <meta property="og:image" content="https:/anyisalin.github.io/images/form5.png">
 <meta property="og:image" content="https:/anyisalin.github.io/images/form6.png">
 <meta property="og:image" content="https:/anyisalin.github.io/images/form7.png">
-<meta property="og:updated_time" content="2017-03-17T05:00:10.000Z">
+<meta property="og:image" content="https:/anyisalin.github.io/images/traceback.png">
+<meta property="og:updated_time" content="2017-03-17T05:30:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python Web 编程 - CGI">
 <meta name="twitter:description" content="所谓的动态网页就是会根据某些变量，渲染出不同的页面，曾经的 Web 后端开发主要就是通过服务端脚本生成 HTML 文档给用户，但是这已经过时了，现在流行前后端分离的架构，后端只提供 API，前端通过调用后端 API 获取数据，因为现在前端可以做很多事，是门大学问，坑也非常多，这里就不说了，本文主要介绍已经过时的 Web 开发的基础， CGI 协议
@@ -417,10 +418,24 @@
 <p><img src="/images/form7.png" alt=""></p>
 <p>查看 <code>upload</code> 目录</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ ls upload/</div><div class="line">export.json</div></pre></td></tr></table></figure>
+<h2 id="异常捕获"><a href="#异常捕获" class="headerlink" title="异常捕获"></a>异常捕获</h2><p>如果我们的 cgi 脚本运行出错，一般情况下 HTTP Server 会抛出 500 错误，但是我们可能希望 HTTP Server 能够准确的抛出异常，供我们排错，这时候就要用到 <code>cgitb</code> 这个模块了</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># traceback.py</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> cgi</div><div class="line"><span class="keyword">import</span> cgitb</div><div class="line"></div><div class="line">cgitb.enable()</div><div class="line"></div><div class="line">print(<span class="string">''</span>)</div><div class="line"></div><div class="line">print(<span class="string">'hello, world'</span>, aaaa) <span class="comment">#故意打错</span></div></pre></td></tr></table></figure>
+<p>请求一下页面试试</p>
+<p><img src="/images/traceback.png" alt=""></p>
+<h2 id="CGI-的一些问题"><a href="#CGI-的一些问题" class="headerlink" title="CGI 的一些问题"></a>CGI 的一些问题</h2><p>有几个比较关键的问题</p>
+<ul>
+<li>所有脚本都必须有执行权限</li>
+<li>不同操作系统的换行符可能会有问题</li>
+<li>要使用特定的扩展名去访问</li>
+<li>cgi 脚本中必须指定解释器</li>
+<li>性能不行</li>
+</ul>
+<p>在 Python 中解决这些问题可能就需要用到  <code>WSGI</code> 了</p>
 <blockquote>
 <p>参考资料: </p>
 <p><a href="http://www.runoob.com/python/python-cgi.html" target="_blank" rel="external">Python CGI | 菜鸟教程</a></p>
 <p><a href="https://docs.python.org/3/library/cgi.html" target="_blank" rel="external">Python doc CGI</a></p>
+<p><a href="https://docs.python.org/3/howto/webservers.html#howto-use-python-in-the-web" target="_blank" rel="external">HOWTO Use Python in the web</a></p>
 </blockquote>
 
       
@@ -627,7 +642,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cgi-模块"><span class="nav-number">1.</span> <span class="nav-text">cgi 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传递参数"><span class="nav-number">1.1.</span> <span class="nav-text">传递参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过传递的参数渲染页面"><span class="nav-number">1.2.</span> <span class="nav-text">通过传递的参数渲染页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GET-表单测试"><span class="nav-number">1.3.</span> <span class="nav-text">GET 表单测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#POST-表单测试"><span class="nav-number">1.4.</span> <span class="nav-text">POST 表单测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上传文件"><span class="nav-number">1.5.</span> <span class="nav-text">上传文件</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cgi-模块"><span class="nav-number">1.</span> <span class="nav-text">cgi 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传递参数"><span class="nav-number">1.1.</span> <span class="nav-text">传递参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过传递的参数渲染页面"><span class="nav-number">1.2.</span> <span class="nav-text">通过传递的参数渲染页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GET-表单测试"><span class="nav-number">1.3.</span> <span class="nav-text">GET 表单测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#POST-表单测试"><span class="nav-number">1.4.</span> <span class="nav-text">POST 表单测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上传文件"><span class="nav-number">1.5.</span> <span class="nav-text">上传文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常捕获"><span class="nav-number">2.</span> <span class="nav-text">异常捕获</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CGI-的一些问题"><span class="nav-number">3.</span> <span class="nav-text">CGI 的一些问题</span></a></li></ol></div>
             
 
           </div>
