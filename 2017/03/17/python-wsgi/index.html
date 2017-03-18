@@ -1,0 +1,779 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Fira Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="web,python,development,network," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="WSGI 是服务器与应用程序通信的接口规范，在 PEP-3333 提出，如果一个 Web 框架基于 WSGI 规范编写，那么它就可以运行在任意支持 WSGI 规范的 Web 服务器上，httpd、nginx 以及 Python 标准库中的 wsgiref 等 Web 服务器都支持 WSGI 规范，而 django、flask 这些基于 WSGI 的 Web 框架也都能够运行在这些服务器上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python Web编程 - WSGI">
+<meta property="og:url" content="https:/anyisalin.github.io/2017/03/17/python-wsgi/index.html">
+<meta property="og:site_name" content="新的开始">
+<meta property="og:description" content="WSGI 是服务器与应用程序通信的接口规范，在 PEP-3333 提出，如果一个 Web 框架基于 WSGI 规范编写，那么它就可以运行在任意支持 WSGI 规范的 Web 服务器上，httpd、nginx 以及 Python 标准库中的 wsgiref 等 Web 服务器都支持 WSGI 规范，而 django、flask 这些基于 WSGI 的 Web 框架也都能够运行在这些服务器上">
+<meta property="og:image" content="https:/anyisalin.github.io/images/wsgi_form1.png">
+<meta property="og:image" content="https:/anyisalin.github.io/images/wsgi_form2.png">
+<meta property="og:updated_time" content="2017-03-18T15:21:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python Web编程 - WSGI">
+<meta name="twitter:description" content="WSGI 是服务器与应用程序通信的接口规范，在 PEP-3333 提出，如果一个 Web 框架基于 WSGI 规范编写，那么它就可以运行在任意支持 WSGI 规范的 Web 服务器上，httpd、nginx 以及 Python 标准库中的 wsgiref 等 Web 服务器都支持 WSGI 规范，而 django、flask 这些基于 WSGI 的 Web 框架也都能够运行在这些服务器上">
+<meta name="twitter:image" content="https:/anyisalin.github.io/images/wsgi_form1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6281484541139879000',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https:/anyisalin.github.io/2017/03/17/python-wsgi/"/>
+
+
+
+
+
+  <title> Python Web编程 - WSGI | 新的开始 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-77446934-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">新的开始</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">痛改前非 重新做人</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https:/anyisalin.github.io/2017/03/17/python-wsgi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnyISalIn">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="新的开始">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python Web编程 - WSGI
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-17T13:37:10+08:00">
+                2017-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/17/python-wsgi/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/17/python-wsgi/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>WSGI</code> 是服务器与应用程序通信的接口规范，在 <a href="https://www.python.org/dev/peps/pep-3333/" target="_blank" rel="external">PEP-3333</a> 提出，如果一个 Web 框架基于 <code>WSGI</code> 规范编写，那么它就可以运行在任意支持 <code>WSGI</code> 规范的 Web 服务器上，<code>httpd</code>、<code>nginx</code> 以及 Python 标准库中的 <code>wsgiref</code> 等 Web 服务器都支持 <code>WSGI</code> 规范，而 <code>django</code>、<code>flask</code> 这些基于 <code>WSGI</code> 的 Web 框架也都能够运行在这些服务器上</p>
+<a id="more"></a>
+<h2 id="编写应用程序"><a href="#编写应用程序" class="headerlink" title="编写应用程序"></a>编写应用程序</h2><p><code>WSGI</code> 应用程序有以下几点要求</p>
+<ul>
+<li>需要是一个 <code>callable</code> 对象</li>
+<li>接受两个参数，环境字典、还有一个向 Web 服务器返回状态码和响应头部的函数</li>
+<li>返回值为一个可迭代对象</li>
+</ul>
+<h3 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> wsgiref.simple_server <span class="keyword">import</span> make_server</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">easy_app</span><span class="params">(env, resp)</span>:</span></div><div class="line">    resp_headers = [(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>)] <span class="comment">#头部需要用列表嵌套元组的格式</span></div><div class="line">    status = <span class="string">'200 OK'</span></div><div class="line">    resp(status, resp_headers)  <span class="comment">#resp 函数接受 状态码和头部</span></div><div class="line">    <span class="keyword">return</span> [<span class="string">b'&lt;h1&gt;hello, world&lt;/h1&gt;'</span>] <span class="comment">#返回一个可迭代对象，并且 body 必须转为 ascii 码</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    server = make_server(<span class="string">'localhost'</span>, <span class="number">8080</span>, easy_app) <span class="comment">#这里使用 python 自带的 wsgi 服务器</span></div><div class="line">    server.serve_forever()</div></pre></td></tr></table></figure>
+<p>测试</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ curl localhost:8080</div><div class="line">&lt;h1&gt;hello, world&lt;/h1&gt;</div></pre></td></tr></table></figure>
+<h3 id="操作环境变量"><a href="#操作环境变量" class="headerlink" title="操作环境变量"></a>操作环境变量</h3><p>这个例子返回当前这次请求的一些环境变量</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> wsgiref.simple_server <span class="keyword">import</span> make_server</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">application</span><span class="params">(env, resp)</span>:</span></div><div class="line">    resp_body = [<span class="string">'&#123;&#125;:&#123;&#125;'</span>.format(key, val) <span class="keyword">for</span> key, val <span class="keyword">in</span> env.items() <span class="keyword">if</span></div><div class="line">                 key <span class="keyword">in</span> (<span class="string">'SERVER_PROTOCOL'</span>, <span class="string">'CONTENT_TYPE'</span>, <span class="string">'HTTP_HOST'</span>, <span class="string">'USER'</span>)]</div><div class="line">    <span class="comment">#由于变量太多，只返回这几个就行了</span></div><div class="line">    resp_body = <span class="string">'\n'</span>.join(resp_body) <span class="comment">#格式化以下返回 body</span></div><div class="line"></div><div class="line">    status = <span class="string">'200 OK'</span></div><div class="line">    resp_headers = [ </div><div class="line">        (<span class="string">'Content-Type'</span>, <span class="string">'text/plain'</span>),</div><div class="line">        (<span class="string">'Content-Length'</span>, str(len(resp_body))) <span class="comment">#增加 Length 字段</span></div><div class="line">    ]</div><div class="line">    resp(status, resp_headers)</div><div class="line"></div><div class="line">    <span class="keyword">return</span> [resp_body.encode(<span class="string">'ascii'</span>)] </div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    server = make_server(<span class="string">'localhost'</span>, <span class="number">8080</span>, application) </div><div class="line">    server.serve_forever()</div></pre></td></tr></table></figure>
+<p>测试</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">...</div><div class="line">&gt; server.serve_forever()</div><div class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> - - [<span class="number">18</span>/Mar/<span class="number">2017</span> <span class="number">10</span>:<span class="number">11</span>:<span class="number">01</span>] <span class="string">"GET / HTTP/1.1"</span> <span class="number">200</span> <span class="number">88</span></div></pre></td></tr></table></figure>
+<p>启动之后通过 <code>curl</code> 测试，返回了我们指定的几个环境变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ curl localhost:8080</div><div class="line">USER:anyisalin</div><div class="line">HTTP_HOST:localhost:8080</div><div class="line">SERVER_PROTOCOL:HTTP/1.1</div><div class="line">CONTENT_TYPE:text/plain</div></pre></td></tr></table></figure>
+<h3 id="表单解析"><a href="#表单解析" class="headerlink" title="表单解析"></a>表单解析</h3><p>如果我们需要解析表单并处理，看下面这个例子</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> wsgiref.simple_server <span class="keyword">import</span> make_server</div><div class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> parse_qs</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_form</span><span class="params">(env)</span>:</span> <span class="comment">#写一个将查询参数转换为字典的函数</span></div><div class="line">    data = env.get(<span class="string">'QUERY_STRING'</span>)  <span class="comment">#环境变量中的 QUERY_STRING 就是表单的参数</span></div><div class="line">    <span class="keyword">if</span> data:</div><div class="line">        <span class="keyword">return</span> &#123;key: val[<span class="number">0</span>] <span class="keyword">for</span> key, val <span class="keyword">in</span> parse_qs(data).items()&#125;</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> &#123;&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">application</span><span class="params">(env, resp)</span>:</span></div><div class="line">    form = get_form(env)</div><div class="line">    <span class="keyword">if</span> form.get(<span class="string">'submitted'</span>): <span class="comment">#判断是否是表单提交</span></div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            name = form.get(<span class="string">'name'</span>)</div><div class="line">            resp_html = <span class="string">'&lt;h1&gt;Hello &#123;&#125;&lt;/h1&gt;'</span>.format(name)</div><div class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">            resp(<span class="string">'500 ERR'</span>, [(<span class="string">'Content-Type'</span>, <span class="string">'text/plain'</span>)])</div><div class="line">            <span class="keyword">return</span> [str(e).encode(<span class="string">'ascii'</span>)]</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            resp(<span class="string">'200 OK'</span>, [(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>)])</div><div class="line">            <span class="keyword">return</span> [resp_html.encode(<span class="string">'ascii'</span>)]</div><div class="line">    <span class="keyword">else</span>:	<span class="comment">#如果不是表单提交，就正常渲染表单</span></div><div class="line">        resp(<span class="string">'200 OK'</span>, [(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>)])</div><div class="line">        resp_html = <span class="string">'''</span></div><div class="line">        &lt;form&gt;</div><div class="line">        name: &lt;input type="text", name="name"/&gt;</div><div class="line">        submit: &lt;input type="submit", name="submitted"/&gt;</div><div class="line">        &lt;/form&gt;</div><div class="line">        '''</div><div class="line">        <span class="keyword">return</span> [resp_html.encode(<span class="string">'ascii'</span>)]</div><div class="line"></div><div class="line"></div><div class="line">server = make_server(<span class="string">''</span>, <span class="number">8080</span>, application)</div><div class="line">server.serve_forever()</div></pre></td></tr></table></figure>
+<p>测试，点击提交</p>
+<p><img src="/images/wsgi_form1.png" alt=""></p>
+<p><img src="/images/wsgi_form2.png" alt=""></p>
+<h2 id="写不下去了"><a href="#写不下去了" class="headerlink" title="写不下去了"></a>写不下去了</h2><p>为什么不用 Web 框架呢</p>
+<p>这样写简直 LOW 到爆，没有路由，不够安全、扩展性不够</p>
+<p>主要还是写起来真累！</p>
+<p>我想要这样写！</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">@app.route('/', methods=['GET'])</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'&lt;h1&gt;hello, world&lt;/h1&gt;'</span></div><div class="line"></div><div class="line"><span class="meta">@app.route('/hello/&lt;username&gt;')</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">(username)</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'&lt;h1&gt;hello &#123;&#125;&lt;/h1&gt;'</span>.format(username)</div></pre></td></tr></table></figure>
+<p>嗯，这些都是 Web 框架干的事，处理请求，提供路由 等</p>
+<p>如果只是要进行 Web 开发，而不打算深入理解底层框架实现的话，用现成的框架就可以了，Python 有很多牛逼的 Web 框架，<code>Flask</code>、<code>Django</code>、<code>Tornado</code>等，各有各的优点，随便挑选一个开始你的 Web 开发之路吧</p>
+<p>嗯，如果你都用不惯的话，也可以自己实现一个</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/web/" rel="tag"># web</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/development/" rel="tag"># development</a>
+          
+            <a href="/tags/network/" rel="tag"># network</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/16/python-cgi/" rel="next" title="Python Web 编程 - CGI">
+                <i class="fa fa-chevron-left"></i> Python Web 编程 - CGI
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/17/python-wsgi/"
+           data-title="Python Web编程 - WSGI" data-url="https:/anyisalin.github.io/2017/03/17/python-wsgi/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png"
+               alt="AnyISalIn" />
+          <p class="site-author-name" itemprop="name">AnyISalIn</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/anyisalin" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://flowsnow.net/" title="Flowsnow" target="_blank">Flowsnow</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://zantony.top/" title="A 姐" target="_blank">A 姐</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://magedu.org" title="最帅的凡哥" target="_blank">最帅的凡哥</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编写应用程序"><span class="nav-number">1.</span> <span class="nav-text">编写应用程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简单的例子"><span class="nav-number">1.1.</span> <span class="nav-text">一个简单的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作环境变量"><span class="nav-number">1.2.</span> <span class="nav-text">操作环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表单解析"><span class="nav-number">1.3.</span> <span class="nav-text">表单解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写不下去了"><span class="nav-number">2.</span> <span class="nav-text">写不下去了</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnyISalIn</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"anyisalin-reborn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
