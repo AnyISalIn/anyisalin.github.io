@@ -1,0 +1,809 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Fira Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python,development,database,orm," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Python 中有很多连接数据库的模块，pymysql、psycopg2、sqlite3 等，但是通常情况下我们都不会单独使用它们，因为程序可能需要支持多个数据库，而且直接通过调用 SQL 的方式去获取数据库中的数据会使得代码维护成本变高，这种情况下可能就要用到 ORM (数据关系映射, Object Relational Mapping)，而 Python 中最著名的 ORM 当属 SQLAlc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python - SQLAlchemy">
+<meta property="og:url" content="https:/anyisalin.github.io/2017/03/18/python-sqlalchemy/index.html">
+<meta property="og:site_name" content="新的开始">
+<meta property="og:description" content="Python 中有很多连接数据库的模块，pymysql、psycopg2、sqlite3 等，但是通常情况下我们都不会单独使用它们，因为程序可能需要支持多个数据库，而且直接通过调用 SQL 的方式去获取数据库中的数据会使得代码维护成本变高，这种情况下可能就要用到 ORM (数据关系映射, Object Relational Mapping)，而 Python 中最著名的 ORM 当属 SQLAlc">
+<meta property="og:updated_time" content="2017-03-23T14:22:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python - SQLAlchemy">
+<meta name="twitter:description" content="Python 中有很多连接数据库的模块，pymysql、psycopg2、sqlite3 等，但是通常情况下我们都不会单独使用它们，因为程序可能需要支持多个数据库，而且直接通过调用 SQL 的方式去获取数据库中的数据会使得代码维护成本变高，这种情况下可能就要用到 ORM (数据关系映射, Object Relational Mapping)，而 Python 中最著名的 ORM 当属 SQLAlc">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6281484541139879000',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https:/anyisalin.github.io/2017/03/18/python-sqlalchemy/"/>
+
+
+
+
+
+  <title> Python - SQLAlchemy | 新的开始 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-77446934-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">新的开始</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">痛改前非 重新做人</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-nonsense">
+          <a href="/nonsense" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />
+            
+            Nonsense
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https:/anyisalin.github.io/2017/03/18/python-sqlalchemy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnyISalIn">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="新的开始">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python - SQLAlchemy
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-18T23:34:18+08:00">
+                2017-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/18/python-sqlalchemy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/18/python-sqlalchemy/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Python 中有很多连接数据库的模块，<code>pymysql</code>、<code>psycopg2</code>、<code>sqlite3</code> 等，但是通常情况下我们都不会单独使用它们，因为程序可能需要支持多个数据库，而且直接通过调用 <code>SQL</code> 的方式去获取数据库中的数据会使得代码维护成本变高，这种情况下可能就要用到 <code>ORM (数据关系映射, Object Relational Mapping)</code>，而 Python 中最著名的 <code>ORM</code> 当属 <code>SQLAlchemy</code> 了</p>
+<a id="more"></a>
+<p><code>SQLAlchemy</code> 的关系映射提供了 数据库中的表 与 Python 的类、实例之间的映射关系 一般个类对应一张表，一个实例对应一列</p>
+<h2 id="SQLAlchemy-基础"><a href="#SQLAlchemy-基础" class="headerlink" title="SQLAlchemy 基础"></a>SQLAlchemy 基础</h2><p>首先我们肯定得先安装 <code>SQLAlchemy</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ pip install sqlalchemy</div></pre></td></tr></table></figure>
+<h3 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine </div><div class="line"></div><div class="line">engine = create_engine(<span class="string">'sqlite:///:memory:'</span>) <span class="comment">#通过 create_engine 连接数据库，这里我们使用 sqlite，并存储数据在内存中</span></div><div class="line"></div><div class="line"><span class="comment"># 开启 debug 模式</span></div><div class="line"><span class="string">"""</span></div><div class="line">engine = create_engine('sqlite:///:memeory:', echo=True)</div><div class="line">"""</div></pre></td></tr></table></figure>
+<p>关于连接数据库的 url 可以看官方文档 <a href="http://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls" target="_blank" rel="external">database-url</a></p>
+<h3 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h3><p>如果我们需要一张 <code>users</code> 的表，那么我们可以通过一个 <code>User</code> 类来声明它的元数据，它继承自 <code>Base</code> 基类</p>
+<p>它有以下几个字段</p>
+<ul>
+<li>username</li>
+<li>email</li>
+<li>location</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine, Column, String, Integer</div><div class="line"><span class="keyword">from</span> sqlalchemy.ext.declarative <span class="keyword">import</span> declarative_base</div><div class="line"></div><div class="line">engine = create_engine(<span class="string">'sqlite:///:memory:'</span>, echo=<span class="keyword">True</span>)</div><div class="line">Base = declarative_base()</div><div class="line"></div><div class="line"><span class="string">"""</span></div><div class="line">SQLAlchemy 通过 Column 这个描述器类来替换数据库字段的访问和赋值过程</div><div class="line">"""</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(Base)</span>:</span></div><div class="line">    __tablename__ = <span class="string">'users'</span></div><div class="line">    id = Column(Integer, primary_key=<span class="keyword">True</span>)  <span class="comment"># 每一个类都需要主键</span></div><div class="line">    username = Column(String(<span class="number">64</span>), index=<span class="keyword">True</span>)</div><div class="line">    email = Column(String(<span class="number">64</span>), unique=<span class="keyword">True</span>, index=<span class="keyword">True</span>)</div><div class="line">    location = Column(String(<span class="number">128</span>))</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="string">"""定义 repr 让输出更加直观优雅"""</span></div><div class="line">        <span class="keyword">return</span> <span class="string">'&lt;User &#123;&#125;&gt;'</span>.format(self.username)</div></pre></td></tr></table></figure>
+<p>上面的代码用来声明一个数据表的元数据，可以通过 <code>User.__table__</code> 看看</p>
+<p>会返回一个 Table 对象，我们并没有定义 <code>__table__</code>，但是为什么会有这个属性呢？这都是通过 <code>Base</code> 的元类<code>DeclarativeMeta</code>  来完成的</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>User.__table__</div><div class="line">Table(<span class="string">'users'</span>, MetaData(bind=<span class="keyword">None</span>), Column(<span class="string">'id'</span>, Integer(), table=&lt;users&gt;, primary_key=<span class="keyword">True</span>, nullable=<span class="keyword">False</span>), Column(<span class="string">'username'</span>, String(length=<span class="number">64</span>), table=&lt;users&gt;), Column(<span class="string">'email'</span>, String(length=<span class="number">64</span>), table=&lt;users&gt;), Column(<span class="string">'location'</span>, String(length=<span class="number">128</span>), table=&lt;users&gt;), schema=<span class="keyword">None</span>)</div></pre></td></tr></table></figure>
+<h3 id="创建-Schema"><a href="#创建-Schema" class="headerlink" title="创建 Schema"></a>创建 Schema</h3><p><code>users</code> 表定义了，我们该如何创建呢？可以通过 <code>Metadata</code> 类的 <code>create_all</code> 方法来创建数据表的 <code>schema</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>Base.metadata.create_all(bind=engine) <span class="comment"># 由于指定了 echo 参数，所以打印出创建过程</span></div><div class="line"></div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-23</span> <span class="number">20</span>:<span class="number">44</span>:<span class="number">08</span>,<span class="number">121</span> INFO sqlalchemy.engine.base.Engine SELECT CAST(<span class="string">'test plain returns'</span> AS VARCHAR(<span class="number">60</span>)) AS anon_1</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-23</span> <span class="number">20</span>:<span class="number">44</span>:<span class="number">08</span>,<span class="number">122</span> INFO sqlalchemy.engine.base.Engine ()</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-23</span> <span class="number">20</span>:<span class="number">44</span>:<span class="number">08</span>,<span class="number">123</span> INFO sqlalchemy.engine.base.Engine SELECT CAST(<span class="string">'test unicode returns'</span> AS VARCHAR(<span class="number">60</span>)) AS anon_1</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-23</span> <span class="number">20</span>:<span class="number">44</span>:<span class="number">08</span>,<span class="number">123</span> INFO sqlalchemy.engine.base.Engine ()</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-23</span> <span class="number">20</span>:<span class="number">44</span>:<span class="number">08</span>,<span class="number">124</span> INFO sqlalchemy.engine.base.Engine PRAGMA table_info(<span class="string">"users"</span>)</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-23</span> <span class="number">20</span>:<span class="number">44</span>:<span class="number">08</span>,<span class="number">124</span> INFO sqlalchemy.engine.base.Engine ()</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-23</span> <span class="number">20</span>:<span class="number">44</span>:<span class="number">08</span>,<span class="number">126</span> INFO sqlalchemy.engine.base.Engine</div><div class="line">CREATE TABLE users (</div><div class="line">        id INTEGER NOT NULL,</div><div class="line">        username VARCHAR(<span class="number">64</span>),</div><div class="line">        email VARCHAR(<span class="number">64</span>),</div><div class="line">        location VARCHAR(<span class="number">128</span>),</div><div class="line">        PRIMARY KEY (id)</div><div class="line">)</div><div class="line"></div><div class="line"></div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-23</span> <span class="number">20</span>:<span class="number">44</span>:<span class="number">08</span>,<span class="number">126</span> INFO sqlalchemy.engine.base.Engine ()</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-23</span> <span class="number">20</span>:<span class="number">44</span>:<span class="number">08</span>,<span class="number">126</span> INFO sqlalchemy.engine.base.Engine COMMIT</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-23</span> <span class="number">20</span>:<span class="number">44</span>:<span class="number">08</span>,<span class="number">126</span> INFO sqlalchemy.engine.base.Engine CREATE INDEX ix_users_username ON users (username)</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-23</span> <span class="number">20</span>:<span class="number">44</span>:<span class="number">08</span>,<span class="number">126</span> INFO sqlalchemy.engine.base.Engine ()</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-23</span> <span class="number">20</span>:<span class="number">44</span>:<span class="number">08</span>,<span class="number">126</span> INFO sqlalchemy.engine.base.Engine COMMIT</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-23</span> <span class="number">20</span>:<span class="number">44</span>:<span class="number">08</span>,<span class="number">127</span> INFO sqlalchemy.engine.base.Engine CREATE UNIQUE INDEX ix_users_email ON users (email)</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-23</span> <span class="number">20</span>:<span class="number">44</span>:<span class="number">08</span>,<span class="number">127</span> INFO sqlalchemy.engine.base.Engine ()</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-23</span> <span class="number">20</span>:<span class="number">44</span>:<span class="number">08</span>,<span class="number">127</span> INFO sqlalchemy.engine.base.Engine COMMIT</div></pre></td></tr></table></figure>
+<h3 id="创建-instance"><a href="#创建-instance" class="headerlink" title="创建 instance"></a>创建 instance</h3><p>我们已经创建了一张表，怎么给它加字段呢？其实添加一个字段就像新建一个实例一样简单</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>anyisalin = User(username=<span class="string">'AnyISalIn'</span>, email=<span class="string">'anyisalin@gmail.com'</span>, location=<span class="string">'ShangHai/China'</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>anyisalin.__dict__</div><div class="line">&#123;<span class="string">'_sa_instance_state'</span>: &lt;sqlalchemy.orm.state.InstanceState at <span class="number">0x112aa4438</span>&gt;,</div><div class="line"> <span class="string">'email'</span>: <span class="string">'anyisalin@gmail.com'</span>,</div><div class="line"> <span class="string">'location'</span>: <span class="string">'ShangHai/China'</span>,</div><div class="line"> <span class="string">'username'</span>: <span class="string">'AnyISalIn'</span>&#125;</div></pre></td></tr></table></figure>
+<h2 id="CRUD-操作"><a href="#CRUD-操作" class="headerlink" title="CRUD 操作"></a>CRUD 操作</h2><h3 id="create"><a href="#create" class="headerlink" title="create"></a>create</h3><p>虽然我们添加了一个字段，但是并没有将它保存到数据库中，如果我们需要 存储、查询、更新数据，那么我们就需要定义 <code>Session</code> 类了</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> sessionmaker</div><div class="line"></div><div class="line">session = sessionmaker(bind=engine)() <span class="comment">#就像 Metadata 类一样，需要 bind engine</span></div></pre></td></tr></table></figure>
+<p>通过 <code>add</code> 方法将实例临时存储在 <code>Session</code> 对象里面，然后通过 <code>commit</code> 方法提交到数据库，其实 <code>Session</code> 对象的操作就是在进行事务，当然也可以 <code>rollback</code></p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">&gt;&gt;&gt; session.add(anyisalin)</div><div class="line"></div><div class="line">&gt;&gt;&gt; session.commit() #如果不想提交，并恢复可以调用 session.rollback()</div><div class="line">2017-03-23 21:07:47,336 INFO sqlalchemy.engine.base.Engine BEGIN (implicit)</div><div class="line">2017-03-23 21:07:47,338 INFO sqlalchemy.engine.base.Engine INSERT INTO users (username, email, location) VALUES (?, ?, ?)</div><div class="line">2017-03-23 21:07:47,338 INFO sqlalchemy.engine.base.Engine ('AnyISalIn', 'anyisalin@gmail.com', 'ShangHai/China')</div><div class="line">2017-03-23 21:07:47,338 INFO sqlalchemy.engine.base.Engine COMMIT</div></pre></td></tr></table></figure>
+<h3 id="read"><a href="#read" class="headerlink" title="read"></a>read</h3><p>这里先不介绍读取操作了，后面介绍查询</p>
+<h3 id="update"><a href="#update" class="headerlink" title="update"></a>update</h3><p>如果想要更新字段的数据，其实也非常简单</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>anyisalin.username</div><div class="line"><span class="string">'AnyISalIn'</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>anyisalin.username = <span class="string">'hahahaha'</span> <span class="comment">#直接修改实例</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>session.add(anyisalin)	<span class="comment">#重新 add</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>session.dirty</div><div class="line">IdentitySet([&lt;User hahahaha&gt;]) <span class="comment">#identiyset中可以看到修改的字段</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>session.commit() <span class="comment">#再次 commit</span></div></pre></td></tr></table></figure>
+<h3 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h3><p>想要删除字段，调用 <code>delete</code> 方法就可以了</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>session.delete(anyisalin)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>session.commit()</div></pre></td></tr></table></figure>
+<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><p>我们先添加一点假的数据以供查询</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> faker <span class="keyword">import</span> Faker <span class="comment"># 使用 faker 这个模块来生成一些假数据, pip install faker</span></div><div class="line"></div><div class="line">faker = Faker()</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fake_data_generate</span><span class="params">(User, session)</span>:</span></div><div class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">        user = User(username=faker.name(), email=faker.email(), location=faker.address())</div><div class="line">        session.add(user)</div><div class="line">    session.commit()</div></pre></td></tr></table></figure>
+<p>生成假数据</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">&gt;&gt;&gt; fake_data_generate(User, session)</div><div class="line">2017-03-23 21:26:44,761 INFO sqlalchemy.engine.base.Engine INSERT INTO users (username, email, location) VALUES (?, ?, ?)</div><div class="line">... ignore output</div><div class="line">2017-03-23 21:26:44,766 INFO sqlalchemy.engine.base.Engine COMMIT</div></pre></td></tr></table></figure>
+<h3 id="基础查询"><a href="#基础查询" class="headerlink" title="基础查询"></a>基础查询</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>session.query(User) <span class="comment">#指定查询的字段, 如果只指定了表，则会查询所有字段，相当于 select * from table</span></div><div class="line">&lt;sqlalchemy.orm.query.Query at <span class="number">0x112ceeeb8</span>&gt;</div></pre></td></tr></table></figure>
+<p><strong>all</strong></p>
+<p>返回所有的字段</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>session.query(User).all()</div><div class="line">[&lt;User Sherry Collins&gt;,</div><div class="line"> &lt;User Jeffrey Pierce&gt;,</div><div class="line"> &lt;User Tamara Sherman&gt;,</div><div class="line"> &lt;User Lori James&gt;,</div><div class="line"> &lt;User Kendra Hernandez&gt;,</div><div class="line"> &lt;User Mitchell Campbell&gt;,</div><div class="line"> &lt;User Patricia Maldonado&gt;,</div><div class="line"> &lt;User Jennifer Johnson&gt;,</div><div class="line"> &lt;User Timothy Williamson&gt;,</div><div class="line"> &lt;User Pamela Cochran&gt;]</div></pre></td></tr></table></figure>
+<p><strong>first</strong></p>
+<p>返回第一个字段</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>session.query(User).first()</div><div class="line">&lt;User Sherry Collins&gt;</div></pre></td></tr></table></figure>
+<p><strong>filter</strong></p>
+<p>很多时候需要过滤一些条件，可以通过 filter 方法来实现</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>session.query(User).filter(User.id == <span class="number">1</span>)</div><div class="line"><span class="string">'&lt;User Sherry Collins&gt;'</span></div></pre></td></tr></table></figure>
+<p><strong>count</strong></p>
+<p>计数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>session.query(User).count()</div><div class="line"><span class="number">10</span></div></pre></td></tr></table></figure>
+<h3 id="还没写"><a href="#还没写" class="headerlink" title="还没写"></a>还没写</h3><h2 id="relationship"><a href="#relationship" class="headerlink" title="relationship"></a>relationship</h2><p>如果我们需要将用户的 <code>email</code> 单独存放在一张表里面，并使它们的实例都有一定关联关系，我们就需要定义 <code>relationship</code> 字段了</p>
+<p>这是一个简单的例子</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> Column, String, Integer, create_engine, ForeignKey</div><div class="line"><span class="keyword">from</span> sqlalchemy.ext.declarative <span class="keyword">import</span> declarative_base</div><div class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> relationship, sessionmaker</div><div class="line"></div><div class="line">engine = create_engine(<span class="string">'sqlite:///:memory:'</span>)</div><div class="line">Base = declarative_base()</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Email</span><span class="params">(Base)</span>:</span></div><div class="line">    __tablename__ = <span class="string">'emails'</span></div><div class="line">    id = Column(Integer, primary_key=<span class="keyword">True</span>)</div><div class="line">    address = Column(String(<span class="number">128</span>))</div><div class="line">    user_id = Column(Integer, ForeignKey(<span class="string">'users.id'</span>))  <span class="comment"># 如果要使用 relationship, 必须有一个引用外键</span></div><div class="line">    user = relationship(<span class="string">'User'</span>, back_populates=<span class="string">'emails'</span>)</div><div class="line">    <span class="string">"""</span></div><div class="line">        back_populates 参数指的是，</div><div class="line">        可以通过这个参数来反推,</div><div class="line">        也就是说 email.user 可以获取对应用户的实例,</div><div class="line">        user.emails 可以获取对应所有邮箱的实例</div><div class="line">    """</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="string">'&lt;Email &#123;&#125;&gt;'</span>.format(self.address)</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(Base)</span>:</span></div><div class="line">    __tablename__ = <span class="string">'users'</span></div><div class="line">    id = Column(Integer, primary_key=<span class="keyword">True</span>)</div><div class="line">    username = Column(String(<span class="number">64</span>))</div><div class="line">    emails = relationship(<span class="string">'Email'</span>, order_by=Email.id, back_populates=<span class="string">'user'</span>)</div><div class="line">    location = Column(String(<span class="number">128</span>))</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="string">'&lt;User &#123;&#125;&gt;'</span>.format(self.username)</div></pre></td></tr></table></figure>
+<p>测试</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>Base.metadata.create_all(bind=engine)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>session = sessionmaker(bind=engine)()</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>user1 = User(username=<span class="string">'anyisalin'</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>user1.emails</div><div class="line">[]</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>user1.emails.append(Email(address=<span class="string">'anyisalin@gmail.com'</span>))</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>user1.emails.append(Email(address=<span class="string">'xilin@vanecloud.com'</span>))</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>user1.emails</div><div class="line">[&lt;Email anyisalin@gmail.com&gt;, &lt;Email xilin@vanecloud.com&gt;]</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>session.add(user1)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>session.commit()</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>session.query(User).first()</div><div class="line">&lt;User anyisalin&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>u = session.query(User).first()</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>u.emails</div><div class="line">[&lt;Email xilin@vanecloud.com&gt;, &lt;Email anyisalin@gmail.com&gt;]</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>u.emails[<span class="number">0</span>].user</div><div class="line">&lt;User anyisalin&gt;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/development/" rel="tag"># development</a>
+          
+            <a href="/tags/database/" rel="tag"># database</a>
+          
+            <a href="/tags/orm/" rel="tag"># orm</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/17/python-wsgi/" rel="next" title="Python Web编程 - WSGI">
+                <i class="fa fa-chevron-left"></i> Python Web编程 - WSGI
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/18/python-sqlalchemy/"
+           data-title="Python - SQLAlchemy" data-url="https:/anyisalin.github.io/2017/03/18/python-sqlalchemy/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png"
+               alt="AnyISalIn" />
+          <p class="site-author-name" itemprop="name">AnyISalIn</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/anyisalin" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://flowsnow.net/" title="Flowsnow" target="_blank">Flowsnow</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://zantony.top/" title="A 姐" target="_blank">A 姐</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://magedu.org" title="最帅的凡哥" target="_blank">最帅的凡哥</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQLAlchemy-基础"><span class="nav-number">1.</span> <span class="nav-text">SQLAlchemy 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连接数据库"><span class="nav-number">1.1.</span> <span class="nav-text">连接数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mapping"><span class="nav-number">1.2.</span> <span class="nav-text">Mapping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-Schema"><span class="nav-number">1.3.</span> <span class="nav-text">创建 Schema</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-instance"><span class="nav-number">1.4.</span> <span class="nav-text">创建 instance</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRUD-操作"><span class="nav-number">2.</span> <span class="nav-text">CRUD 操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#create"><span class="nav-number">2.1.</span> <span class="nav-text">create</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#read"><span class="nav-number">2.2.</span> <span class="nav-text">read</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#update"><span class="nav-number">2.3.</span> <span class="nav-text">update</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delete"><span class="nav-number">2.4.</span> <span class="nav-text">delete</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询"><span class="nav-number">3.</span> <span class="nav-text">查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础查询"><span class="nav-number">3.1.</span> <span class="nav-text">基础查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#还没写"><span class="nav-number">3.2.</span> <span class="nav-text">还没写</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#relationship"><span class="nav-number">4.</span> <span class="nav-text">relationship</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnyISalIn</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"anyisalin-reborn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
