@@ -100,6 +100,7 @@
 
 
 <meta name="description" content="envoy 是对 Python 标准库中 subprocess 模块的封装， 虽然功能对比原生 subprocess 来说少了很多，但是更易于使用，Github 项目地址">
+<meta name="keywords" content="python,read-code">
 <meta property="og:type" content="article">
 <meta property="og:title" content="代码解析 - envoy">
 <meta property="og:url" content="https:/anyisalin.github.io/2017/05/09/python-envoy-code-reading/index.html">
@@ -368,7 +369,7 @@
         <p><code>envoy</code> 是对 Python 标准库中 <code>subprocess</code> 模块的封装， 虽然功能对比原生 <code>subprocess</code> 来说少了很多，但是更易于使用，<a href="https://github.com/kennethreitz/envoy" target="_blank" rel="external">Github 项目地址</a></p>
 <a id="more"></a>
 <h1 id="代码解析"><a href="#代码解析" class="headerlink" title="代码解析"></a>代码解析</h1><p><code>envoy</code> 只有一个文件，两百多行代码，非常的简单</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ tree envoy</div><div class="line">envoy</div><div class="line">├── __init__.py</div><div class="line">└── core.py</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><div class="line"><span class="meta">$</span> tree envoy</div><div class="line">envoy</div><div class="line">├── __init__.py</div><div class="line">└── core.py</div></pre></td></tr></table></figure>
 <p><code>envoy</code> 可以非常轻松通过管道传递数据</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> envoy.core <span class="keyword">import</span> run</div><div class="line"></div><div class="line">r = run(<span class="string">'ifconfig|wc -l'</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r</div><div class="line">&lt;Response [wc]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.command</div><div class="line">[<span class="string">'wc'</span>, <span class="string">'-l'</span>]</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.std_out</div><div class="line"><span class="string">'      52\n'</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.history</div><div class="line">[&lt;Response [ifconfig]&gt;]</div><div class="line"></div><div class="line"><span class="comment"># 或者像这样</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>run(<span class="string">'wc -l'</span>, data=<span class="string">'1\n2\n3\n'</span>).std_out</div><div class="line"><span class="string">'       3\n'</span></div></pre></td></tr></table></figure>
 <p>我们先看看 <code>run</code> 函数</p>
@@ -743,7 +744,7 @@
   
 
     
-      <script id="dsq-count-scr" src="https://anyisalin-reborn.disqus.com/count.js" async></script>
+      <script id="dsq-count-scr" src="https://anyisalin-reborn-1.disqus.com/count.js" async></script>
     
 
     
@@ -754,7 +755,7 @@
           this.page.title = '代码解析 - envoy';
         };
         var d = document, s = d.createElement('script');
-        s.src = 'https://anyisalin-reborn.disqus.com/embed.js';
+        s.src = 'https://anyisalin-reborn-1.disqus.com/embed.js';
         s.setAttribute('data-timestamp', '' + +new Date());
         (d.head || d.body).appendChild(s);
       </script>

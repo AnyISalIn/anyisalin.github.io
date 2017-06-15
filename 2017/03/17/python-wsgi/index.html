@@ -83,7 +83,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="python,development,web,network," />
+  <meta name="keywords" content="web,python,development,network," />
 
 
 
@@ -100,18 +100,19 @@
 
 
 <meta name="description" content="WSGI 是服务器与应用程序通信的接口规范，在 PEP-3333 提出，如果一个 Web 框架基于 WSGI 规范编写，那么它就可以运行在任意支持 WSGI 规范的 Web 服务器上，httpd、nginx 以及 Python 标准库中的 wsgiref 等 Web 服务器都支持 WSGI 规范，而 django、flask 这些基于 WSGI 的 Web 框架也都能够运行在这些服务器上">
+<meta name="keywords" content="web,python,development,network">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python Web编程 - WSGI">
 <meta property="og:url" content="https:/anyisalin.github.io/2017/03/17/python-wsgi/index.html">
 <meta property="og:site_name" content="新的开始">
 <meta property="og:description" content="WSGI 是服务器与应用程序通信的接口规范，在 PEP-3333 提出，如果一个 Web 框架基于 WSGI 规范编写，那么它就可以运行在任意支持 WSGI 规范的 Web 服务器上，httpd、nginx 以及 Python 标准库中的 wsgiref 等 Web 服务器都支持 WSGI 规范，而 django、flask 这些基于 WSGI 的 Web 框架也都能够运行在这些服务器上">
-<meta property="og:image" content="https:/anyisalin.github.io/images/wsgi_form1.png">
-<meta property="og:image" content="https:/anyisalin.github.io/images/wsgi_form2.png">
+<meta property="og:image" content="https:/images/wsgi_form1.png">
+<meta property="og:image" content="https:/images/wsgi_form2.png">
 <meta property="og:updated_time" content="2017-03-18T15:21:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python Web编程 - WSGI">
 <meta name="twitter:description" content="WSGI 是服务器与应用程序通信的接口规范，在 PEP-3333 提出，如果一个 Web 框架基于 WSGI 规范编写，那么它就可以运行在任意支持 WSGI 规范的 Web 服务器上，httpd、nginx 以及 Python 标准库中的 wsgiref 等 Web 服务器都支持 WSGI 规范，而 django、flask 这些基于 WSGI 的 Web 框架也都能够运行在这些服务器上">
-<meta name="twitter:image" content="https:/anyisalin.github.io/images/wsgi_form1.png">
+<meta name="twitter:image" content="https:/images/wsgi_form1.png">
 
 
 
@@ -378,13 +379,13 @@
 </ul>
 <h3 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> wsgiref.simple_server <span class="keyword">import</span> make_server</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">easy_app</span><span class="params">(env, resp)</span>:</span></div><div class="line">    resp_headers = [(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>)] <span class="comment">#头部需要用列表嵌套元组的格式</span></div><div class="line">    status = <span class="string">'200 OK'</span></div><div class="line">    resp(status, resp_headers)  <span class="comment">#resp 函数接受 状态码和头部</span></div><div class="line">    <span class="keyword">return</span> [<span class="string">b'&lt;h1&gt;hello, world&lt;/h1&gt;'</span>] <span class="comment">#返回一个可迭代对象，并且 body 必须转为 ascii 码</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    server = make_server(<span class="string">'localhost'</span>, <span class="number">8080</span>, easy_app) <span class="comment">#这里使用 python 自带的 wsgi 服务器</span></div><div class="line">    server.serve_forever()</div></pre></td></tr></table></figure>
 <p>测试</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ curl localhost:8080</div><div class="line">&lt;h1&gt;hello, world&lt;/h1&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><div class="line"><span class="meta">$</span> curl localhost:8080</div><div class="line">&lt;h1&gt;hello, world&lt;/h1&gt;</div></pre></td></tr></table></figure>
 <h3 id="操作环境变量"><a href="#操作环境变量" class="headerlink" title="操作环境变量"></a>操作环境变量</h3><p>这个例子返回当前这次请求的一些环境变量</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> wsgiref.simple_server <span class="keyword">import</span> make_server</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">application</span><span class="params">(env, resp)</span>:</span></div><div class="line">    resp_body = [<span class="string">'&#123;&#125;:&#123;&#125;'</span>.format(key, val) <span class="keyword">for</span> key, val <span class="keyword">in</span> env.items() <span class="keyword">if</span></div><div class="line">                 key <span class="keyword">in</span> (<span class="string">'SERVER_PROTOCOL'</span>, <span class="string">'CONTENT_TYPE'</span>, <span class="string">'HTTP_HOST'</span>, <span class="string">'USER'</span>)]</div><div class="line">    <span class="comment">#由于变量太多，只返回这几个就行了</span></div><div class="line">    resp_body = <span class="string">'\n'</span>.join(resp_body) <span class="comment">#格式化以下返回 body</span></div><div class="line"></div><div class="line">    status = <span class="string">'200 OK'</span></div><div class="line">    resp_headers = [ </div><div class="line">        (<span class="string">'Content-Type'</span>, <span class="string">'text/plain'</span>),</div><div class="line">        (<span class="string">'Content-Length'</span>, str(len(resp_body))) <span class="comment">#增加 Length 字段</span></div><div class="line">    ]</div><div class="line">    resp(status, resp_headers)</div><div class="line"></div><div class="line">    <span class="keyword">return</span> [resp_body.encode(<span class="string">'ascii'</span>)] </div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    server = make_server(<span class="string">'localhost'</span>, <span class="number">8080</span>, application) </div><div class="line">    server.serve_forever()</div></pre></td></tr></table></figure>
 <p>测试</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><div class="line">...</div><div class="line">&gt; server.serve_forever()</div><div class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> - - [<span class="number">18</span>/Mar/<span class="number">2017</span> <span class="number">10</span>:<span class="number">11</span>:<span class="number">01</span>] <span class="string">"GET / HTTP/1.1"</span> <span class="number">200</span> <span class="number">88</span></div></pre></td></tr></table></figure>
 <p>启动之后通过 <code>curl</code> 测试，返回了我们指定的几个环境变量</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ curl localhost:8080</div><div class="line">USER:anyisalin</div><div class="line">HTTP_HOST:localhost:8080</div><div class="line">SERVER_PROTOCOL:HTTP/1.1</div><div class="line">CONTENT_TYPE:text/plain</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><div class="line"><span class="meta">$</span> curl localhost:8080</div><div class="line">USER:anyisalin</div><div class="line">HTTP_HOST:localhost:8080</div><div class="line">SERVER_PROTOCOL:HTTP/1.1</div><div class="line">CONTENT_TYPE:text/plain</div></pre></td></tr></table></figure>
 <h3 id="表单解析"><a href="#表单解析" class="headerlink" title="表单解析"></a>表单解析</h3><p>如果我们需要解析表单并处理，看下面这个例子</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> wsgiref.simple_server <span class="keyword">import</span> make_server</div><div class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> parse_qs</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_form</span><span class="params">(env)</span>:</span> <span class="comment">#写一个将查询参数转换为字典的函数</span></div><div class="line">    data = env.get(<span class="string">'QUERY_STRING'</span>)  <span class="comment">#环境变量中的 QUERY_STRING 就是表单的参数</span></div><div class="line">    <span class="keyword">if</span> data:</div><div class="line">        <span class="keyword">return</span> &#123;key: val[<span class="number">0</span>] <span class="keyword">for</span> key, val <span class="keyword">in</span> parse_qs(data).items()&#125;</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> &#123;&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">application</span><span class="params">(env, resp)</span>:</span></div><div class="line">    form = get_form(env)</div><div class="line">    <span class="keyword">if</span> form.get(<span class="string">'submitted'</span>): <span class="comment">#判断是否是表单提交</span></div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            name = form.get(<span class="string">'name'</span>)</div><div class="line">            resp_html = <span class="string">'&lt;h1&gt;Hello &#123;&#125;&lt;/h1&gt;'</span>.format(name)</div><div class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">            resp(<span class="string">'500 ERR'</span>, [(<span class="string">'Content-Type'</span>, <span class="string">'text/plain'</span>)])</div><div class="line">            <span class="keyword">return</span> [str(e).encode(<span class="string">'ascii'</span>)]</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            resp(<span class="string">'200 OK'</span>, [(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>)])</div><div class="line">            <span class="keyword">return</span> [resp_html.encode(<span class="string">'ascii'</span>)]</div><div class="line">    <span class="keyword">else</span>:	<span class="comment">#如果不是表单提交，就正常渲染表单</span></div><div class="line">        resp(<span class="string">'200 OK'</span>, [(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>)])</div><div class="line">        resp_html = <span class="string">'''</span></div><div class="line">        &lt;form&gt;</div><div class="line">        name: &lt;input type="text", name="name"/&gt;</div><div class="line">        submit: &lt;input type="submit", name="submitted"/&gt;</div><div class="line">        &lt;/form&gt;</div><div class="line">        '''</div><div class="line">        <span class="keyword">return</span> [resp_html.encode(<span class="string">'ascii'</span>)]</div><div class="line"></div><div class="line"></div><div class="line">server = make_server(<span class="string">''</span>, <span class="number">8080</span>, application)</div><div class="line">server.serve_forever()</div></pre></td></tr></table></figure>
 <p>测试，点击提交</p>
@@ -427,11 +428,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/web/" rel="tag"># web</a>
+          
             <a href="/tags/python/" rel="tag"># python</a>
           
             <a href="/tags/development/" rel="tag"># development</a>
-          
-            <a href="/tags/web/" rel="tag"># web</a>
           
             <a href="/tags/network/" rel="tag"># network</a>
           
@@ -755,7 +756,7 @@
   
 
     
-      <script id="dsq-count-scr" src="https://anyisalin-reborn.disqus.com/count.js" async></script>
+      <script id="dsq-count-scr" src="https://anyisalin-reborn-1.disqus.com/count.js" async></script>
     
 
     
@@ -766,7 +767,7 @@
           this.page.title = 'Python Web编程 - WSGI';
         };
         var d = document, s = d.createElement('script');
-        s.src = 'https://anyisalin-reborn.disqus.com/embed.js';
+        s.src = 'https://anyisalin-reborn-1.disqus.com/embed.js';
         s.setAttribute('data-timestamp', '' + +new Date());
         (d.head || d.body).appendChild(s);
       </script>

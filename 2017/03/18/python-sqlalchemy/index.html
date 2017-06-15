@@ -100,6 +100,7 @@
 
 
 <meta name="description" content="Python 中有很多连接数据库的模块，pymysql、psycopg2、sqlite3 等，但是通常情况下我们都不会单独使用它们，因为程序可能需要支持多个数据库，而且直接通过调用 SQL 的方式去获取数据库中的数据会使得代码维护成本变高，这种情况下可能就要用到 ORM (数据关系映射, Object Relational Mapping)，而 Python 中最著名的 ORM 当属 SQLAlc">
+<meta name="keywords" content="python,development,database,orm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python - SQLAlchemy">
 <meta property="og:url" content="https:/anyisalin.github.io/2017/03/18/python-sqlalchemy/index.html">
@@ -369,7 +370,7 @@
 <a id="more"></a>
 <p><code>SQLAlchemy</code> 的关系映射提供了 数据库中的表 与 Python 的类、实例之间的映射关系 一般个类对应一张表，一个实例对应一列</p>
 <h2 id="SQLAlchemy-基础"><a href="#SQLAlchemy-基础" class="headerlink" title="SQLAlchemy 基础"></a>SQLAlchemy 基础</h2><p>首先我们肯定得先安装 <code>SQLAlchemy</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ pip install sqlalchemy</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><div class="line"><span class="meta">$</span> pip install sqlalchemy</div></pre></td></tr></table></figure>
 <h3 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine </div><div class="line"></div><div class="line">engine = create_engine(<span class="string">'sqlite:///:memory:'</span>) <span class="comment">#通过 create_engine 连接数据库，这里我们使用 sqlite，并存储数据在内存中</span></div><div class="line"></div><div class="line"><span class="comment"># 开启 debug 模式</span></div><div class="line"><span class="string">"""</span></div><div class="line">engine = create_engine('sqlite:///:memeory:', echo=True)</div><div class="line">"""</div></pre></td></tr></table></figure>
 <p>关于连接数据库的 url 可以看官方文档 <a href="http://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls" target="_blank" rel="external">database-url</a></p>
 <h3 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h3><p>如果我们需要一张 <code>users</code> 的表，那么我们可以通过一个 <code>User</code> 类来声明它的元数据，它继承自 <code>Base</code> 基类</p>
@@ -775,7 +776,7 @@
   
 
     
-      <script id="dsq-count-scr" src="https://anyisalin-reborn.disqus.com/count.js" async></script>
+      <script id="dsq-count-scr" src="https://anyisalin-reborn-1.disqus.com/count.js" async></script>
     
 
     
@@ -786,7 +787,7 @@
           this.page.title = 'Python - SQLAlchemy';
         };
         var d = document, s = d.createElement('script');
-        s.src = 'https://anyisalin-reborn.disqus.com/embed.js';
+        s.src = 'https://anyisalin-reborn-1.disqus.com/embed.js';
         s.setAttribute('data-timestamp', '' + +new Date());
         (d.head || d.body).appendChild(s);
       </script>

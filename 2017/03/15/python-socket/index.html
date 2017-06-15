@@ -100,6 +100,7 @@
 
 
 <meta name="description" content="如果希望我们的程序能够通过网络进行调用，就需用到网络编程的模块，Python 最基础的网络程序就是 通过 socket  来编写，高级一点的就是所谓的 Web 编程了，底层无非也就是 socket 通信，本文主要介绍 socket 这个模块的用法">
+<meta name="keywords" content="python,development,network">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python 网络编程 - socket">
 <meta property="og:url" content="https:/anyisalin.github.io/2017/03/15/python-socket/index.html">
@@ -379,7 +380,7 @@
 </ul>
 <figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="string">"""</span></div><div class="line">构造函数接受的参数如下</div><div class="line">def __init__(self, family=AF_INET, type=SOCK_STREAM, proto=0, fileno=None)</div><div class="line">"""</div><div class="line"></div><div class="line">sock = socket()</div><div class="line">sock.bind((<span class="string">''</span>, <span class="number">5000</span>))	<span class="comment"># bind 方法接受一个元祖，包含监听地址和端口</span></div><div class="line">sock.listen(<span class="number">5</span>) <span class="comment">#监听指定地址，5 代表排队连接的最大数量，一般最大为5</span></div><div class="line">conn, addr = sock.accept() <span class="comment">#接受连接，如果没有连接会一直阻塞，建立连接后会返回 已经建立连接的 socket 对象和客户端地址</span></div><div class="line">print(conn, addr)</div></pre></td></tr></table></figure>
 <p>然后程序会阻塞，我们通过 nc 命令建立连接</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ nc localhost 5000</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><div class="line"><span class="meta">$</span> nc localhost 5000</div></pre></td></tr></table></figure>
 <p>中断并输出</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># output</span></div><div class="line">&lt;socket.socket fd=<span class="number">11</span>, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=<span class="number">0</span>, laddr=(<span class="string">'127.0.0.1'</span>, <span class="number">5000</span>), raddr=(<span class="string">'127.0.0.1'</span>, <span class="number">50686</span>)&gt; (<span class="string">'127.0.0.1'</span>, <span class="number">50686</span>)</div></pre></td></tr></table></figure>
 <h3 id="一个简单的服务端例子"><a href="#一个简单的服务端例子" class="headerlink" title="一个简单的服务端例子"></a>一个简单的服务端例子</h3><p>这个简单的例子，会将客户端发送的信息原样返回，能够大致的了解 <code>socket</code> 服务端是怎么做的</p>
@@ -767,7 +768,7 @@
   
 
     
-      <script id="dsq-count-scr" src="https://anyisalin-reborn.disqus.com/count.js" async></script>
+      <script id="dsq-count-scr" src="https://anyisalin-reborn-1.disqus.com/count.js" async></script>
     
 
     
@@ -778,7 +779,7 @@
           this.page.title = 'Python 网络编程 - socket';
         };
         var d = document, s = d.createElement('script');
-        s.src = 'https://anyisalin-reborn.disqus.com/embed.js';
+        s.src = 'https://anyisalin-reborn-1.disqus.com/embed.js';
         s.setAttribute('data-timestamp', '' + +new Date());
         (d.head || d.body).appendChild(s);
       </script>
