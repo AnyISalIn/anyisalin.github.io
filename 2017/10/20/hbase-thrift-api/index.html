@@ -83,7 +83,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="rpc," />
 
 
 
@@ -99,16 +99,17 @@
 
 
 
-<meta name="description" content="工作半年多, 虽然学到了很多东西, 但是缺少总结, 想了一下, 重新开博客记录一下技术、生活。">
+<meta name="description" content="Install Thrift$ yum groupinstall &apos;Development Tools&apos; # install package group on centos$ git clone https://github.com/apache/thrift.git$ cd thrift$ ./configure --with-lua=no$ make &amp;amp;&amp;amp; make insta">
+<meta name="keywords" content="rpc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="痛改前非, 重新做人">
-<meta property="og:url" content="https:/anyisalin.github.io/2017/03/06/reborn/index.html">
+<meta property="og:title" content="Hbase Thrift API Test">
+<meta property="og:url" content="https:/anyisalin.github.io/2017/10/20/hbase-thrift-api/index.html">
 <meta property="og:site_name" content="无趣">
-<meta property="og:description" content="工作半年多, 虽然学到了很多东西, 但是缺少总结, 想了一下, 重新开博客记录一下技术、生活。">
-<meta property="og:updated_time" content="2017-03-06T06:21:08.000Z">
+<meta property="og:description" content="Install Thrift$ yum groupinstall &apos;Development Tools&apos; # install package group on centos$ git clone https://github.com/apache/thrift.git$ cd thrift$ ./configure --with-lua=no$ make &amp;amp;&amp;amp; make insta">
+<meta property="og:updated_time" content="2017-10-20T08:16:47.551Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="痛改前非, 重新做人">
-<meta name="twitter:description" content="工作半年多, 虽然学到了很多东西, 但是缺少总结, 想了一下, 重新开博客记录一下技术、生活。">
+<meta name="twitter:title" content="Hbase Thrift API Test">
+<meta name="twitter:description" content="Install Thrift$ yum groupinstall &apos;Development Tools&apos; # install package group on centos$ git clone https://github.com/apache/thrift.git$ cd thrift$ ./configure --with-lua=no$ make &amp;amp;&amp;amp; make insta">
 
 
 
@@ -136,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="https:/anyisalin.github.io/2017/03/06/reborn/"/>
+  <link rel="canonical" href="https:/anyisalin.github.io/2017/10/20/hbase-thrift-api/"/>
 
 
 
 
 
-  <title>痛改前非, 重新做人 | 无趣</title>
+  <title>Hbase Thrift API Test | 无趣</title>
   
 
 
@@ -290,7 +291,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https:/anyisalin.github.io/2017/03/06/reborn/">
+    <link itemprop="mainEntityOfPage" href="https:/anyisalin.github.io/2017/10/20/hbase-thrift-api/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnyISalIn">
@@ -307,7 +308,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">痛改前非, 重新做人</h2>
+          <h2 class="post-title" itemprop="name headline">Hbase Thrift API Test</h2>
         
 
         <div class="post-meta">
@@ -319,8 +320,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-06T14:15:11+08:00">
-                2017-03-06
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-20T16:13:31+08:00">
+                2017-10-20
               </time>
             
 
@@ -338,9 +339,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/03/06/reborn/#comments" itemprop="discussionUrl">
+                <a href="/2017/10/20/hbase-thrift-api/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/03/06/reborn/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/10/20/hbase-thrift-api/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -365,8 +366,11 @@
       
 
       
-        <p>工作半年多, 虽然学到了很多东西, 但是缺少总结, 想了一下, 重新开博客记录一下技术、生活。</p>
-
+        <h2 id="Install-Thrift"><a href="#Install-Thrift" class="headerlink" title="Install Thrift"></a>Install Thrift</h2><figure class="highlight shell"><table><tr><td class="code"><pre><div class="line"><span class="meta">$</span> yum groupinstall 'Development Tools' # install package group on centos</div><div class="line"><span class="meta"></span></div><div class="line">$ git clone https://github.com/apache/thrift.git</div><div class="line"><span class="meta"></span></div><div class="line">$ cd thrift</div><div class="line"><span class="meta"></span></div><div class="line">$ ./configure --with-lua=no</div><div class="line"><span class="meta"></span></div><div class="line">$ make &amp;&amp; make install</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="Build-Hbase-Client-Package"><a href="#Build-Hbase-Client-Package" class="headerlink" title="Build Hbase Client Package"></a>Build Hbase Client Package</h2><figure class="highlight shell"><table><tr><td class="code"><pre><div class="line"><span class="meta">$</span> thrift --gen py hbase-src/hbase-1.3.1/hbase-thrift/src/main/resources/org/apache/hadoop/hbase/thrift/Hbase.thrift</div></pre></td></tr></table></figure>
+<h2 id="Start-Hbase-Thrift-API"><a href="#Start-Hbase-Thrift-API" class="headerlink" title="Start Hbase Thrift API"></a>Start Hbase Thrift API</h2><figure class="highlight shell"><table><tr><td class="code"><pre><div class="line"><span class="meta">$</span> bin/hbase thrift start</div></pre></td></tr></table></figure>
+<h2 id="Test-Hbase-Thrift-API"><a href="#Test-Hbase-Thrift-API" class="headerlink" title="Test Hbase Thrift API"></a>Test Hbase Thrift API</h2><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> thrift.transport.TSocket <span class="keyword">import</span> TSocket</div><div class="line"><span class="keyword">from</span> thrift.transport.TTransport <span class="keyword">import</span> TBufferedTransport</div><div class="line"><span class="keyword">from</span> thrift.protocol <span class="keyword">import</span> TBinaryProtocol</div><div class="line"><span class="keyword">from</span> hbase <span class="keyword">import</span> Hbase</div><div class="line"><span class="keyword">from</span> hbase.ttypes <span class="keyword">import</span> ColumnDescriptor</div><div class="line"></div><div class="line">transport = TBufferedTransport(TSocket(<span class="string">'192.168.20.209'</span>, <span class="string">'9090'</span>))</div><div class="line">transport.open()</div><div class="line">protocol = TBinaryProtocol.TBinaryProtocol(transport)</div><div class="line"></div><div class="line">client = Hbase.Client(protocol)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">list_table</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'tables: &#123;&#125;'</span>.format(client.getTableNames()))</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_table</span><span class="params">(table_name, family_name)</span>:</span></div><div class="line">    c = ColumnDescriptor(family_name)</div><div class="line">    client.createTable(table_name, [c])</div><div class="line">    print(<span class="string">'create table &#123;&#125;'</span>.format(table_name.decode()))</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">disable_table</span><span class="params">(table_name)</span>:</span></div><div class="line">    client.disableTable(table_name)</div><div class="line">    print(<span class="string">'disaable table &#123;&#125;'</span>.format(table_name.decode()))</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">delete_table</span><span class="params">(table_name)</span>:</span></div><div class="line">    client.deleteTable(table_name)</div><div class="line">    print(<span class="string">'delete table &#123;&#125;'</span>.format(table_name.decode()))</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    <span class="comment"># get all table</span></div><div class="line">    list_table()</div><div class="line">    <span class="comment"># create a tables</span></div><div class="line">    create_table(<span class="string">b'test_table'</span>, <span class="string">b'test_family'</span>)</div><div class="line">    list_table()</div><div class="line">    <span class="comment"># disable table</span></div><div class="line">    disable_table(<span class="string">b'test_table'</span>)</div><div class="line">    <span class="comment"># delete table</span></div><div class="line">    delete_table(<span class="string">b'test_table'</span>)</div><div class="line">    list_table()</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -393,6 +397,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/rpc/" rel="tag"># rpc</a>
+          
+        </div>
+      
 
       
       
@@ -402,15 +412,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/10/13/python-file-buffer/" rel="next" title="Python File Buffer">
+                <i class="fa fa-chevron-left"></i> Python File Buffer
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/06/tmuxinator/" rel="prev" title="Tmuxinator - 轻松管理复杂 tmux 会话">
-                Tmuxinator - 轻松管理复杂 tmux 会话 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -464,8 +474,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png"
@@ -551,6 +570,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-Thrift"><span class="nav-number">1.</span> <span class="nav-text">Install Thrift</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Build-Hbase-Client-Package"><span class="nav-number">2.</span> <span class="nav-text">Build Hbase Client Package</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Start-Hbase-Thrift-API"><span class="nav-number">3.</span> <span class="nav-text">Start Hbase Thrift API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Test-Hbase-Thrift-API"><span class="nav-number">4.</span> <span class="nav-text">Test Hbase Thrift API</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -688,9 +723,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https:/anyisalin.github.io/2017/03/06/reborn/';
-          this.page.identifier = '2017/03/06/reborn/';
-          this.page.title = '痛改前非, 重新做人';
+          this.page.url = 'https:/anyisalin.github.io/2017/10/20/hbase-thrift-api/';
+          this.page.identifier = '2017/10/20/hbase-thrift-api/';
+          this.page.title = 'Hbase Thrift API Test';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://anyisalin.disqus.com/embed.js';
