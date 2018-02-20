@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="python,ansible,devops," />
+  <meta name="keywords" content="devops,python,ansible," />
 
 
 
@@ -95,7 +95,7 @@
 
 
 <meta name="description" content="这一系列文章将通过一些常见的 Ansible 使用例子来解析 Ansible 内部代码实现 Ansible 有很多命令，ansible、ansible-playbook、ansible-doc、ansible-galaxy、ansible-console 等，笔者在看 Ansible 入口代码的时候发现 Ansible 对于不同命令的处理方式很特别">
-<meta name="keywords" content="python,ansible,devops">
+<meta name="keywords" content="devops,python,ansible">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ansible 源码解析 - ansible 命令的调用">
 <meta property="og:url" content="https:/anyisalin.github.io/2017/06/16/ansible-code-reading-1/index.html">
@@ -221,6 +221,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -316,6 +326,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/16/ansible-code-reading-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/06/16/ansible-code-reading-1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -387,11 +408,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/devops/" rel="tag"># devops</a>
+          
             <a href="/tags/python/" rel="tag"># python</a>
           
             <a href="/tags/ansible/" rel="tag"># ansible</a>
-          
-            <a href="/tags/devops/" rel="tag"># devops</a>
           
         </div>
       
@@ -445,6 +466,13 @@
 
           
   <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
     
   </div>
 
@@ -677,6 +705,26 @@
 
   
 
+    
+      <script id="dsq-count-scr" src="https://anyisalin.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https:/anyisalin.github.io/2017/06/16/ansible-code-reading-1/';
+          this.page.identifier = '2017/06/16/ansible-code-reading-1/';
+          this.page.title = 'Ansible 源码解析 - ansible 命令的调用';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://anyisalin.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
 
 
 
@@ -689,10 +737,6 @@
   
 
 
-
-
-
-  
 
 
 
