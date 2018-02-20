@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="en">
+<html class="theme-next mist use-motion" lang="en">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -75,7 +75,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '6.0.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
@@ -110,7 +110,8 @@
 <meta property="og:url" content="anyisalin.github.io/2017/10/20/hbase-thrift-api/index.html">
 <meta property="og:site_name" content="无趣">
 <meta property="og:description" content="Install Thrift$ yum groupinstall &apos;Development Tools&apos; # install package group on centos$ git clone https://github.com/apache/thrift.git$ cd thrift$ ./configure --with-lua=no$ make &amp;amp;&amp;amp; make insta">
-<meta property="og:updated_time" content="2017-10-20T08:16:47.551Z">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-20T11:43:03.202Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hbase Thrift API Test">
 <meta name="twitter:description" content="Install Thrift$ yum groupinstall &apos;Development Tools&apos; # install package group on centos$ git clone https://github.com/apache/thrift.git$ cd thrift$ ./configure --with-lua=no$ make &amp;amp;&amp;amp; make insta">
@@ -227,8 +228,20 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives" rel="section">
             <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
@@ -334,6 +347,34 @@
           
 
           
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article&#58;</span>
+                
+                <span title="Symbols count in article">1.6k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">0:02</span>
+              
+            </div>
+          
 
           
 
@@ -350,11 +391,11 @@
       
 
       
-        <h2 id="Install-Thrift"><a href="#Install-Thrift" class="headerlink" title="Install Thrift"></a>Install Thrift</h2><figure class="highlight shell"><table><tr><td class="code"><pre><div class="line"><span class="meta">$</span> yum groupinstall 'Development Tools' # install package group on centos</div><div class="line"><span class="meta"></span></div><div class="line">$ git clone https://github.com/apache/thrift.git</div><div class="line"><span class="meta"></span></div><div class="line">$ cd thrift</div><div class="line"><span class="meta"></span></div><div class="line">$ ./configure --with-lua=no</div><div class="line"><span class="meta"></span></div><div class="line">$ make &amp;&amp; make install</div></pre></td></tr></table></figure>
+        <h2 id="Install-Thrift"><a href="#Install-Thrift" class="headerlink" title="Install Thrift"></a>Install Thrift</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> yum groupinstall 'Development Tools' # install package group on centos</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> git clone https://github.com/apache/thrift.git</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> cd thrift</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> ./configure --with-lua=no</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h2 id="Build-Hbase-Client-Package"><a href="#Build-Hbase-Client-Package" class="headerlink" title="Build Hbase Client Package"></a>Build Hbase Client Package</h2><figure class="highlight shell"><table><tr><td class="code"><pre><div class="line"><span class="meta">$</span> thrift --gen py hbase-src/hbase-1.3.1/hbase-thrift/src/main/resources/org/apache/hadoop/hbase/thrift/Hbase.thrift</div></pre></td></tr></table></figure>
-<h2 id="Start-Hbase-Thrift-API"><a href="#Start-Hbase-Thrift-API" class="headerlink" title="Start Hbase Thrift API"></a>Start Hbase Thrift API</h2><figure class="highlight shell"><table><tr><td class="code"><pre><div class="line"><span class="meta">$</span> bin/hbase thrift start</div></pre></td></tr></table></figure>
-<h2 id="Test-Hbase-Thrift-API"><a href="#Test-Hbase-Thrift-API" class="headerlink" title="Test Hbase Thrift API"></a>Test Hbase Thrift API</h2><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> thrift.transport.TSocket <span class="keyword">import</span> TSocket</div><div class="line"><span class="keyword">from</span> thrift.transport.TTransport <span class="keyword">import</span> TBufferedTransport</div><div class="line"><span class="keyword">from</span> thrift.protocol <span class="keyword">import</span> TBinaryProtocol</div><div class="line"><span class="keyword">from</span> hbase <span class="keyword">import</span> Hbase</div><div class="line"><span class="keyword">from</span> hbase.ttypes <span class="keyword">import</span> ColumnDescriptor</div><div class="line"></div><div class="line">transport = TBufferedTransport(TSocket(<span class="string">'192.168.20.209'</span>, <span class="string">'9090'</span>))</div><div class="line">transport.open()</div><div class="line">protocol = TBinaryProtocol.TBinaryProtocol(transport)</div><div class="line"></div><div class="line">client = Hbase.Client(protocol)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">list_table</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'tables: &#123;&#125;'</span>.format(client.getTableNames()))</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_table</span><span class="params">(table_name, family_name)</span>:</span></div><div class="line">    c = ColumnDescriptor(family_name)</div><div class="line">    client.createTable(table_name, [c])</div><div class="line">    print(<span class="string">'create table &#123;&#125;'</span>.format(table_name.decode()))</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">disable_table</span><span class="params">(table_name)</span>:</span></div><div class="line">    client.disableTable(table_name)</div><div class="line">    print(<span class="string">'disaable table &#123;&#125;'</span>.format(table_name.decode()))</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">delete_table</span><span class="params">(table_name)</span>:</span></div><div class="line">    client.deleteTable(table_name)</div><div class="line">    print(<span class="string">'delete table &#123;&#125;'</span>.format(table_name.decode()))</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    <span class="comment"># get all table</span></div><div class="line">    list_table()</div><div class="line">    <span class="comment"># create a tables</span></div><div class="line">    create_table(<span class="string">b'test_table'</span>, <span class="string">b'test_family'</span>)</div><div class="line">    list_table()</div><div class="line">    <span class="comment"># disable table</span></div><div class="line">    disable_table(<span class="string">b'test_table'</span>)</div><div class="line">    <span class="comment"># delete table</span></div><div class="line">    delete_table(<span class="string">b'test_table'</span>)</div><div class="line">    list_table()</div></pre></td></tr></table></figure>
+<h2 id="Build-Hbase-Client-Package"><a href="#Build-Hbase-Client-Package" class="headerlink" title="Build Hbase Client Package"></a>Build Hbase Client Package</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> thrift --gen py hbase-src/hbase-1.3.1/hbase-thrift/src/main/resources/org/apache/hadoop/hbase/thrift/Hbase.thrift</span><br></pre></td></tr></table></figure>
+<h2 id="Start-Hbase-Thrift-API"><a href="#Start-Hbase-Thrift-API" class="headerlink" title="Start Hbase Thrift API"></a>Start Hbase Thrift API</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> bin/hbase thrift start</span><br></pre></td></tr></table></figure>
+<h2 id="Test-Hbase-Thrift-API"><a href="#Test-Hbase-Thrift-API" class="headerlink" title="Test Hbase Thrift API"></a>Test Hbase Thrift API</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> thrift.transport.TSocket <span class="keyword">import</span> TSocket</span><br><span class="line"><span class="keyword">from</span> thrift.transport.TTransport <span class="keyword">import</span> TBufferedTransport</span><br><span class="line"><span class="keyword">from</span> thrift.protocol <span class="keyword">import</span> TBinaryProtocol</span><br><span class="line"><span class="keyword">from</span> hbase <span class="keyword">import</span> Hbase</span><br><span class="line"><span class="keyword">from</span> hbase.ttypes <span class="keyword">import</span> ColumnDescriptor</span><br><span class="line"></span><br><span class="line">transport = TBufferedTransport(TSocket(<span class="string">'192.168.20.209'</span>, <span class="string">'9090'</span>))</span><br><span class="line">transport.open()</span><br><span class="line">protocol = TBinaryProtocol.TBinaryProtocol(transport)</span><br><span class="line"></span><br><span class="line">client = Hbase.Client(protocol)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">list_table</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'tables: &#123;&#125;'</span>.format(client.getTableNames()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_table</span><span class="params">(table_name, family_name)</span>:</span></span><br><span class="line">    c = ColumnDescriptor(family_name)</span><br><span class="line">    client.createTable(table_name, [c])</span><br><span class="line">    print(<span class="string">'create table &#123;&#125;'</span>.format(table_name.decode()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">disable_table</span><span class="params">(table_name)</span>:</span></span><br><span class="line">    client.disableTable(table_name)</span><br><span class="line">    print(<span class="string">'disaable table &#123;&#125;'</span>.format(table_name.decode()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delete_table</span><span class="params">(table_name)</span>:</span></span><br><span class="line">    client.deleteTable(table_name)</span><br><span class="line">    print(<span class="string">'delete table &#123;&#125;'</span>.format(table_name.decode()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># get all table</span></span><br><span class="line">    list_table()</span><br><span class="line">    <span class="comment"># create a tables</span></span><br><span class="line">    create_table(<span class="string">b'test_table'</span>, <span class="string">b'test_family'</span>)</span><br><span class="line">    list_table()</span><br><span class="line">    <span class="comment"># disable table</span></span><br><span class="line">    disable_table(<span class="string">b'test_table'</span>)</span><br><span class="line">    <span class="comment"># delete table</span></span><br><span class="line">    delete_table(<span class="string">b'test_table'</span>)</span><br><span class="line">    list_table()</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -485,7 +526,7 @@
               
                 <div class="site-state-item site-state-posts">
                 
-                  <a href="/archives/">
+                  <a href="/archives">
                 
                     <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">posts</span>
@@ -551,11 +592,39 @@
           
 
           
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/anyisalin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:anyisalin@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelop"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
 
           
           
 
           
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://flowsnow.net" title="Flowsnow" target="_blank">Flowsnow</a>
+                  </li>
+                
+              </ul>
+            </div>
           
 
           
@@ -603,7 +672,25 @@
   <span class="author" itemprop="copyrightHolder">AnyISalIn</span>
 
   
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Symbols count total&#58;</span>
+    
+    <span title="Symbols count total">84k</span>
+  
 
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Reading time total&#58;</span>
+    
+    <span title="Reading time total">1:24</span>
   
 </div>
 
@@ -618,7 +705,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
 
 
 

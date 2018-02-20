@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="en">
+<html class="theme-next mist use-motion" lang="en">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -75,7 +75,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '6.0.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
@@ -110,7 +110,8 @@
 <meta property="og:url" content="anyisalin.github.io/2017/03/07/python-context-manager/index.html">
 <meta property="og:site_name" content="无趣">
 <meta property="og:description" content="如果需要精确的分配和释放资源，就需要上下文管理 context manager ，上下文管理器在 Python 中最常见的例子就是 with 语句">
-<meta property="og:updated_time" content="2017-03-10T05:48:34.000Z">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-20T11:43:03.206Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python - 上下文管理">
 <meta name="twitter:description" content="如果需要精确的分配和释放资源，就需要上下文管理 context manager ，上下文管理器在 Python 中最常见的例子就是 with 语句">
@@ -227,8 +228,20 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives" rel="section">
             <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
@@ -334,6 +347,34 @@
           
 
           
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article&#58;</span>
+                
+                <span title="Symbols count in article">3k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">0:03</span>
+              
+            </div>
+          
 
           
 
@@ -354,31 +395,31 @@
 <a id="more"></a>
 <h2 id="有状态资源的管理"><a href="#有状态资源的管理" class="headerlink" title="有状态资源的管理"></a>有状态资源的管理</h2><p>很多时候我们需要操作一些有状态的资源，例如 类文件、套接字等</p>
 <p>通常情况下我们会 建立连接 —&gt; 做一些事 —&gt; 释放连接</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">f = open(<span class="string">'aaaa'</span>, <span class="string">'w'</span>)</div><div class="line">f.write(<span class="string">'hello, world'</span>)</div><div class="line">f.close()</div><div class="line"></div><div class="line"><span class="keyword">import</span> socket</div><div class="line"></div><div class="line">s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</div><div class="line">s.connect((<span class="string">'hello.org'</span>, <span class="number">20333</span>))</div><div class="line">s.sendall(<span class="string">'hello, world'</span>)</div><div class="line">print(s.recv(<span class="number">1024</span>))</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">f = open(<span class="string">'aaaa'</span>, <span class="string">'w'</span>)</span><br><span class="line">f.write(<span class="string">'hello, world'</span>)</span><br><span class="line">f.close()</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">s.connect((<span class="string">'hello.org'</span>, <span class="number">20333</span>))</span><br><span class="line">s.sendall(<span class="string">'hello, world'</span>)</span><br><span class="line">print(s.recv(<span class="number">1024</span>))</span><br></pre></td></tr></table></figure>
 <p>如果没有 <code>close</code> ，只有程序中断或者服务端主动关闭才会释放资源，否则会一直占用资源，有兴趣的朋友可以试试下面的代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">files = []</div><div class="line">file = open(<span class="string">'aaaa'</span>, <span class="string">'w'</span>)</div><div class="line">file.write(<span class="string">'aaaaa'</span>)</div><div class="line">file.close()</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000009</span>):</div><div class="line">    files.append(open(<span class="string">'aaaa'</span>, <span class="string">'w'</span>))</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">files = []</span><br><span class="line">file = open(<span class="string">'aaaa'</span>, <span class="string">'w'</span>)</span><br><span class="line">file.write(<span class="string">'aaaaa'</span>)</span><br><span class="line">file.close()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000009</span>):</span><br><span class="line">    files.append(open(<span class="string">'aaaa'</span>, <span class="string">'w'</span>))</span><br></pre></td></tr></table></figure>
 <p>在 macOS/Linux 上会抛出 <code>OS Error</code> 的异常，因为打开的 <code>file descriptor</code> 超过限制了，Windows 估计会蓝屏 😀</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">OSError: [Errno <span class="number">24</span>] Too many open files</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">OSError: [Errno <span class="number">24</span>] Too many open files</span><br></pre></td></tr></table></figure>
 <h3 id="try-finally-清理资源"><a href="#try-finally-清理资源" class="headerlink" title="try..finally 清理资源"></a>try..finally 清理资源</h3><p>我们也可以通过 try..finally 语句来实现对资源的清理，无论是否触发异常，最后都将清理资源</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">try</span>:</div><div class="line">    f = open(<span class="string">'w'</span>, <span class="string">'w'</span>)</div><div class="line">    f.write(<span class="string">'hello, world'</span>)</div><div class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">    <span class="keyword">raise</span> e</div><div class="line"><span class="keyword">finally</span>:</div><div class="line">    f.close()</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    f = open(<span class="string">'w'</span>, <span class="string">'w'</span>)</span><br><span class="line">    f.write(<span class="string">'hello, world'</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="keyword">raise</span> e</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    f.close()</span><br></pre></td></tr></table></figure>
 <h3 id="with-语句"><a href="#with-语句" class="headerlink" title="with 语句"></a>with 语句</h3><p>如果看过一些 Python 的教程或者书籍的朋友可能会了解，操作文件和套接字都建议使用 <code>with</code> 语句</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">with</span> open(<span class="string">'aaa'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f:</div><div class="line">    f.write(<span class="string">'hello, world'</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span> f.closed</div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">'aaa'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(<span class="string">'hello, world'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span> f.closed</span><br><span class="line"><span class="keyword">True</span></span><br></pre></td></tr></table></figure>
 <p><code>with</code> 语句下操作文件的代码非常的简洁，并且能够自动关闭文件，这是因为 <code>TextIOWrapper</code> 这个类实现了 <code>__enter__</code>、<code>__exit__</code> 这两个魔术方法，也就是所谓的上下文管理</p>
 <p>我们也可以自己实现一个 <code>Open</code> 类，使其实现上下文管理</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Open</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, file, mode)</span>:</span></div><div class="line">        self.open_file = open(file, mode)</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__enter__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.open_file</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, *exception)</span>:</span></div><div class="line">        self.open_file.close()</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> Open(<span class="string">'aaaa'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f:</div><div class="line">        f.write(<span class="string">'aaaa'</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span> f.closed</div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Open</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, file, mode)</span>:</span></span><br><span class="line">        self.open_file = open(file, mode)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__enter__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.open_file</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, *exception)</span>:</span></span><br><span class="line">        self.open_file.close()</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> Open(<span class="string">'aaaa'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(<span class="string">'aaaa'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span> f.closed</span><br><span class="line"><span class="keyword">True</span></span><br></pre></td></tr></table></figure>
 <p><code>__enter__</code> 方法是在 with 初始化时调用，<code>__exit__</code> 方法在所有语句结束后调用，可以用来处理异常和关闭资源</p>
 <h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><p>上下文管理器根据<code>__exit__</code> 方法的返回值来决定是否抛出异常，如果没有返回值或者返回值为 <code>False</code> ，则异常由上下文管理器处理，如果为 <code>True</code> 则由用户自己处理</p>
 <p><code>__exit__</code> 接受三个参数，exception_type、exception_value、traceback，我们可以根据这些值来决定是否处理异常</p>
 <p>下面这个例子，捕捉了 <code>AttributeError</code> 的异常，并打印出警告</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Open</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, file, mode)</span>:</span></div><div class="line">        self.open_file = open(file, mode)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__enter__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.open_file</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, type, value, tb)</span>:</span></div><div class="line">        self.open_file.close()</div><div class="line">        <span class="keyword">if</span> type <span class="keyword">is</span> AttributeError:</div><div class="line">            print(<span class="string">'handing some exception'</span>)</div><div class="line">            <span class="keyword">return</span> <span class="keyword">True</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Open</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, file, mode)</span>:</span></span><br><span class="line">        self.open_file = open(file, mode)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__enter__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.open_file</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, type, value, tb)</span>:</span></span><br><span class="line">        self.open_file.close()</span><br><span class="line">        <span class="keyword">if</span> type <span class="keyword">is</span> AttributeError:</span><br><span class="line">            print(<span class="string">'handing some exception'</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span><br></pre></td></tr></table></figure>
 <p>试着故意打错方法的名称，并没有引发异常</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> Open(<span class="string">'aaa'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f:</div><div class="line">        f.writeee(<span class="string">'aaaa'</span>)</div><div class="line">handing some exception</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> Open(<span class="string">'aaa'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.writeee(<span class="string">'aaaa'</span>)</span><br><span class="line">handing some exception</span><br></pre></td></tr></table></figure>
 <h2 id="使用-contextmanager"><a href="#使用-contextmanager" class="headerlink" title="使用 contextmanager"></a>使用 contextmanager</h2><p>由于上下文管理非常有用，Python 中有一个专门用于实现上下文管理的标准库，这就是 <code>contextlib</code> </p>
 <p>有了 <code>contextlib</code> 创建上下文管理的最好方式就是使用 <code>contextmanager</code> 装饰器，通过 <code>contextmanager</code> 装饰一个生成器函数，<code>yield</code> 语句前面的部分被认为是 <code>__enter__</code> 方法的代码，后面的部分被认为是 <code>__exit__</code> 方法的代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> contextlib <span class="keyword">import</span> contextmanager</div><div class="line"></div><div class="line"><span class="meta">@contextmanager</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">file</span><span class="params">(path, mode)</span>:</span></div><div class="line">    open_file = open(path, mode)</div><div class="line">    <span class="keyword">yield</span> open_file</div><div class="line">    open_file.close()</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> contextlib <span class="keyword">import</span> contextmanager</span><br><span class="line"></span><br><span class="line"><span class="meta">@contextmanager</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">file</span><span class="params">(path, mode)</span>:</span></span><br><span class="line">    open_file = open(path, mode)</span><br><span class="line">    <span class="keyword">yield</span> open_file</span><br><span class="line">    open_file.close()</span><br></pre></td></tr></table></figure>
 <p>通过上面这种方法，我们就能够简单的创建一个支持上下文管理的函数</p>
 <h3 id="contextmanager-的简单实现"><a href="#contextmanager-的简单实现" class="headerlink" title="contextmanager 的简单实现"></a>contextmanager 的简单实现</h3><p>我之前实现过一个非常粗糙的 <code>contextmanager</code> 装饰器</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ContextManager</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, fn)</span>:</span></div><div class="line">        self.fn = fn</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__enter__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> next(self.fn)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, exc_type, exc_val, exc_tb)</span>:</span></div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            next(self.fn)</div><div class="line">        <span class="keyword">except</span> StopIteration:</div><div class="line">            <span class="keyword">pass</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">cm</span><span class="params">(fn)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">return</span> ContextManager(fn(*args, **kwargs))</div><div class="line"></div><div class="line">    <span class="keyword">return</span> wrapper</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@cm</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">open_file</span><span class="params">(path, mode)</span>:</span></div><div class="line">    open_file = open(path, mode)</div><div class="line">    <span class="keyword">yield</span> open_file</div><div class="line">    open_file.close()</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ContextManager</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, fn)</span>:</span></span><br><span class="line">        self.fn = fn</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__enter__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> next(self.fn)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, exc_type, exc_val, exc_tb)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            next(self.fn)</span><br><span class="line">        <span class="keyword">except</span> StopIteration:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cm</span><span class="params">(fn)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> ContextManager(fn(*args, **kwargs))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@cm</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">open_file</span><span class="params">(path, mode)</span>:</span></span><br><span class="line">    open_file = open(path, mode)</span><br><span class="line">    <span class="keyword">yield</span> open_file</span><br><span class="line">    open_file.close()</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -512,7 +553,7 @@
               
                 <div class="site-state-item site-state-posts">
                 
-                  <a href="/archives/">
+                  <a href="/archives">
                 
                     <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">posts</span>
@@ -578,11 +619,39 @@
           
 
           
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/anyisalin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:anyisalin@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelop"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
 
           
           
 
           
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://flowsnow.net" title="Flowsnow" target="_blank">Flowsnow</a>
+                  </li>
+                
+              </ul>
+            </div>
           
 
           
@@ -630,7 +699,25 @@
   <span class="author" itemprop="copyrightHolder">AnyISalIn</span>
 
   
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Symbols count total&#58;</span>
+    
+    <span title="Symbols count total">84k</span>
+  
 
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Reading time total&#58;</span>
+    
+    <span title="Reading time total">1:24</span>
   
 </div>
 
@@ -645,7 +732,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
 
 
 

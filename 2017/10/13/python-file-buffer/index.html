@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="en">
+<html class="theme-next mist use-motion" lang="en">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -75,7 +75,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '6.0.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
@@ -110,7 +110,8 @@
 <meta property="og:url" content="anyisalin.github.io/2017/10/13/python-file-buffer/index.html">
 <meta property="og:site_name" content="无趣">
 <meta property="og:description" content="Python 内置的 open 函数有一个 buffering 参数，用来设置打开文件的缓冲策略(buffer policy)">
-<meta property="og:updated_time" content="2017-10-13T03:10:03.473Z">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-20T11:43:03.199Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python File Buffer">
 <meta name="twitter:description" content="Python 内置的 open 函数有一个 buffering 参数，用来设置打开文件的缓冲策略(buffer policy)">
@@ -227,8 +228,20 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives" rel="section">
             <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
@@ -334,6 +347,34 @@
           
 
           
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article&#58;</span>
+                
+                <span title="Symbols count in article">2.2k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">0:02</span>
+              
+            </div>
+          
 
           
 
@@ -413,13 +454,13 @@
 </table>
 <h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>不理解 buffer 之前认为 open 函数打开的文件，写入了数据，如果不 close，或者不提前用 flush 是不会刷入硬盘的，实际上这和 buffer policy 有关，如果设置了 line buffering 的策略，则为每写一行数据就会刷入硬盘，如果指定 buffer size，写入大于 buffer size 数据才会刷入硬盘</p>
 <p><strong>line buffering</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">In [<span class="number">1</span>]: f = open(<span class="string">'line_buffer.txt'</span>, <span class="string">'w'</span>, buffering=<span class="number">1</span>) <span class="comment"># line buffering 策略写文件</span></div><div class="line"></div><div class="line">In [<span class="number">2</span>]: cat line_buffer.txt</div><div class="line"></div><div class="line">In [<span class="number">3</span>]: f.write(<span class="string">'this is line\n'</span>) <span class="comment"># 写入一行，没有 flush/close，实际上也刷入硬盘了</span></div><div class="line">Out[<span class="number">3</span>]: <span class="number">13</span></div><div class="line"></div><div class="line">In [<span class="number">4</span>]: cat line_buffer.txt <span class="comment"># 因为是 ipython，所以可以直接调用 bash 内建命令</span></div><div class="line">this <span class="keyword">is</span> line</div><div class="line"></div><div class="line">In [<span class="number">5</span>]: f.write(<span class="string">'this not a line'</span>) <span class="comment"># 写入数据，但是没有加换行符，没有刷入硬盘</span></div><div class="line">Out[<span class="number">5</span>]: <span class="number">15</span></div><div class="line"></div><div class="line">In [<span class="number">6</span>]: cat line_buffer.txt</div><div class="line">this <span class="keyword">is</span> line</div><div class="line"></div><div class="line">In [<span class="number">7</span>]: f.write(<span class="string">'\n'</span>) <span class="comment"># 写入换行符，刷入了硬盘</span></div><div class="line">Out[<span class="number">7</span>]: <span class="number">1</span></div><div class="line"></div><div class="line">In [<span class="number">8</span>]: cat line_buffer.txt</div><div class="line">this <span class="keyword">is</span> line</div><div class="line">this <span class="keyword">not</span> a line</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">1</span>]: f = open(<span class="string">'line_buffer.txt'</span>, <span class="string">'w'</span>, buffering=<span class="number">1</span>) <span class="comment"># line buffering 策略写文件</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">2</span>]: cat line_buffer.txt</span><br><span class="line"></span><br><span class="line">In [<span class="number">3</span>]: f.write(<span class="string">'this is line\n'</span>) <span class="comment"># 写入一行，没有 flush/close，实际上也刷入硬盘了</span></span><br><span class="line">Out[<span class="number">3</span>]: <span class="number">13</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">4</span>]: cat line_buffer.txt <span class="comment"># 因为是 ipython，所以可以直接调用 bash 内建命令</span></span><br><span class="line">this <span class="keyword">is</span> line</span><br><span class="line"></span><br><span class="line">In [<span class="number">5</span>]: f.write(<span class="string">'this not a line'</span>) <span class="comment"># 写入数据，但是没有加换行符，没有刷入硬盘</span></span><br><span class="line">Out[<span class="number">5</span>]: <span class="number">15</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">6</span>]: cat line_buffer.txt</span><br><span class="line">this <span class="keyword">is</span> line</span><br><span class="line"></span><br><span class="line">In [<span class="number">7</span>]: f.write(<span class="string">'\n'</span>) <span class="comment"># 写入换行符，刷入了硬盘</span></span><br><span class="line">Out[<span class="number">7</span>]: <span class="number">1</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">8</span>]: cat line_buffer.txt</span><br><span class="line">this <span class="keyword">is</span> line</span><br><span class="line">this <span class="keyword">not</span> a line</span><br></pre></td></tr></table></figure>
 <p><strong>unbunffered</strong></p>
 <p>只有二进制文件才能禁用 buffer</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">In [<span class="number">10</span>]: f = open(<span class="string">'binary_unbuffered.txt'</span>, <span class="string">'wb'</span>, buffering=<span class="number">0</span>)</div><div class="line"></div><div class="line">In [<span class="number">11</span>]: cat binary_unbuffered.txt</div><div class="line"></div><div class="line">In [<span class="number">13</span>]: f.write(<span class="string">b'hello'</span>) <span class="comment"># 写入任意大小的数据，都直接刷入硬盘</span></div><div class="line">Out[<span class="number">13</span>]: <span class="number">5</span></div><div class="line"></div><div class="line">In [<span class="number">14</span>]: cat binary_unbuffered.txt</div><div class="line">hello</div><div class="line">In [<span class="number">15</span>]: f.write(<span class="string">b' world'</span>)</div><div class="line">Out[<span class="number">15</span>]: <span class="number">6</span></div><div class="line"></div><div class="line">In [<span class="number">16</span>]: cat binary_unbuffered.txt</div><div class="line">hello world</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">10</span>]: f = open(<span class="string">'binary_unbuffered.txt'</span>, <span class="string">'wb'</span>, buffering=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">In [<span class="number">11</span>]: cat binary_unbuffered.txt</span><br><span class="line"></span><br><span class="line">In [<span class="number">13</span>]: f.write(<span class="string">b'hello'</span>) <span class="comment"># 写入任意大小的数据，都直接刷入硬盘</span></span><br><span class="line">Out[<span class="number">13</span>]: <span class="number">5</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">14</span>]: cat binary_unbuffered.txt</span><br><span class="line">hello</span><br><span class="line">In [<span class="number">15</span>]: f.write(<span class="string">b' world'</span>)</span><br><span class="line">Out[<span class="number">15</span>]: <span class="number">6</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">16</span>]: cat binary_unbuffered.txt</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
 <p><strong>指定 buffer size</strong></p>
 <p>也只有二进制文件才能指定 buffer size</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">In [<span class="number">18</span>]: f = open(<span class="string">'binary_buffer_size.txt'</span>, <span class="string">'wb'</span>, buffering=<span class="number">10</span>) <span class="comment">#设置 buffer size 为 10</span></div><div class="line"></div><div class="line">In [<span class="number">19</span>]: cat binary_buffer_size.txt</div><div class="line"></div><div class="line">In [<span class="number">21</span>]: f.write(<span class="string">b'hello'</span>) <span class="comment"># 写入 5 byte 数据，由于 buffer 还没有满，所以不会刷入缓冲区</span></div><div class="line">Out[<span class="number">21</span>]: <span class="number">5</span></div><div class="line"></div><div class="line">In [<span class="number">22</span>]: cat binary_buffer_size.txt</div><div class="line"></div><div class="line">In [<span class="number">23</span>]: f.write(<span class="string">b'helloworld'</span>)</div><div class="line">Out[<span class="number">23</span>]: <span class="number">10</span></div><div class="line"></div><div class="line">In [<span class="number">24</span>]: cat binary_buffer_size.txt <span class="comment"># buffer 满了，刷入缓冲区</span></div><div class="line">hello</div><div class="line">In [<span class="number">25</span>]: f.write(<span class="string">b'helloworld111'</span>)</div><div class="line">Out[<span class="number">25</span>]: <span class="number">13</span></div><div class="line"></div><div class="line">In [<span class="number">26</span>]: cat binary_buffer_size.txt</div><div class="line">hellohelloworldhelloworld111</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">In [<span class="number">18</span>]: f = open(<span class="string">'binary_buffer_size.txt'</span>, <span class="string">'wb'</span>, buffering=<span class="number">10</span>) <span class="comment">#设置 buffer size 为 10</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">19</span>]: cat binary_buffer_size.txt</span><br><span class="line"></span><br><span class="line">In [<span class="number">21</span>]: f.write(<span class="string">b'hello'</span>) <span class="comment"># 写入 5 byte 数据，由于 buffer 还没有满，所以不会刷入缓冲区</span></span><br><span class="line">Out[<span class="number">21</span>]: <span class="number">5</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">22</span>]: cat binary_buffer_size.txt</span><br><span class="line"></span><br><span class="line">In [<span class="number">23</span>]: f.write(<span class="string">b'helloworld'</span>)</span><br><span class="line">Out[<span class="number">23</span>]: <span class="number">10</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">24</span>]: cat binary_buffer_size.txt <span class="comment"># buffer 满了，刷入缓冲区</span></span><br><span class="line">hello</span><br><span class="line">In [<span class="number">25</span>]: f.write(<span class="string">b'helloworld111'</span>)</span><br><span class="line">Out[<span class="number">25</span>]: <span class="number">13</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">26</span>]: cat binary_buffer_size.txt</span><br><span class="line">hellohelloworldhelloworld111</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -550,7 +591,7 @@
               
                 <div class="site-state-item site-state-posts">
                 
-                  <a href="/archives/">
+                  <a href="/archives">
                 
                     <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">posts</span>
@@ -616,11 +657,39 @@
           
 
           
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/anyisalin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:anyisalin@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelop"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
 
           
           
 
           
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://flowsnow.net" title="Flowsnow" target="_blank">Flowsnow</a>
+                  </li>
+                
+              </ul>
+            </div>
           
 
           
@@ -668,7 +737,25 @@
   <span class="author" itemprop="copyrightHolder">AnyISalIn</span>
 
   
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Symbols count total&#58;</span>
+    
+    <span title="Symbols count total">84k</span>
+  
 
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Reading time total&#58;</span>
+    
+    <span title="Reading time total">1:24</span>
   
 </div>
 
@@ -683,7 +770,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
 
 
 

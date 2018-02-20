@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="en">
+<html class="theme-next mist use-motion" lang="en">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -75,7 +75,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '6.0.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
@@ -110,7 +110,8 @@
 <meta property="og:url" content="anyisalin.github.io/2017/03/06/python-decorator/index.html">
 <meta property="og:site_name" content="无趣">
 <meta property="og:description" content="装饰器是一种软件设计模式，可以动态的修改函数、方法、类的功能，而不需要修改原函数或者重写方法，PEP-0318 提出了对装饰器语法的支持，并在 Python 2.4 实现">
-<meta property="og:updated_time" content="2017-03-12T11:14:06.000Z">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-20T11:43:03.199Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python - 装饰器">
 <meta name="twitter:description" content="装饰器是一种软件设计模式，可以动态的修改函数、方法、类的功能，而不需要修改原函数或者重写方法，PEP-0318 提出了对装饰器语法的支持，并在 Python 2.4 实现">
@@ -227,8 +228,20 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives" rel="section">
             <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
@@ -334,6 +347,34 @@
           
 
           
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article&#58;</span>
+                
+                <span title="Symbols count in article">4.3k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">0:04</span>
+              
+            </div>
+          
 
           
 
@@ -350,14 +391,14 @@
       
 
       
-        <p>装饰器是一种软件设计模式，可以动态的修改函数、方法、类的功能，而不需要修改原函数或者重写方法，<a href="https://www.python.org/dev/peps/pep-0318/" target="_blank" rel="external">PEP-0318</a> 提出了对装饰器语法的支持，并在 Python 2.4 实现</p>
+        <p>装饰器是一种软件设计模式，可以动态的修改函数、方法、类的功能，而不需要修改原函数或者重写方法，<a href="https://www.python.org/dev/peps/pep-0318/" target="_blank" rel="noopener">PEP-0318</a> 提出了对装饰器语法的支持，并在 Python 2.4 实现</p>
 <a id="more"></a>
 <h2 id="嵌套函数"><a href="#嵌套函数" class="headerlink" title="嵌套函数"></a>嵌套函数</h2><p>Python 中函数是可以嵌套的，我们可以写出以下代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parent_func</span><span class="params">(number)</span>:</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">chilren_func1</span><span class="params">()</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="string">'hello, world, chilren1'</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">chilren_func2</span><span class="params">()</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="string">'hello, world, chilren2'</span></div><div class="line">    </div><div class="line">    <span class="keyword">if</span> number &gt; <span class="number">2</span>:</div><div class="line">        <span class="keyword">return</span> chilren_func2</div><div class="line">    <span class="keyword">return</span> chilren_func1</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parent_func</span><span class="params">(number)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">chilren_func1</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'hello, world, chilren1'</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">chilren_func2</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'hello, world, chilren2'</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> number &gt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> chilren_func2</span><br><span class="line">    <span class="keyword">return</span> chilren_func1</span><br></pre></td></tr></table></figure>
 <p>如果我们直接传入数字并调用 <code>parent_func</code>，它会返回一个函数</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>parent_func(<span class="number">3</span>)</div><div class="line">&lt;function parent_func.&lt;locals&gt;.chilren_func2 at <span class="number">0x104f0b048</span>&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>parent_func(<span class="number">1</span>)</div><div class="line">&lt;function parent_func.&lt;locals&gt;.chilren_func1 at <span class="number">0x104ef3f28</span>&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>parent_func(<span class="number">3</span>)</span><br><span class="line">&lt;function parent_func.&lt;locals&gt;.chilren_func2 at <span class="number">0x104f0b048</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>parent_func(<span class="number">1</span>)</span><br><span class="line">&lt;function parent_func.&lt;locals&gt;.chilren_func1 at <span class="number">0x104ef3f28</span>&gt;</span><br></pre></td></tr></table></figure>
 <p>对其返回的函数再次调用</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>parent_func(<span class="number">1</span>)()</div><div class="line"><span class="string">'hello, world, chilren1'</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>parent_func(<span class="number">3</span>)()</div><div class="line"><span class="string">'hello, world, chilren2'</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>parent_func(<span class="number">1</span>)()</span><br><span class="line"><span class="string">'hello, world, chilren1'</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>parent_func(<span class="number">3</span>)()</span><br><span class="line"><span class="string">'hello, world, chilren2'</span></span><br></pre></td></tr></table></figure>
 <h2 id="将函数作为参数"><a href="#将函数作为参数" class="headerlink" title="将函数作为参数"></a>将函数作为参数</h2><p>符合以下两个条件之一就算是高阶函数</p>
 <ul>
 <li>将函数作为参数</li>
@@ -365,30 +406,30 @@
 </ul>
 <p>Python 中自然也可以支持将函数作为参数传入一个函数中，最经典的莫过于 <code>map</code>、<code>reduce</code>、<code>sort</code>、<code>max</code>、<code>filter</code> 等高阶函数</p>
 <p><code>d</code> 是一个 <code>key</code> 和 <code>value</code> 都是 <code>int</code> 的字典, 通过 <code>max</code> 函数取其最大值，默认只能通过对比 <code>key</code> 的值</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">d = &#123;</div><div class="line">  <span class="number">1</span>: <span class="number">2</span>,</div><div class="line">  <span class="number">2</span>: <span class="number">1</span>,</div><div class="line">  <span class="number">3</span>: <span class="number">0</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>max(d)</div><div class="line"><span class="number">3</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">d = &#123;</span><br><span class="line">  <span class="number">1</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="number">2</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="number">3</span>: <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>max(d)</span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
 <p>但是可以传入一个函数，通过这个函数来进行对比, 这样我们就可以对比字典中 <code>value</code> 的值</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>max(d, key=<span class="keyword">lambda</span> x: d[x])</div><div class="line"><span class="number">1</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>max(d, key=<span class="keyword">lambda</span> x: d[x])</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
 <h2 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h2><p>有了以上基础后，就可以介绍真正的装饰器了</p>
 <p>所谓 Python 的装饰器就是通过封装来动态修改一个函数或方法</p>
 <p>我们可以传入一个函数到另一个函数中，另一个函数对其的功能进行修改或扩展，并将修改过的函数返回</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">decroator_func</span><span class="params">(fn, *args, **kwargs)</span>:</span></div><div class="line">    </div><div class="line">    print(<span class="string">'start &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">    result = fn(*args, **kwargs)</div><div class="line">    print(<span class="string">'end &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">    <span class="keyword">return</span> result</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello, world'</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>decroator_func(p_hello)</div><div class="line">start p_hello</div><div class="line">hello, world</div><div class="line">end p_hello</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decroator_func</span><span class="params">(fn, *args, **kwargs)</span>:</span></span><br><span class="line">    </span><br><span class="line">    print(<span class="string">'start &#123;&#125;'</span>.format(fn.__name__))</span><br><span class="line">    result = fn(*args, **kwargs)</span><br><span class="line">    print(<span class="string">'end &#123;&#125;'</span>.format(fn.__name__))</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'hello, world'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>decroator_func(p_hello)</span><br><span class="line">start p_hello</span><br><span class="line">hello, world</span><br><span class="line">end p_hello</span><br></pre></td></tr></table></figure>
 <p>但是上面这种方法不是正确的写法，我们需要嵌套一个 <code>wrapper</code> 函数来修改原函数，并返回修改后的函数，还需要通过一个变量来保存原函数的输出，由封装函数 reutrn </p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">decroator_func</span><span class="params">(fn)</span>:</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">        print(<span class="string">'start &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">        result = fn(*args, **kwargs)</div><div class="line">        print(<span class="string">'end &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">        <span class="keyword">return</span> result</div><div class="line">    <span class="keyword">return</span> wrapper</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello, world'</span>)</div><div class="line"></div><div class="line">p_hello = decroator_func(p_hello)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello()</div><div class="line">start p_hello</div><div class="line">hello, world</div><div class="line">end p_hello</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decroator_func</span><span class="params">(fn)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        print(<span class="string">'start &#123;&#125;'</span>.format(fn.__name__))</span><br><span class="line">        result = fn(*args, **kwargs)</span><br><span class="line">        print(<span class="string">'end &#123;&#125;'</span>.format(fn.__name__))</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'hello, world'</span>)</span><br><span class="line"></span><br><span class="line">p_hello = decroator_func(p_hello)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello()</span><br><span class="line">start p_hello</span><br><span class="line">hello, world</span><br><span class="line">end p_hello</span><br></pre></td></tr></table></figure>
 <h3 id="语法糖"><a href="#语法糖" class="headerlink" title="语法糖"></a>语法糖</h3><p>虽然上面这种  <code>p_hello = decroator_func(p_hello)</code>  在功能上没有问题，但是看起来非常的丑陋，Python 可以在定义函数时通过 <code>@</code> 这个语法糖来简化调用装饰器函数的步骤，使得代码更加简洁优雅</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">@decroator_func</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello, world'</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@decroator_func</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'hello, world'</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="functools-wraps"><a href="#functools-wraps" class="headerlink" title="functools.wraps"></a>functools.wraps</h3><p>实际上，上面的代码还是有一些问题的，因为装饰器函数其实是返回 <code>wrapper</code> 函数，也就是封装过后的原函数，但是原函数的 <code>docstring</code>、<code>__name__</code> 等属性都被 <code>wrapper</code> 覆盖了</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello.__name__</div><div class="line"><span class="string">'wrapper'</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello.__name__</span><br><span class="line"><span class="string">'wrapper'</span></span><br></pre></td></tr></table></figure>
 <p>那么这时候我们就可以通过 <code>functools</code> 中的 <code>wraps</code> 这个装饰器函数来解决这个问题，我们的代码可以这样写</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">decroator_func</span><span class="params">(fn)</span>:</span></div><div class="line">    </div><div class="line"><span class="meta">    @wraps(fn)</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">        print(<span class="string">'start &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">        result = fn(*args, **kwargs)</div><div class="line">        print(<span class="string">'end &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">        <span class="keyword">return</span> result</div><div class="line">    <span class="keyword">return</span> wrapper</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decroator_func</span><span class="params">(fn)</span>:</span></span><br><span class="line">    </span><br><span class="line"><span class="meta">    @wraps(fn)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        print(<span class="string">'start &#123;&#125;'</span>.format(fn.__name__))</span><br><span class="line">        result = fn(*args, **kwargs)</span><br><span class="line">        print(<span class="string">'end &#123;&#125;'</span>.format(fn.__name__))</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br></pre></td></tr></table></figure>
 <p>再次尝试</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">@decroator_func</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello, world'</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello.__name__</div><div class="line"><span class="string">'p_hello'</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@decroator_func</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'hello, world'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello.__name__</span><br><span class="line"><span class="string">'p_hello'</span></span><br></pre></td></tr></table></figure>
 <h3 id="带参数的装饰器"><a href="#带参数的装饰器" class="headerlink" title="带参数的装饰器"></a>带参数的装饰器</h3><p>函数能接收参数，装饰器函数如果需要传入参数得多封装一层</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</div><div class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">sleep_decroator</span><span class="params">(second)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decroator</span><span class="params">(fn)</span>:</span></div><div class="line"><span class="meta">        @wraps(fn)</span></div><div class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">            print(<span class="string">'sleep &#123;&#125; s'</span>.format(second))</div><div class="line">            sleep(second)</div><div class="line">            result = fn(*args, **kwargs)</div><div class="line">            <span class="keyword">return</span> result</div><div class="line">        <span class="keyword">return</span> wrapper</div><div class="line">    <span class="keyword">return</span> decroator</div><div class="line"></div><div class="line"><span class="meta">@sleep_decroator(3)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello, world'</span>)</div><div class="line">    </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello()</div><div class="line">sleep <span class="number">3</span> s</div><div class="line">hello, world</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello.__name__</div><div class="line"><span class="string">'p_hello'</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sleep_decroator</span><span class="params">(second)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decroator</span><span class="params">(fn)</span>:</span></span><br><span class="line"><span class="meta">        @wraps(fn)</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">            print(<span class="string">'sleep &#123;&#125; s'</span>.format(second))</span><br><span class="line">            sleep(second)</span><br><span class="line">            result = fn(*args, **kwargs)</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        <span class="keyword">return</span> wrapper</span><br><span class="line">    <span class="keyword">return</span> decroator</span><br><span class="line"></span><br><span class="line"><span class="meta">@sleep_decroator(3)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'hello, world'</span>)</span><br><span class="line">    </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello()</span><br><span class="line">sleep <span class="number">3</span> s</span><br><span class="line">hello, world</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello.__name__</span><br><span class="line"><span class="string">'p_hello'</span></span><br></pre></td></tr></table></figure>
 <h3 id="类装饰器"><a href="#类装饰器" class="headerlink" title="类装饰器"></a>类装饰器</h3><p>Python 也可以使用类作为装饰器，可以让复杂的装饰器更加的优雅</p>
 <p>其实装饰器只需要是一个 <code>callable</code> 对象即可，所以我们需要定义一个 <code>__call__</code> 方法</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Decorator</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">pass</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, fn)</span>:</span></div><div class="line"><span class="meta">        @wraps(fn)</span></div><div class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">            print(<span class="string">'start &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">            result = fn(*args, **kwargs)</div><div class="line">            print(<span class="string">'end &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">            <span class="keyword">return</span> result</div><div class="line">        <span class="keyword">return</span> wrapper</div><div class="line"></div><div class="line"><span class="meta">@Decorator()</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello, world'</span>)</div><div class="line">    </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello()</div><div class="line">start p_hello</div><div class="line">hello, world</div><div class="line">end p_hello</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Decorator</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, fn)</span>:</span></span><br><span class="line"><span class="meta">        @wraps(fn)</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">            print(<span class="string">'start &#123;&#125;'</span>.format(fn.__name__))</span><br><span class="line">            result = fn(*args, **kwargs)</span><br><span class="line">            print(<span class="string">'end &#123;&#125;'</span>.format(fn.__name__))</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@Decorator()</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'hello, world'</span>)</span><br><span class="line">    </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello()</span><br><span class="line">start p_hello</span><br><span class="line">hello, world</span><br><span class="line">end p_hello</span><br></pre></td></tr></table></figure>
 <p>上面这种情况下的代码看起来不是很好，但是如果我们定义一个需要传递参数的装饰器，代码就会很简洁</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SleepDecorator</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, second)</span>:</span></div><div class="line">        self.second = second</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, fn)</span>:</span></div><div class="line"><span class="meta">        @wraps(fn)</span></div><div class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">            print(<span class="string">'sleep &#123;&#125; s'</span>.format(self.second))</div><div class="line">            sleep(self.second)</div><div class="line">            result = fn(*args, **kwargs)</div><div class="line">			print(<span class="string">'end &#123;&#125;'</span>.format(fn.__name__))</div><div class="line">            <span class="keyword">return</span> result</div><div class="line">        <span class="keyword">return</span> wrapper</div><div class="line"></div><div class="line"><span class="meta">@SleepDecorator(3)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello, world'</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello()</div><div class="line">sleep <span class="number">3</span> s</div><div class="line">hello, world</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SleepDecorator</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, second)</span>:</span></span><br><span class="line">        self.second = second</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, fn)</span>:</span></span><br><span class="line"><span class="meta">        @wraps(fn)</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">            print(<span class="string">'sleep &#123;&#125; s'</span>.format(self.second))</span><br><span class="line">            sleep(self.second)</span><br><span class="line">            result = fn(*args, **kwargs)</span><br><span class="line">			print(<span class="string">'end &#123;&#125;'</span>.format(fn.__name__))</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@SleepDecorator(3)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">p_hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'hello, world'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p_hello()</span><br><span class="line">sleep <span class="number">3</span> s</span><br><span class="line">hello, world</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -522,7 +563,7 @@
               
                 <div class="site-state-item site-state-posts">
                 
-                  <a href="/archives/">
+                  <a href="/archives">
                 
                     <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">posts</span>
@@ -588,11 +629,39 @@
           
 
           
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/anyisalin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:anyisalin@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelop"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
 
           
           
 
           
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://flowsnow.net" title="Flowsnow" target="_blank">Flowsnow</a>
+                  </li>
+                
+              </ul>
+            </div>
           
 
           
@@ -640,7 +709,25 @@
   <span class="author" itemprop="copyrightHolder">AnyISalIn</span>
 
   
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Symbols count total&#58;</span>
+    
+    <span title="Symbols count total">84k</span>
+  
 
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Reading time total&#58;</span>
+    
+    <span title="Reading time total">1:24</span>
   
 </div>
 
@@ -655,7 +742,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
 
 
 
