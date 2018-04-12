@@ -104,18 +104,18 @@
 
 
   
-  <meta name="keywords" content="python,data-structure," />
+  <meta name="keywords" content="data-structure,python," />
 
 
 <meta name="description" content="栈是一种 LIFO(Last In First Out) 的数据结构，栈插入和删除都在 栈顶 操作">
-<meta name="keywords" content="python,data-structure">
+<meta name="keywords" content="data-structure,python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构 - 栈">
 <meta property="og:url" content="https://anyisalin.github.io/2017/11/28/data-structure-stack/index.html">
 <meta property="og:site_name" content="无趣">
 <meta property="og:description" content="栈是一种 LIFO(Last In First Out) 的数据结构，栈插入和删除都在 栈顶 操作">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-02-20T11:43:03.204Z">
+<meta property="og:updated_time" content="2018-02-20T11:43:03.203Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构 - 栈">
 <meta name="twitter:description" content="栈是一种 LIFO(Last In First Out) 的数据结构，栈插入和删除都在 栈顶 操作">
@@ -423,9 +423,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"># python</a>
-          
             <a href="/tags/data-structure/" rel="tag"># data-structure</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
           
         </div>
       
@@ -447,6 +447,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/12/openvpn-with-easyconnect/" rel="prev" title="openvpn 中转 EasyConnect">
+                openvpn 中转 EasyConnect <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -534,7 +538,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -685,7 +689,7 @@
     
       <span class="post-meta-item-text">Symbols count total&#58;</span>
     
-    <span title="Symbols count total">84k</span>
+    <span title="Symbols count total">85k</span>
   
 
   
@@ -696,7 +700,7 @@
     
       <span class="post-meta-item-text">Reading time total&#58;</span>
     
-    <span title="Reading time total">1:24</span>
+    <span title="Reading time total">1:25</span>
   
 </div>
 
@@ -841,7 +845,21 @@
         (d.head || d.body).appendChild(s);
       }
       
-        loadComments();
+        $(function () {
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          if (offsetTop <= 0) {
+            // load directly when there's no a scrollbar
+            loadComments();
+          } else {
+            $(window).on('scroll.disqus_scroll', function () {
+              var scrollTop = document.documentElement.scrollTop;
+              if (scrollTop >= offsetTop) {
+                $(window).off('.disqus_scroll');
+                loadComments();
+              }
+            });
+          }
+        });
       
     </script>
   

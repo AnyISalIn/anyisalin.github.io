@@ -118,7 +118,7 @@
 <meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/game/aco-caesar.jpg">
 <meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/game/aco-bayke_and_aya.jpg">
 <meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/game/aco-overview.jpg">
-<meta property="og:updated_time" content="2018-02-20T11:43:03.197Z">
+<meta property="og:updated_time" content="2018-02-20T11:43:03.196Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="刺客信条·起源 玩后感">
 <meta name="twitter:description" content="这几天把起源玩了一遍，虽然没有刷满全部成就，但是也前前后后玩了 30 多个小时，浅谈一下我对起源的看法。">
@@ -543,7 +543,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -694,7 +694,7 @@
     
       <span class="post-meta-item-text">Symbols count total&#58;</span>
     
-    <span title="Symbols count total">84k</span>
+    <span title="Symbols count total">85k</span>
   
 
   
@@ -705,7 +705,7 @@
     
       <span class="post-meta-item-text">Reading time total&#58;</span>
     
-    <span title="Reading time total">1:24</span>
+    <span title="Reading time total">1:25</span>
   
 </div>
 
@@ -850,7 +850,21 @@
         (d.head || d.body).appendChild(s);
       }
       
-        loadComments();
+        $(function () {
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          if (offsetTop <= 0) {
+            // load directly when there's no a scrollbar
+            loadComments();
+          } else {
+            $(window).on('scroll.disqus_scroll', function () {
+              var scrollTop = document.documentElement.scrollTop;
+              if (scrollTop >= offsetTop) {
+                $(window).off('.disqus_scroll');
+                loadComments();
+              }
+            });
+          }
+        });
       
     </script>
   

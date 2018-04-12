@@ -104,27 +104,31 @@
 
 
   
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="network," />
 
 
-<meta name="description" content="工作半年多, 虽然学到了很多东西, 但是缺少总结, 想了一下, 重新开博客记录一下技术、生活。">
+<meta name="description" content="国内大部分高校都使用 easyconnect 这种傻逼的软件作为 vpn 解决方案，最近需要频繁登入某高校 VPN(easyconnect)，由于手上只有一个账号，所以遇到了以下几个问题  同一账号最多只能在一个客户端登录(多人使用会被挤下线) 除了 Mac 和 Windows，Linux 下基本没法用 连接过程过于繁琐  同事给我提了一个方案，通过一台主机中转 EasyConnect 连接，来解">
+<meta name="keywords" content="network">
 <meta property="og:type" content="article">
-<meta property="og:title" content="痛改前非, 重新做人">
-<meta property="og:url" content="https://anyisalin.github.io/2017/03/06/reborn/index.html">
+<meta property="og:title" content="openvpn 中转 EasyConnect">
+<meta property="og:url" content="https://anyisalin.github.io/2018/04/12/openvpn-with-easyconnect/index.html">
 <meta property="og:site_name" content="无趣">
-<meta property="og:description" content="工作半年多, 虽然学到了很多东西, 但是缺少总结, 想了一下, 重新开博客记录一下技术、生活。">
+<meta property="og:description" content="国内大部分高校都使用 easyconnect 这种傻逼的软件作为 vpn 解决方案，最近需要频繁登入某高校 VPN(easyconnect)，由于手上只有一个账号，所以遇到了以下几个问题  同一账号最多只能在一个客户端登录(多人使用会被挤下线) 除了 Mac 和 Windows，Linux 下基本没法用 连接过程过于繁琐  同事给我提了一个方案，通过一台主机中转 EasyConnect 连接，来解">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-02-20T11:43:03.195Z">
+<meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/vpn-architecture.png">
+<meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/sharing-network.png">
+<meta property="og:updated_time" content="2018-04-12T06:05:20.167Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="痛改前非, 重新做人">
-<meta name="twitter:description" content="工作半年多, 虽然学到了很多东西, 但是缺少总结, 想了一下, 重新开博客记录一下技术、生活。">
+<meta name="twitter:title" content="openvpn 中转 EasyConnect">
+<meta name="twitter:description" content="国内大部分高校都使用 easyconnect 这种傻逼的软件作为 vpn 解决方案，最近需要频繁登入某高校 VPN(easyconnect)，由于手上只有一个账号，所以遇到了以下几个问题  同一账号最多只能在一个客户端登录(多人使用会被挤下线) 除了 Mac 和 Windows，Linux 下基本没法用 连接过程过于繁琐  同事给我提了一个方案，通过一台主机中转 EasyConnect 连接，来解">
+<meta name="twitter:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/vpn-architecture.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://anyisalin.github.io/2017/03/06/reborn/"/>
+  <link rel="canonical" href="https://anyisalin.github.io/2018/04/12/openvpn-with-easyconnect/"/>
 
 
 
@@ -133,7 +137,7 @@
     sidebar: "",
   };
 </script>
-  <title>痛改前非, 重新做人 | 无趣</title>
+  <title>openvpn 中转 EasyConnect | 无趣</title>
   
 
 
@@ -289,7 +293,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2017/03/06/reborn/">
+    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2018/04/12/openvpn-with-easyconnect/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnyISalIn">
@@ -306,7 +310,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">痛改前非, 重新做人</h1>
+          <h1 class="post-title" itemprop="name headline">openvpn 中转 EasyConnect</h1>
         
 
         <div class="post-meta">
@@ -318,7 +322,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-06T14:15:11+08:00">2017-03-06</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-12T13:59:11+08:00">2018-04-12</time>
             
 
             
@@ -336,9 +340,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/03/06/reborn/#comments" itemprop="discussionUrl">
+                <a href="/2018/04/12/openvpn-with-easyconnect/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/03/06/reborn/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/04/12/openvpn-with-easyconnect/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -360,7 +364,7 @@
                 
                   <span class="post-meta-item-text">Symbols count in article&#58;</span>
                 
-                <span title="Symbols count in article">48</span>
+                <span title="Symbols count in article">603</span>
               
 
               
@@ -394,7 +398,20 @@
       
 
       
-        <p>工作半年多, 虽然学到了很多东西, 但是缺少总结, 想了一下, 重新开博客记录一下技术、生活。</p>
+        <p>国内大部分高校都使用 <code>easyconnect</code> 这种傻逼的软件作为 <code>vpn</code> 解决方案，最近需要频繁登入某高校 VPN(easyconnect)，由于手上只有一个账号，所以遇到了以下几个问题</p>
+<ul>
+<li>同一账号最多只能在一个客户端登录(多人使用会被挤下线)</li>
+<li>除了 Mac 和 Windows，Linux 下基本没法用</li>
+<li>连接过程过于繁琐</li>
+</ul>
+<p>同事给我提了一个方案，通过一台主机中转 <code>EasyConnect</code> 连接，来解决上面的这些问题</p>
+<p>大致拓扑图如下</p>
+<p><img src="http://anyisalin1-1251720225.file.myqcloud.com/blog/vpn-architecture.png" alt="VPN Architecture"></p>
+<a id="more"></a>
+<p>说干就干，我先尝试了 <code>Ubuntu</code> 和 <code>CentOS</code> 作为 <code>EasyConnect</code> 的客户端，各种失败，因为浏览器版本太新不支持 <code>Java</code>，<code>EasyConnect</code> 给出的文档是要求 <code>Opera 10.10</code> 的版本</p>
+<p>。。。。天哪，这是 2018 年了，哪里去找 10.10 的版本，最后我在 <code>rpmfind</code> 上找到一个 10.12 的 Opera，装上了 <code>JRE</code> 的插件，还是不能连接 <code>EasyConnect</code>，我就放弃 Linux 转用 Windows 作为客户端了</p>
+<p>Windows 上 <code>EasyConnect</code> 几分钟就搞定了，连上学校的 <code>vpn</code> 后，开始安装 <code>openvpn Server</code>，教程可以看 <a href="https://community.openvpn.net/openvpn/wiki/Easy_Windows_Guide" target="_blank" rel="noopener">Easy_Windows_Guide</a> 最后直接在 EasyConnect 的网络设备里面 <code>sharing traffic</code> 给 <code>openvpn</code> 的 <code>tun</code> 设备即可</p>
+<p><img src="http://anyisalin1-1251720225.file.myqcloud.com/blog/sharing-network.png" alt="Sharing Network"></p>
 
       
     </div>
@@ -413,6 +430,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/network/" rel="tag"># network</a>
+          
+        </div>
+      
 
       
       
@@ -422,15 +445,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/11/28/data-structure-stack/" rel="next" title="数据结构 - 栈">
+                <i class="fa fa-chevron-left"></i> 数据结构 - 栈
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/06/tmuxinator/" rel="prev" title="Tmuxinator - 轻松管理复杂 tmux 会话">
-                Tmuxinator - 轻松管理复杂 tmux 会话 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -789,9 +812,9 @@
   
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = 'https://anyisalin.github.io/2017/03/06/reborn/';
-        this.page.identifier = '2017/03/06/reborn/';
-        this.page.title = '痛改前非, 重新做人';
+        this.page.url = 'https://anyisalin.github.io/2018/04/12/openvpn-with-easyconnect/';
+        this.page.identifier = '2018/04/12/openvpn-with-easyconnect/';
+        this.page.title = 'openvpn 中转 EasyConnect';
       };
       function loadComments () {
         var d = document, s = d.createElement('script');

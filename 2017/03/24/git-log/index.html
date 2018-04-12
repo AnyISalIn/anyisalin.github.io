@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="无趣">
 <meta property="og:description" content="git 是一款非常牛逼的分布式代码管理工具，Linux 之父 linus torvalds 所编写，是目前全世界最流行的代码管理工具，全世界最大的代码托管平台 Github 就是基于 git 做的，无数的开源项目使用 git ，如果不会 git 简直无法在开源世界立足，因为最近在看 《pro git》 这本书，所以我会写几篇 git 的文章，这篇文章主要介绍 git log 子命令的一些用法">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-02-20T11:43:03.202Z">
+<meta property="og:updated_time" content="2018-02-20T11:43:03.201Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git - log">
 <meta name="twitter:description" content="git 是一款非常牛逼的分布式代码管理工具，Linux 之父 linus torvalds 所编写，是目前全世界最流行的代码管理工具，全世界最大的代码托管平台 Github 就是基于 git 做的，无数的开源项目使用 git ，如果不会 git 简直无法在开源世界立足，因为最近在看 《pro git》 这本书，所以我会写几篇 git 的文章，这篇文章主要介绍 git log 子命令的一些用法">
@@ -616,7 +616,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -767,7 +767,7 @@
     
       <span class="post-meta-item-text">Symbols count total&#58;</span>
     
-    <span title="Symbols count total">84k</span>
+    <span title="Symbols count total">85k</span>
   
 
   
@@ -778,7 +778,7 @@
     
       <span class="post-meta-item-text">Reading time total&#58;</span>
     
-    <span title="Reading time total">1:24</span>
+    <span title="Reading time total">1:25</span>
   
 </div>
 
@@ -923,7 +923,21 @@
         (d.head || d.body).appendChild(s);
       }
       
-        loadComments();
+        $(function () {
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          if (offsetTop <= 0) {
+            // load directly when there's no a scrollbar
+            loadComments();
+          } else {
+            $(window).on('scroll.disqus_scroll', function () {
+              var scrollTop = document.documentElement.scrollTop;
+              if (scrollTop >= offsetTop) {
+                $(window).off('.disqus_scroll');
+                loadComments();
+              }
+            });
+          }
+        });
       
     </script>
   

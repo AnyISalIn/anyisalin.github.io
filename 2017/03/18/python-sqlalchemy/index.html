@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="无趣">
 <meta property="og:description" content="Python 中有很多连接数据库的模块，pymysql、psycopg2、sqlite3 等，但是通常情况下我们都不会单独使用它们，因为程序可能需要支持多个数据库，而且直接通过调用 SQL 的方式去获取数据库中的数据会使得代码维护成本变高，这种情况下可能就要用到 ORM (数据关系映射, Object Relational Mapping)，而 Python 中最著名的 ORM 当属 SQLAlc">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-02-20T11:43:03.207Z">
+<meta property="og:updated_time" content="2018-02-20T11:43:03.206Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python - SQLAlchemy">
 <meta name="twitter:description" content="Python 中有很多连接数据库的模块，pymysql、psycopg2、sqlite3 等，但是通常情况下我们都不会单独使用它们，因为程序可能需要支持多个数据库，而且直接通过调用 SQL 的方式去获取数据库中的数据会使得代码维护成本变高，这种情况下可能就要用到 ORM (数据关系映射, Object Relational Mapping)，而 Python 中最著名的 ORM 当属 SQLAlc">
@@ -587,7 +587,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -738,7 +738,7 @@
     
       <span class="post-meta-item-text">Symbols count total&#58;</span>
     
-    <span title="Symbols count total">84k</span>
+    <span title="Symbols count total">85k</span>
   
 
   
@@ -749,7 +749,7 @@
     
       <span class="post-meta-item-text">Reading time total&#58;</span>
     
-    <span title="Reading time total">1:24</span>
+    <span title="Reading time total">1:25</span>
   
 </div>
 
@@ -894,7 +894,21 @@
         (d.head || d.body).appendChild(s);
       }
       
-        loadComments();
+        $(function () {
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          if (offsetTop <= 0) {
+            // load directly when there's no a scrollbar
+            loadComments();
+          } else {
+            $(window).on('scroll.disqus_scroll', function () {
+              var scrollTop = document.documentElement.scrollTop;
+              if (scrollTop >= offsetTop) {
+                $(window).off('.disqus_scroll');
+                loadComments();
+              }
+            });
+          }
+        });
       
     </script>
   
