@@ -104,27 +104,28 @@
 
 
   
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="python,web," />
 
 
-<meta name="description" content="工作半年多, 虽然学到了很多东西, 但是缺少总结, 想了一下, 重新开博客记录一下技术、生活。">
+<meta name="description" content="from user import viewsfrom django.urls import pathapp_name = &apos;user&apos;urlpatterns = [    path(&apos;register/&apos;, views.RegisterView.as_view(), name=&apos;register&apos;),    path(&apos;login/&apos;, views.LoginView.as_view(), nam">
+<meta name="keywords" content="python,web">
 <meta property="og:type" content="article">
-<meta property="og:title" content="痛改前非, 重新做人">
-<meta property="og:url" content="https://anyisalin.github.io/2017/03/06/reborn/index.html">
+<meta property="og:title" content="极验 Django Example">
+<meta property="og:url" content="https://anyisalin.github.io/2018/08/11/geetest-with-django/index.html">
 <meta property="og:site_name" content="无趣">
-<meta property="og:description" content="工作半年多, 虽然学到了很多东西, 但是缺少总结, 想了一下, 重新开博客记录一下技术、生活。">
+<meta property="og:description" content="from user import viewsfrom django.urls import pathapp_name = &apos;user&apos;urlpatterns = [    path(&apos;register/&apos;, views.RegisterView.as_view(), name=&apos;register&apos;),    path(&apos;login/&apos;, views.LoginView.as_view(), nam">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-02-20T11:43:03.195Z">
+<meta property="og:updated_time" content="2018-08-11T07:54:26.900Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="痛改前非, 重新做人">
-<meta name="twitter:description" content="工作半年多, 虽然学到了很多东西, 但是缺少总结, 想了一下, 重新开博客记录一下技术、生活。">
+<meta name="twitter:title" content="极验 Django Example">
+<meta name="twitter:description" content="from user import viewsfrom django.urls import pathapp_name = &apos;user&apos;urlpatterns = [    path(&apos;register/&apos;, views.RegisterView.as_view(), name=&apos;register&apos;),    path(&apos;login/&apos;, views.LoginView.as_view(), nam">
 
 
 
 
 
 
-  <link rel="canonical" href="https://anyisalin.github.io/2017/03/06/reborn/"/>
+  <link rel="canonical" href="https://anyisalin.github.io/2018/08/11/geetest-with-django/"/>
 
 
 
@@ -133,7 +134,7 @@
     sidebar: "",
   };
 </script>
-  <title>痛改前非, 重新做人 | 无趣</title>
+  <title>极验 Django Example | 无趣</title>
   
 
 
@@ -289,7 +290,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2017/03/06/reborn/">
+    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2018/08/11/geetest-with-django/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnyISalIn">
@@ -306,7 +307,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">痛改前非, 重新做人</h1>
+          <h1 class="post-title" itemprop="name headline">极验 Django Example</h1>
         
 
         <div class="post-meta">
@@ -318,7 +319,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-06T14:15:11+08:00">2017-03-06</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-11T15:43:48+08:00">2018-08-11</time>
             
 
             
@@ -336,9 +337,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/03/06/reborn/#comments" itemprop="discussionUrl">
+                <a href="/2018/08/11/geetest-with-django/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/03/06/reborn/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/08/11/geetest-with-django/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -360,7 +361,7 @@
                 
                   <span class="post-meta-item-text">Symbols count in article&#58;</span>
                 
-                <span title="Symbols count in article">48</span>
+                <span title="Symbols count in article">3.7k</span>
               
 
               
@@ -374,7 +375,7 @@
                 
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Reading time">0:01</span>
+                <span title="Reading time">0:04</span>
               
             </div>
           
@@ -394,7 +395,9 @@
       
 
       
-        <p>工作半年多, 虽然学到了很多东西, 但是缺少总结, 想了一下, 重新开博客记录一下技术、生活。</p>
+        <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> user <span class="keyword">import</span> views</span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path</span><br><span class="line"></span><br><span class="line">app_name = <span class="string">'user'</span></span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">'register/'</span>, views.RegisterView.as_view(), name=<span class="string">'register'</span>),</span><br><span class="line">    path(<span class="string">'login/'</span>, views.LoginView.as_view(), name=<span class="string">'login'</span>),</span><br><span class="line">    path(<span class="string">'logout/'</span>, views.LogoutView.as_view(), name=<span class="string">'logout'</span>),</span><br><span class="line">    path(<span class="string">'pc-gt/'</span>, views.GtValidateView.as_view(), name=<span class="string">'gt-validate'</span>),</span><br><span class="line">    path(<span class="string">r'active/&lt;uidb64&gt;/&lt;token&gt;/'</span>, views.ActiveView.as_view(), name=<span class="string">'active'</span>),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> messages</span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> reverse_lazy</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth <span class="keyword">import</span> login, logout</span><br><span class="line"><span class="keyword">from</span> django.utils.http <span class="keyword">import</span> urlsafe_base64_decode</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.tokens <span class="keyword">import</span> default_token_generator</span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponseRedirect, HttpResponseBadRequest</span><br><span class="line"><span class="keyword">from</span> django.views.generic <span class="keyword">import</span> FormView, View, TemplateView, CreateView</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> geetest <span class="keyword">import</span> GeetestLib <span class="comment"># https://github.com/GeeTeam/gt-python-sdk</span></span><br><span class="line"><span class="keyword">from</span> user.forms <span class="keyword">import</span> UserRegisterForm, UserLoginForm</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GeeTestMixin</span><span class="params">(object)</span>:</span></span><br><span class="line">    gid = settings.GEETEST_ID <span class="comment"># 极验ID</span></span><br><span class="line">    gkey = settings.GEETEST_KEY <span class="comment"># 极验 Key</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">check_request</span><span class="params">(self, request)</span>:</span> <span class="comment"># 检查验证是否通过</span></span><br><span class="line">        gt = GeetestLib(self.gid, self.gkey)</span><br><span class="line">        challenge = request.POST.get(gt.FN_CHALLENGE, <span class="string">''</span>)</span><br><span class="line">        validate = request.POST.get(gt.FN_VALIDATE, <span class="string">''</span>)</span><br><span class="line">        seccode = request.POST.get(gt.FN_SECCODE, <span class="string">''</span>)</span><br><span class="line">        status = request.session[gt.GT_STATUS_SESSION_KEY]</span><br><span class="line">        user_id = request.session[<span class="string">"user_id"</span>]</span><br><span class="line">        <span class="keyword">if</span> status:</span><br><span class="line">            <span class="keyword">return</span> gt.success_validate(challenge, validate, seccode, user_id)</span><br><span class="line">        <span class="keyword">return</span> gt.failback_validate(challenge, validate, seccode)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RegisterView</span><span class="params">(CreateView, GeeTestMixin)</span>:</span></span><br><span class="line">    template_name = <span class="string">'login_and_register.html'</span></span><br><span class="line">    form_class = UserRegisterForm</span><br><span class="line">    success_url = reverse_lazy(<span class="string">'user:login'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_context_data</span><span class="params">(self, **kwargs)</span>:</span></span><br><span class="line">        context = super().get_context_data(**kwargs)</span><br><span class="line">        context.update(&#123;</span><br><span class="line">            <span class="string">'form_title'</span>: <span class="string">'注册'</span></span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">return</span> context</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">form_valid</span><span class="params">(self, form)</span>:</span></span><br><span class="line">        super().form_valid(form)</span><br><span class="line">        messages.add_message(self.request, messages.INFO, <span class="string">'激活邮件已发出，请检查您的邮箱'</span>)</span><br><span class="line">        <span class="keyword">return</span> HttpResponseRedirect(self.get_success_url())</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.check_request(request):</span><br><span class="line">            messages.add_message(request, messages.ERROR, <span class="string">'验证失败'</span>)</span><br><span class="line">            <span class="keyword">return</span> HttpResponseRedirect(reverse_lazy(<span class="string">'user:register'</span>))</span><br><span class="line">        <span class="keyword">return</span> super().post(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GtValidateView</span><span class="params">(View, GeeTestMixin)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request)</span>:</span></span><br><span class="line">        user_id = <span class="string">'test'</span></span><br><span class="line">        gt = GeetestLib(self.gid, self.gkey)</span><br><span class="line">        status = gt.pre_process(user_id)</span><br><span class="line">        request.session[gt.GT_STATUS_SESSION_KEY] = status</span><br><span class="line">        request.session[<span class="string">"user_id"</span>] = user_id</span><br><span class="line">        response_str = gt.get_response_str()</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(response_str)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">    url: <span class="string">"&#123;% url 'user:gt-validate' %&#125;"</span>,</span><br><span class="line">    type: <span class="string">"get"</span>,</span><br><span class="line">    dataType: <span class="string">"json"</span>,</span><br><span class="line">    success: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="comment">//请检测data的数据结构， 保证data.gt, data.challenge, data.success有值</span></span><br><span class="line">        initGeetest(&#123;</span><br><span class="line">                <span class="comment">// 以下配置参数来自服务端 SDK</span></span><br><span class="line">                gt: data.gt,</span><br><span class="line">                challenge: data.challenge,</span><br><span class="line">                offline: !data.success,</span><br><span class="line">                new_captcha: <span class="literal">true</span>,</span><br><span class="line">            &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">captchaObj</span>) </span>&#123;</span><br><span class="line">                captchaObj.appendTo(<span class="string">'#captchaBox'</span>)</span><br><span class="line"></span><br><span class="line">                captchaObj.onReady(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                &#125;).onSuccess(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                    $(<span class="string">'button[type=submit]'</span>).removeAttr(<span class="string">'disabled'</span>)</span><br><span class="line">                &#125;).onError(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -413,6 +416,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/web/" rel="tag"># web</a>
+          
+        </div>
+      
 
       
       
@@ -422,15 +433,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/04/12/openvpn-with-easyconnect/" rel="next" title="openvpn 中转 EasyConnect">
+                <i class="fa fa-chevron-left"></i> openvpn 中转 EasyConnect
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/06/tmuxinator/" rel="prev" title="Tmuxinator - 轻松管理复杂 tmux 会话">
-                Tmuxinator - 轻松管理复杂 tmux 会话 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -789,9 +800,9 @@
   
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = 'https://anyisalin.github.io/2017/03/06/reborn/';
-        this.page.identifier = '2017/03/06/reborn/';
-        this.page.title = '痛改前非, 重新做人';
+        this.page.url = 'https://anyisalin.github.io/2018/08/11/geetest-with-django/';
+        this.page.identifier = '2018/08/11/geetest-with-django/';
+        this.page.title = '极验 Django Example';
       };
       function loadComments () {
         var d = document, s = d.createElement('script');
