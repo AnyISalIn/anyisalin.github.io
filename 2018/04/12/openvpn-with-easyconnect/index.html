@@ -115,13 +115,13 @@
 <meta property="og:site_name" content="无趣">
 <meta property="og:description" content="国内大部分高校都使用 easyconnect 这种傻逼的软件作为 vpn 解决方案，最近需要频繁登入某高校 VPN(easyconnect)，由于手上只有一个账号，所以遇到了以下几个问题  同一账号最多只能在一个客户端登录(多人使用会被挤下线) 除了 Mac 和 Windows，Linux 下基本没法用 连接过程过于繁琐  同事给我提了一个方案，通过一台主机中转 EasyConnect 连接，来解">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/vpn-architecture.png">
-<meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/sharing-network.png">
-<meta property="og:updated_time" content="2018-04-12T06:05:20.167Z">
+<meta property="og:image" content="https://anyisalin1-1251720225.file.myqcloud.com/blog/vpn-architecture.png">
+<meta property="og:image" content="https://anyisalin1-1251720225.file.myqcloud.com/blog/sharing-network.png">
+<meta property="og:updated_time" content="2018-08-15T12:34:31.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="openvpn 中转 EasyConnect">
 <meta name="twitter:description" content="国内大部分高校都使用 easyconnect 这种傻逼的软件作为 vpn 解决方案，最近需要频繁登入某高校 VPN(easyconnect)，由于手上只有一个账号，所以遇到了以下几个问题  同一账号最多只能在一个客户端登录(多人使用会被挤下线) 除了 Mac 和 Windows，Linux 下基本没法用 连接过程过于繁琐  同事给我提了一个方案，通过一台主机中转 EasyConnect 连接，来解">
-<meta name="twitter:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/vpn-architecture.png">
+<meta name="twitter:image" content="https://anyisalin1-1251720225.file.myqcloud.com/blog/vpn-architecture.png">
 
 
 
@@ -406,12 +406,12 @@
 </ul>
 <p>同事给我提了一个方案，通过一台主机中转 <code>EasyConnect</code> 连接，来解决上面的这些问题</p>
 <p>大致拓扑图如下</p>
-<p><img src="http://anyisalin1-1251720225.file.myqcloud.com/blog/vpn-architecture.png" alt="VPN Architecture"></p>
+<p><img src="https://anyisalin1-1251720225.file.myqcloud.com/blog/vpn-architecture.png" alt="VPN Architecture"></p>
 <a id="more"></a>
 <p>说干就干，我先尝试了 <code>Ubuntu</code> 和 <code>CentOS</code> 作为 <code>EasyConnect</code> 的客户端，各种失败，因为浏览器版本太新不支持 <code>Java</code>，<code>EasyConnect</code> 给出的文档是要求 <code>Opera 10.10</code> 的版本</p>
 <p>。。。。天哪，这是 2018 年了，哪里去找 10.10 的版本，最后我在 <code>rpmfind</code> 上找到一个 10.12 的 Opera，装上了 <code>JRE</code> 的插件，还是不能连接 <code>EasyConnect</code>，我就放弃 Linux 转用 Windows 作为客户端了</p>
 <p>Windows 上 <code>EasyConnect</code> 几分钟就搞定了，连上学校的 <code>vpn</code> 后，开始安装 <code>openvpn Server</code>，教程可以看 <a href="https://community.openvpn.net/openvpn/wiki/Easy_Windows_Guide" target="_blank" rel="noopener">Easy_Windows_Guide</a> 最后直接在 EasyConnect 的网络设备里面 <code>sharing traffic</code> 给 <code>openvpn</code> 的 <code>tun</code> 设备即可</p>
-<p><img src="http://anyisalin1-1251720225.file.myqcloud.com/blog/sharing-network.png" alt="Sharing Network"></p>
+<p><img src="https://anyisalin1-1251720225.file.myqcloud.com/blog/sharing-network.png" alt="Sharing Network"></p>
 
       
     </div>
