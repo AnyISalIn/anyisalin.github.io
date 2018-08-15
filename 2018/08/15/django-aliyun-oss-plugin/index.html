@@ -104,28 +104,28 @@
 
 
   
-  <meta name="keywords" content="python,development," />
+  <meta name="keywords" content="python,development,web," />
 
 
-<meta name="description" content="元类是 Python 的黑魔法之一，大多数人都不需要掌握，但是可以用来装逼，所以写一篇元类的博客">
-<meta name="keywords" content="python,development">
+<meta name="description" content="# project.storage.pyimport oss2from django.conf import settingsfrom django.core.files.storage import Storageclass AliyunObjectStorage(Storage):    def __init__(self):        self.access_key_id = setti">
+<meta name="keywords" content="python,development,web">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python - 元类">
-<meta property="og:url" content="https://anyisalin.github.io/2017/03/10/python-metaclass/index.html">
+<meta property="og:title" content="Django Aliyun OSS Plugin Example">
+<meta property="og:url" content="https://anyisalin.github.io/2018/08/15/django-aliyun-oss-plugin/index.html">
 <meta property="og:site_name" content="无趣">
-<meta property="og:description" content="元类是 Python 的黑魔法之一，大多数人都不需要掌握，但是可以用来装逼，所以写一篇元类的博客">
+<meta property="og:description" content="# project.storage.pyimport oss2from django.conf import settingsfrom django.core.files.storage import Storageclass AliyunObjectStorage(Storage):    def __init__(self):        self.access_key_id = setti">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-02-20T11:43:03.197Z">
+<meta property="og:updated_time" content="2018-08-15T06:05:33.710Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python - 元类">
-<meta name="twitter:description" content="元类是 Python 的黑魔法之一，大多数人都不需要掌握，但是可以用来装逼，所以写一篇元类的博客">
+<meta name="twitter:title" content="Django Aliyun OSS Plugin Example">
+<meta name="twitter:description" content="# project.storage.pyimport oss2from django.conf import settingsfrom django.core.files.storage import Storageclass AliyunObjectStorage(Storage):    def __init__(self):        self.access_key_id = setti">
 
 
 
 
 
 
-  <link rel="canonical" href="https://anyisalin.github.io/2017/03/10/python-metaclass/"/>
+  <link rel="canonical" href="https://anyisalin.github.io/2018/08/15/django-aliyun-oss-plugin/"/>
 
 
 
@@ -134,7 +134,7 @@
     sidebar: "",
   };
 </script>
-  <title>Python - 元类 | 无趣</title>
+  <title>Django Aliyun OSS Plugin Example | 无趣</title>
   
 
 
@@ -290,7 +290,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2017/03/10/python-metaclass/">
+    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2018/08/15/django-aliyun-oss-plugin/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnyISalIn">
@@ -307,7 +307,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Python - 元类</h1>
+          <h1 class="post-title" itemprop="name headline">Django Aliyun OSS Plugin Example</h1>
         
 
         <div class="post-meta">
@@ -319,7 +319,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-10T11:12:02+08:00">2017-03-10</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-15T13:59:59+08:00">2018-08-15</time>
             
 
             
@@ -337,9 +337,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/03/10/python-metaclass/#comments" itemprop="discussionUrl">
+                <a href="/2018/08/15/django-aliyun-oss-plugin/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/03/10/python-metaclass/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/08/15/django-aliyun-oss-plugin/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -361,7 +361,7 @@
                 
                   <span class="post-meta-item-text">Symbols count in article&#58;</span>
                 
-                <span title="Symbols count in article">3k</span>
+                <span title="Symbols count in article">1.3k</span>
               
 
               
@@ -375,7 +375,7 @@
                 
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Reading time">0:03</span>
+                <span title="Reading time">0:01</span>
               
             </div>
           
@@ -395,57 +395,7 @@
       
 
       
-        <p>元类是 Python 的黑魔法之一，大多数人都不需要掌握，但是可以用来装逼，所以写一篇元类的博客</p>
-<a id="more"></a>
-<h2 id="类是实例"><a href="#类是实例" class="headerlink" title="类是实例"></a>类是实例</h2><p>类是描述如何产生一个对象的代码段，就像下面的代码一样</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, age)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_info</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'Name &#123;&#125;, Age &#123;&#125;'</span>.format(self.name, self.age))</span><br></pre></td></tr></table></figure>
-<p>然而 Python 中的类不止如此，在 Python 中类也是一个对象，是 <code>type</code> 的实例</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>Person.__class__</span><br><span class="line">type</span><br></pre></td></tr></table></figure>
-<p>既然类也是一个对象，我们就可以将它</p>
-<ul>
-<li>赋值给变量</li>
-<li>当参数传递</li>
-<li>复制</li>
-<li>添加属性</li>
-</ul>
-<p>就像下面的代码一样</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cls_add_method</span><span class="params">(cls)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">haha</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">'haha'</span>)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> hasattr(cls, <span class="string">'haha'</span>):</span><br><span class="line">        setattr(cls, <span class="string">'haha'</span>, haha)</span><br><span class="line">    <span class="keyword">return</span> cls</span><br><span class="line"></span><br><span class="line"><span class="meta">@cls_add_method  # 等价于 A = cls_add_method(A)   </span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>A.haha()</span><br><span class="line">haha</span><br></pre></td></tr></table></figure>
-<h2 id="type-的神奇用法"><a href="#type-的神奇用法" class="headerlink" title="type 的神奇用法"></a>type 的神奇用法</h2><p><code>type</code> 是一个非常古老的函数，我们可以通过它来获取对象的类，但是它的神奇之处在于 可以通过参数来创建并返回一个类</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>type(<span class="string">'A'</span>, (), &#123;&#125;)</span><br><span class="line">__main__.A</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上面的代码等价于</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
-<p><code>type</code> 接收三个参数，<code>类名</code>、<code>继承列表</code>、<code>类字典</code></p>
-<p><strong>继承</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>B = type(<span class="string">'B'</span>, (), &#123;<span class="string">'a'</span>: <span class="string">'c'</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>C = type(<span class="string">'C'</span>, (B,), &#123;&#125;)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>C.__mro__</span><br><span class="line">(&lt;class '__main__.C'&gt;, &lt;class '__main__.B'&gt;, &lt;class 'object'&gt;)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>C.a</span><br><span class="line"><span class="string">'c'</span></span><br></pre></td></tr></table></figure>
-<p><strong>添加方法</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">b</span><span class="params">(self)</span>:</span></span><br><span class="line">    print(<span class="string">'abbaa'</span>)</span><br><span class="line">    </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>C.b = b</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = C()</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c.b()</span><br><span class="line"><span class="string">'abbaa'</span></span><br></pre></td></tr></table></figure>
-<h2 id="元类"><a href="#元类" class="headerlink" title="元类"></a>元类</h2><p>其实元类就是 类的类，<code>type</code> 就是一个元类，控制 Python 所有类的创建，无论是 <code>int</code> 、<code>str</code>、<code>list</code> 等类都是由 <code>type</code> 控制创建的，它们的元类都是 <code>type</code> </p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>lst = []</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>lst.__class__</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">list</span>'&gt;</span></span><br><span class="line"><span class="class">&gt;&gt;&gt; <span class="title">lst</span>.<span class="title">__class__</span>.<span class="title">__class__</span></span></span><br><span class="line"><span class="class">&lt;<span class="title">class</span> '<span class="title">type</span>'&gt;</span></span><br></pre></td></tr></table></figure>
-<p>当然，我们也可以自定义元类</p>
-<p>其实元类不一定是一个类，只需要是一个 <code>callable</code> 对象即可，下面这个例子，定义了一个将一个类的所有属性变为大写的函数，通过 <code>metaclass</code> 来指定一个自定义的元类</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">upperclass</span><span class="params">(clsname, bases, clsdict)</span>:</span></span><br><span class="line">    upper_dict = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> key, val <span class="keyword">in</span> clsdict.items():</span><br><span class="line">        <span class="keyword">if</span> key.startswith(<span class="string">'_'</span>):</span><br><span class="line">            upper_dict[key] = val</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            upper_dict[key.upper()] = val</span><br><span class="line">    <span class="keyword">return</span> type(clsname, bases, upper_dict)</span><br></pre></td></tr></table></figure>
-<p>测试</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span><span class="params">(metaclass=upperclass)</span>:</span></span><br><span class="line">    a = <span class="string">'c'</span></span><br><span class="line">    b = <span class="string">'d'</span></span><br><span class="line">    </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d = D()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d.a</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">AttributeError: <span class="string">'D'</span> object has no attribute <span class="string">'a'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d.A</span><br><span class="line"><span class="string">'c'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d.b</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">AttributeError: <span class="string">'D'</span> object has no attribute <span class="string">'b'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d.A</span><br><span class="line"><span class="string">'c'</span></span><br></pre></td></tr></table></figure>
-<p>但是毕竟是元类嘛，当然要用类啊，标准的做法是定义一个类，通过 <code>__new__</code> 方法返回一个新的类，</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UpperClass</span><span class="params">(type)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, clsname, bases, clsdict)</span>:</span></span><br><span class="line">        upper_dict = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> key, val <span class="keyword">in</span> clsdict.items():</span><br><span class="line">            <span class="keyword">if</span> key.startswith(<span class="string">'_'</span>):</span><br><span class="line">                upper_dict[key] = val</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                upper_dict[key.upper()] = val</span><br><span class="line">        <span class="keyword">return</span> super().__new__(cls, clsname, bases, upper_dict)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span><span class="params">(metaclass=UpperClass)</span>:</span></span><br><span class="line">    a = <span class="string">'c'</span></span><br><span class="line">    d = <span class="string">'e'</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>D.a</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">AttributeError: type object <span class="string">'D'</span> has no attribute <span class="string">'a'</span></span><br></pre></td></tr></table></figure>
-<p>为什么用类，不用函数</p>
-<ul>
-<li>使用 oop, 代码简洁明了</li>
-<li>可以使用 <code>__new__</code> 、<code>__init__</code>、<code>__call__</code> 干更多的事情</li>
-<li>元类可以从元类继承方法，或者使用元类，嗯，很高大上</li>
-<li>因为是元类，所以用类</li>
-</ul>
-<p>事实上，元类只做这几件事</p>
-<ul>
-<li>拦截类的创建</li>
-<li>修改类</li>
-<li>返回修改后的类</li>
-</ul>
-<blockquote>
-<p>参考资料:</p>
-<ul>
-<li><a href="http://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python" target="_blank" rel="noopener"><a href="http://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python" target="_blank" rel="noopener">What is a metaclass in Python? Slackoverflow</a></a></li>
-<li><a href="https://www.youtube.com/watch?v=sPiWg5jSoZI" target="_blank" rel="noopener">Python3 元编程 PyCon  David beazley</a></li>
-</ul>
-</blockquote>
+        <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># project.storage.py</span></span><br><span class="line"><span class="keyword">import</span> oss2</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> django.core.files.storage <span class="keyword">import</span> Storage</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AliyunObjectStorage</span><span class="params">(Storage)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.access_key_id = settings.ALIYUN_OSS_KEY_ID</span><br><span class="line">        self.access_key_secret = settings.ALIYUN_OSS_KEY_SECRET</span><br><span class="line">        self.bucket_name = settings.ALIYUN_OSS_BUCKET_NAME</span><br><span class="line">        self.endpoint = settings.ALIYUN_OSS_ENDPOINT</span><br><span class="line">        self.access_url = settings.ALIYUN_OSS_ACCESS_URL</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bucket</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> oss2.Bucket(oss2.Auth(self.access_key_id, self.access_key_secret), self.endpoint, self.bucket_name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_open</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.bucket.get_object(name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_save</span><span class="params">(self, name, content)</span>:</span></span><br><span class="line">        self.bucket.put_object(name, content)</span><br><span class="line">        <span class="keyword">return</span> name</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.bucket.delete_object(name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">exists</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.bucket.object_exists(name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">listdir</span><span class="params">(self, path)</span>:</span></span><br><span class="line">        dirs, files = [], []</span><br><span class="line">        objects = self.bucket.list_objects(path).object_list</span><br><span class="line">        <span class="keyword">for</span> object <span class="keyword">in</span> objects:</span><br><span class="line">            files.append(object.key.split(path)[<span class="number">-1</span>])</span><br><span class="line">        <span class="keyword">return</span> dirs, files</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">size</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.bucket.get_object_meta(name).content_length</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">url</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'&#123;&#125;/&#123;&#125;'</span>.format(self.access_url, name)</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -470,6 +420,8 @@
           
             <a href="/tags/development/" rel="tag"># development</a>
           
+            <a href="/tags/web/" rel="tag"># web</a>
+          
         </div>
       
 
@@ -481,8 +433,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/08/python-descriptor/" rel="next" title="Python - 描述器">
-                <i class="fa fa-chevron-left"></i> Python - 描述器
+              <a href="/2018/08/11/geetest-with-django/" rel="next" title="极验 Django Example">
+                <i class="fa fa-chevron-left"></i> 极验 Django Example
               </a>
             
           </div>
@@ -490,10 +442,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/12/python-multithread/" rel="prev" title="Python - 多线程">
-                Python - 多线程 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -552,17 +500,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -688,22 +627,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类是实例"><span class="nav-number">1.</span> <span class="nav-text">类是实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#type-的神奇用法"><span class="nav-number">2.</span> <span class="nav-text">type 的神奇用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元类"><span class="nav-number">3.</span> <span class="nav-text">元类</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -877,9 +800,9 @@
   
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = 'https://anyisalin.github.io/2017/03/10/python-metaclass/';
-        this.page.identifier = '2017/03/10/python-metaclass/';
-        this.page.title = 'Python - 元类';
+        this.page.url = 'https://anyisalin.github.io/2018/08/15/django-aliyun-oss-plugin/';
+        this.page.identifier = '2018/08/15/django-aliyun-oss-plugin/';
+        this.page.title = 'Django Aliyun OSS Plugin Example';
       };
       function loadComments () {
         var d = document, s = d.createElement('script');
