@@ -104,28 +104,28 @@
 
 
   
-  <meta name="keywords" content="python,web," />
+  <meta name="keywords" content="container,cloudnative,microservice," />
 
 
-<meta name="description" content="from user import viewsfrom django.urls import pathapp_name = &apos;user&apos;urlpatterns = [    path(&apos;register/&apos;, views.RegisterView.as_view(), name=&apos;register&apos;),    path(&apos;login/&apos;, views.LoginView.as_view(), nam">
-<meta name="keywords" content="python,web">
+<meta name="description" content="中文解释 Kubernetes Handbook 来源 I. CodebaseOne codebase tracked in revision control, many deploysII. DependenciesExplicitly declare and isolate dependenciesIII. ConfigStore config in the environmentIV. B">
+<meta name="keywords" content="container,cloudnative,microservice">
 <meta property="og:type" content="article">
-<meta property="og:title" content="极验 Django Example">
-<meta property="og:url" content="https://anyisalin.github.io/2018/08/11/geetest-with-django/index.html">
+<meta property="og:title" content="Heroku Cloud Native Application Design Twelve Factor">
+<meta property="og:url" content="https://anyisalin.github.io/2018/08/26/heroku-twelve-factor/index.html">
 <meta property="og:site_name" content="无趣">
-<meta property="og:description" content="from user import viewsfrom django.urls import pathapp_name = &apos;user&apos;urlpatterns = [    path(&apos;register/&apos;, views.RegisterView.as_view(), name=&apos;register&apos;),    path(&apos;login/&apos;, views.LoginView.as_view(), nam">
+<meta property="og:description" content="中文解释 Kubernetes Handbook 来源 I. CodebaseOne codebase tracked in revision control, many deploysII. DependenciesExplicitly declare and isolate dependenciesIII. ConfigStore config in the environmentIV. B">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-08-11T07:54:26.900Z">
+<meta property="og:updated_time" content="2018-08-26T13:38:45.368Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="极验 Django Example">
-<meta name="twitter:description" content="from user import viewsfrom django.urls import pathapp_name = &apos;user&apos;urlpatterns = [    path(&apos;register/&apos;, views.RegisterView.as_view(), name=&apos;register&apos;),    path(&apos;login/&apos;, views.LoginView.as_view(), nam">
+<meta name="twitter:title" content="Heroku Cloud Native Application Design Twelve Factor">
+<meta name="twitter:description" content="中文解释 Kubernetes Handbook 来源 I. CodebaseOne codebase tracked in revision control, many deploysII. DependenciesExplicitly declare and isolate dependenciesIII. ConfigStore config in the environmentIV. B">
 
 
 
 
 
 
-  <link rel="canonical" href="https://anyisalin.github.io/2018/08/11/geetest-with-django/"/>
+  <link rel="canonical" href="https://anyisalin.github.io/2018/08/26/heroku-twelve-factor/"/>
 
 
 
@@ -134,7 +134,7 @@
     sidebar: "",
   };
 </script>
-  <title>极验 Django Example | 无趣</title>
+  <title>Heroku Cloud Native Application Design Twelve Factor | 无趣</title>
   
 
 
@@ -290,7 +290,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2018/08/11/geetest-with-django/">
+    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2018/08/26/heroku-twelve-factor/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnyISalIn">
@@ -307,7 +307,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">极验 Django Example</h1>
+          <h1 class="post-title" itemprop="name headline">Heroku Cloud Native Application Design Twelve Factor</h1>
         
 
         <div class="post-meta">
@@ -319,7 +319,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-11T15:43:48+08:00">2018-08-11</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-26T21:26:13+08:00">2018-08-26</time>
             
 
             
@@ -337,9 +337,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/08/11/geetest-with-django/#comments" itemprop="discussionUrl">
+                <a href="/2018/08/26/heroku-twelve-factor/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/08/11/geetest-with-django/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/08/26/heroku-twelve-factor/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -361,7 +361,7 @@
                 
                   <span class="post-meta-item-text">Symbols count in article&#58;</span>
                 
-                <span title="Symbols count in article">3.7k</span>
+                <span title="Symbols count in article">740</span>
               
 
               
@@ -375,7 +375,7 @@
                 
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Reading time">0:04</span>
+                <span title="Reading time">0:01</span>
               
             </div>
           
@@ -395,9 +395,10 @@
       
 
       
-        <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> user <span class="keyword">import</span> views</span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path</span><br><span class="line"></span><br><span class="line">app_name = <span class="string">'user'</span></span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">'register/'</span>, views.RegisterView.as_view(), name=<span class="string">'register'</span>),</span><br><span class="line">    path(<span class="string">'login/'</span>, views.LoginView.as_view(), name=<span class="string">'login'</span>),</span><br><span class="line">    path(<span class="string">'logout/'</span>, views.LogoutView.as_view(), name=<span class="string">'logout'</span>),</span><br><span class="line">    path(<span class="string">'pc-gt/'</span>, views.GtValidateView.as_view(), name=<span class="string">'gt-validate'</span>),</span><br><span class="line">    path(<span class="string">r'active/&lt;uidb64&gt;/&lt;token&gt;/'</span>, views.ActiveView.as_view(), name=<span class="string">'active'</span>),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> messages</span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> reverse_lazy</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth <span class="keyword">import</span> login, logout</span><br><span class="line"><span class="keyword">from</span> django.utils.http <span class="keyword">import</span> urlsafe_base64_decode</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.tokens <span class="keyword">import</span> default_token_generator</span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponseRedirect, HttpResponseBadRequest</span><br><span class="line"><span class="keyword">from</span> django.views.generic <span class="keyword">import</span> FormView, View, TemplateView, CreateView</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> geetest <span class="keyword">import</span> GeetestLib <span class="comment"># https://github.com/GeeTeam/gt-python-sdk</span></span><br><span class="line"><span class="keyword">from</span> user.forms <span class="keyword">import</span> UserRegisterForm, UserLoginForm</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GeeTestMixin</span><span class="params">(object)</span>:</span></span><br><span class="line">    gid = settings.GEETEST_ID <span class="comment"># 极验ID</span></span><br><span class="line">    gkey = settings.GEETEST_KEY <span class="comment"># 极验 Key</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">check_request</span><span class="params">(self, request)</span>:</span> <span class="comment"># 检查验证是否通过</span></span><br><span class="line">        gt = GeetestLib(self.gid, self.gkey)</span><br><span class="line">        challenge = request.POST.get(gt.FN_CHALLENGE, <span class="string">''</span>)</span><br><span class="line">        validate = request.POST.get(gt.FN_VALIDATE, <span class="string">''</span>)</span><br><span class="line">        seccode = request.POST.get(gt.FN_SECCODE, <span class="string">''</span>)</span><br><span class="line">        status = request.session[gt.GT_STATUS_SESSION_KEY]</span><br><span class="line">        user_id = request.session[<span class="string">"user_id"</span>]</span><br><span class="line">        <span class="keyword">if</span> status:</span><br><span class="line">            <span class="keyword">return</span> gt.success_validate(challenge, validate, seccode, user_id)</span><br><span class="line">        <span class="keyword">return</span> gt.failback_validate(challenge, validate, seccode)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RegisterView</span><span class="params">(CreateView, GeeTestMixin)</span>:</span></span><br><span class="line">    template_name = <span class="string">'login_and_register.html'</span></span><br><span class="line">    form_class = UserRegisterForm</span><br><span class="line">    success_url = reverse_lazy(<span class="string">'user:login'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_context_data</span><span class="params">(self, **kwargs)</span>:</span></span><br><span class="line">        context = super().get_context_data(**kwargs)</span><br><span class="line">        context.update(&#123;</span><br><span class="line">            <span class="string">'form_title'</span>: <span class="string">'注册'</span></span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">return</span> context</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">form_valid</span><span class="params">(self, form)</span>:</span></span><br><span class="line">        super().form_valid(form)</span><br><span class="line">        messages.add_message(self.request, messages.INFO, <span class="string">'激活邮件已发出，请检查您的邮箱'</span>)</span><br><span class="line">        <span class="keyword">return</span> HttpResponseRedirect(self.get_success_url())</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.check_request(request):</span><br><span class="line">            messages.add_message(request, messages.ERROR, <span class="string">'验证失败'</span>)</span><br><span class="line">            <span class="keyword">return</span> HttpResponseRedirect(reverse_lazy(<span class="string">'user:register'</span>))</span><br><span class="line">        <span class="keyword">return</span> super().post(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GtValidateView</span><span class="params">(View, GeeTestMixin)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request)</span>:</span></span><br><span class="line">        user_id = <span class="string">'test'</span></span><br><span class="line">        gt = GeetestLib(self.gid, self.gkey)</span><br><span class="line">        status = gt.pre_process(user_id)</span><br><span class="line">        request.session[gt.GT_STATUS_SESSION_KEY] = status</span><br><span class="line">        request.session[<span class="string">"user_id"</span>] = user_id</span><br><span class="line">        response_str = gt.get_response_str()</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(response_str)</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">    url: <span class="string">"&#123;% url 'user:gt-validate' %&#125;"</span>,</span><br><span class="line">    type: <span class="string">"get"</span>,</span><br><span class="line">    dataType: <span class="string">"json"</span>,</span><br><span class="line">    success: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="comment">//请检测data的数据结构， 保证data.gt, data.challenge, data.success有值</span></span><br><span class="line">        initGeetest(&#123;</span><br><span class="line">                <span class="comment">// 以下配置参数来自服务端 SDK</span></span><br><span class="line">                gt: data.gt,</span><br><span class="line">                challenge: data.challenge,</span><br><span class="line">                offline: !data.success,</span><br><span class="line">                new_captcha: <span class="literal">true</span>,</span><br><span class="line">            &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">captchaObj</span>) </span>&#123;</span><br><span class="line">                captchaObj.appendTo(<span class="string">'#captchaBox'</span>)</span><br><span class="line"></span><br><span class="line">                captchaObj.onReady(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                &#125;).onSuccess(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                    $(<span class="string">'button[type=submit]'</span>).removeAttr(<span class="string">'disabled'</span>)</span><br><span class="line">                &#125;).onError(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+        <blockquote>
+<p><a href="https://rootsongjc.gitbooks.io/kubernetes-handbook/content/cloud-native/kubernetes-and-cloud-native-app-overview.html#12%E5%9B%A0%E7%B4%A0%E5%BA%94%E7%94%A8" target="_blank" rel="noopener">中文解释 Kubernetes Handbook</a></p>
+<p><a href="https://12factor.net/" target="_blank" rel="noopener">来源</a></p>
+<h2 id="I-Codebase"><a href="#I-Codebase" class="headerlink" title="I. Codebase"></a><a href="https://12factor.net/codebase" target="_blank" rel="noopener">I. Codebase</a></h2><h3 id="One-codebase-tracked-in-revision-control-many-deploys"><a href="#One-codebase-tracked-in-revision-control-many-deploys" class="headerlink" title="One codebase tracked in revision control, many deploys"></a>One codebase tracked in revision control, many deploys</h3><h2 id="II-Dependencies"><a href="#II-Dependencies" class="headerlink" title="II. Dependencies"></a><a href="https://12factor.net/dependencies" target="_blank" rel="noopener">II. Dependencies</a></h2><h3 id="Explicitly-declare-and-isolate-dependencies"><a href="#Explicitly-declare-and-isolate-dependencies" class="headerlink" title="Explicitly declare and isolate dependencies"></a>Explicitly declare and isolate dependencies</h3><h2 id="III-Config"><a href="#III-Config" class="headerlink" title="III. Config"></a><a href="https://12factor.net/config" target="_blank" rel="noopener">III. Config</a></h2><h3 id="Store-config-in-the-environment"><a href="#Store-config-in-the-environment" class="headerlink" title="Store config in the environment"></a>Store config in the environment</h3><h2 id="IV-Backing-services"><a href="#IV-Backing-services" class="headerlink" title="IV. Backing services"></a><a href="https://12factor.net/backing-services" target="_blank" rel="noopener">IV. Backing services</a></h2><h3 id="Treat-backing-services-as-attached-resources"><a href="#Treat-backing-services-as-attached-resources" class="headerlink" title="Treat backing services as attached resources"></a>Treat backing services as attached resources</h3><h2 id="V-Build-release-run"><a href="#V-Build-release-run" class="headerlink" title="V. Build, release, run"></a><a href="https://12factor.net/build-release-run" target="_blank" rel="noopener">V. Build, release, run</a></h2><h3 id="Strictly-separate-build-and-run-stages"><a href="#Strictly-separate-build-and-run-stages" class="headerlink" title="Strictly separate build and run stages"></a>Strictly separate build and run stages</h3><h2 id="VI-Processes"><a href="#VI-Processes" class="headerlink" title="VI. Processes"></a><a href="https://12factor.net/processes" target="_blank" rel="noopener">VI. Processes</a></h2><h3 id="Execute-the-app-as-one-or-more-stateless-processes"><a href="#Execute-the-app-as-one-or-more-stateless-processes" class="headerlink" title="Execute the app as one or more stateless processes"></a>Execute the app as one or more stateless processes</h3><h2 id="VII-Port-binding"><a href="#VII-Port-binding" class="headerlink" title="VII. Port binding"></a><a href="https://12factor.net/port-binding" target="_blank" rel="noopener">VII. Port binding</a></h2><h3 id="Export-services-via-port-binding"><a href="#Export-services-via-port-binding" class="headerlink" title="Export services via port binding"></a>Export services via port binding</h3><h2 id="VIII-Concurrency"><a href="#VIII-Concurrency" class="headerlink" title="VIII. Concurrency"></a><a href="https://12factor.net/concurrency" target="_blank" rel="noopener">VIII. Concurrency</a></h2><h3 id="Scale-out-via-the-process-model"><a href="#Scale-out-via-the-process-model" class="headerlink" title="Scale out via the process model"></a>Scale out via the process model</h3><h2 id="IX-Disposability"><a href="#IX-Disposability" class="headerlink" title="IX. Disposability"></a><a href="https://12factor.net/disposability" target="_blank" rel="noopener">IX. Disposability</a></h2><h3 id="Maximize-robustness-with-fast-startup-and-graceful-shutdown"><a href="#Maximize-robustness-with-fast-startup-and-graceful-shutdown" class="headerlink" title="Maximize robustness with fast startup and graceful shutdown"></a>Maximize robustness with fast startup and graceful shutdown</h3><h2 id="X-Dev-prod-parity"><a href="#X-Dev-prod-parity" class="headerlink" title="X. Dev/prod parity"></a><a href="https://12factor.net/dev-prod-parity" target="_blank" rel="noopener">X. Dev/prod parity</a></h2><h3 id="Keep-development-staging-and-production-as-similar-as-possible"><a href="#Keep-development-staging-and-production-as-similar-as-possible" class="headerlink" title="Keep development, staging, and production as similar as possible"></a>Keep development, staging, and production as similar as possible</h3><h2 id="XI-Logs"><a href="#XI-Logs" class="headerlink" title="XI. Logs"></a><a href="https://12factor.net/logs" target="_blank" rel="noopener">XI. Logs</a></h2><h3 id="Treat-logs-as-event-streams"><a href="#Treat-logs-as-event-streams" class="headerlink" title="Treat logs as event streams"></a>Treat logs as event streams</h3><h2 id="XII-Admin-processes"><a href="#XII-Admin-processes" class="headerlink" title="XII. Admin processes"></a><a href="https://12factor.net/admin-processes" target="_blank" rel="noopener">XII. Admin processes</a></h2><h3 id="Run-admin-management-tasks-as-one-off-processes"><a href="#Run-admin-management-tasks-as-one-off-processes" class="headerlink" title="Run admin/management tasks as one-off processes"></a>Run admin/management tasks as one-off processes</h3></blockquote>
 
       
     </div>
@@ -418,9 +419,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"># python</a>
+            <a href="/tags/container/" rel="tag"># container</a>
           
-            <a href="/tags/web/" rel="tag"># web</a>
+            <a href="/tags/cloudnative/" rel="tag"># cloudnative</a>
+          
+            <a href="/tags/microservice/" rel="tag"># microservice</a>
           
         </div>
       
@@ -433,8 +436,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/12/openvpn-with-easyconnect/" rel="next" title="openvpn 中转 EasyConnect">
-                <i class="fa fa-chevron-left"></i> openvpn 中转 EasyConnect
+              <a href="/2018/08/21/nginx-reverse-proxy-pdf/" rel="next" title="Nginx Reverse Proxy Dynamic PDF URL and Online Preview">
+                <i class="fa fa-chevron-left"></i> Nginx Reverse Proxy Dynamic PDF URL and Online Preview
               </a>
             
           </div>
@@ -442,10 +445,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/15/django-aliyun-oss-plugin/" rel="prev" title="Django Aliyun OSS Plugin Example">
-                Django Aliyun OSS Plugin Example <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -504,8 +503,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -639,6 +647,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-Codebase"><span class="nav-number">1.</span> <span class="nav-text">I. Codebase</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#One-codebase-tracked-in-revision-control-many-deploys"><span class="nav-number">1.1.</span> <span class="nav-text">One codebase tracked in revision control, many deploys</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-Dependencies"><span class="nav-number">2.</span> <span class="nav-text">II. Dependencies</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Explicitly-declare-and-isolate-dependencies"><span class="nav-number">2.1.</span> <span class="nav-text">Explicitly declare and isolate dependencies</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-Config"><span class="nav-number">3.</span> <span class="nav-text">III. Config</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Store-config-in-the-environment"><span class="nav-number">3.1.</span> <span class="nav-text">Store config in the environment</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IV-Backing-services"><span class="nav-number">4.</span> <span class="nav-text">IV. Backing services</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Treat-backing-services-as-attached-resources"><span class="nav-number">4.1.</span> <span class="nav-text">Treat backing services as attached resources</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V-Build-release-run"><span class="nav-number">5.</span> <span class="nav-text">V. Build, release, run</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Strictly-separate-build-and-run-stages"><span class="nav-number">5.1.</span> <span class="nav-text">Strictly separate build and run stages</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VI-Processes"><span class="nav-number">6.</span> <span class="nav-text">VI. Processes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Execute-the-app-as-one-or-more-stateless-processes"><span class="nav-number">6.1.</span> <span class="nav-text">Execute the app as one or more stateless processes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VII-Port-binding"><span class="nav-number">7.</span> <span class="nav-text">VII. Port binding</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Export-services-via-port-binding"><span class="nav-number">7.1.</span> <span class="nav-text">Export services via port binding</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VIII-Concurrency"><span class="nav-number">8.</span> <span class="nav-text">VIII. Concurrency</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Scale-out-via-the-process-model"><span class="nav-number">8.1.</span> <span class="nav-text">Scale out via the process model</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IX-Disposability"><span class="nav-number">9.</span> <span class="nav-text">IX. Disposability</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Maximize-robustness-with-fast-startup-and-graceful-shutdown"><span class="nav-number">9.1.</span> <span class="nav-text">Maximize robustness with fast startup and graceful shutdown</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#X-Dev-prod-parity"><span class="nav-number">10.</span> <span class="nav-text">X. Dev/prod parity</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Keep-development-staging-and-production-as-similar-as-possible"><span class="nav-number">10.1.</span> <span class="nav-text">Keep development, staging, and production as similar as possible</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XI-Logs"><span class="nav-number">11.</span> <span class="nav-text">XI. Logs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Treat-logs-as-event-streams"><span class="nav-number">11.1.</span> <span class="nav-text">Treat logs as event streams</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XII-Admin-processes"><span class="nav-number">12.</span> <span class="nav-text">XII. Admin processes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-admin-management-tasks-as-one-off-processes"><span class="nav-number">12.1.</span> <span class="nav-text">Run admin/management tasks as one-off processes</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -812,9 +836,9 @@
   
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = 'https://anyisalin.github.io/2018/08/11/geetest-with-django/';
-        this.page.identifier = '2018/08/11/geetest-with-django/';
-        this.page.title = '极验 Django Example';
+        this.page.url = 'https://anyisalin.github.io/2018/08/26/heroku-twelve-factor/';
+        this.page.identifier = '2018/08/26/heroku-twelve-factor/';
+        this.page.title = 'Heroku Cloud Native Application Design Twelve Factor';
       };
       function loadComments () {
         var d = document, s = d.createElement('script');
