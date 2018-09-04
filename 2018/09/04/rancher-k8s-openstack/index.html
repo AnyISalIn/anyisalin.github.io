@@ -104,28 +104,30 @@
 
 
   
-  <meta name="keywords" content="container,cloudnative,microservice," />
+  <meta name="keywords" content="container,cloud,kubernetes," />
 
 
-<meta name="description" content="中文解释 Kubernetes Handbook 来源 I. CodebaseOne codebase tracked in revision control, many deploysII. DependenciesExplicitly declare and isolate dependenciesIII. ConfigStore config in the environmentIV. B">
-<meta name="keywords" content="container,cloudnative,microservice">
+<meta name="description" content="近日测试 openstack 作为 kubernetes 的基础设施平台为 kubernetes 提供基础服务(storage, loadbalancer) 目标：  为 kubernetes 提供 cinder 作为持久卷 通过 openstack 的 LBAAS v2 为 kubernetes 提供 LoadBalancer  集群架构">
+<meta name="keywords" content="container,cloud,kubernetes">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Heroku Cloud Native Application Design Twelve Factor">
-<meta property="og:url" content="https://anyisalin.github.io/2018/08/26/heroku-twelve-factor/index.html">
+<meta property="og:title" content="基于 openstack 的 kubernetes(rancher RKE) 测试">
+<meta property="og:url" content="https://anyisalin.github.io/2018/09/04/rancher-k8s-openstack/index.html">
 <meta property="og:site_name" content="无趣">
-<meta property="og:description" content="中文解释 Kubernetes Handbook 来源 I. CodebaseOne codebase tracked in revision control, many deploysII. DependenciesExplicitly declare and isolate dependenciesIII. ConfigStore config in the environmentIV. B">
+<meta property="og:description" content="近日测试 openstack 作为 kubernetes 的基础设施平台为 kubernetes 提供基础服务(storage, loadbalancer) 目标：  为 kubernetes 提供 cinder 作为持久卷 通过 openstack 的 LBAAS v2 为 kubernetes 提供 LoadBalancer  集群架构">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-08-26T13:38:45.368Z">
+<meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/k8s-rancher-ops-arch.png">
+<meta property="og:updated_time" content="2018-09-04T03:05:23.046Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Heroku Cloud Native Application Design Twelve Factor">
-<meta name="twitter:description" content="中文解释 Kubernetes Handbook 来源 I. CodebaseOne codebase tracked in revision control, many deploysII. DependenciesExplicitly declare and isolate dependenciesIII. ConfigStore config in the environmentIV. B">
+<meta name="twitter:title" content="基于 openstack 的 kubernetes(rancher RKE) 测试">
+<meta name="twitter:description" content="近日测试 openstack 作为 kubernetes 的基础设施平台为 kubernetes 提供基础服务(storage, loadbalancer) 目标：  为 kubernetes 提供 cinder 作为持久卷 通过 openstack 的 LBAAS v2 为 kubernetes 提供 LoadBalancer  集群架构">
+<meta name="twitter:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/k8s-rancher-ops-arch.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://anyisalin.github.io/2018/08/26/heroku-twelve-factor/"/>
+  <link rel="canonical" href="https://anyisalin.github.io/2018/09/04/rancher-k8s-openstack/"/>
 
 
 
@@ -134,7 +136,7 @@
     sidebar: "",
   };
 </script>
-  <title>Heroku Cloud Native Application Design Twelve Factor | 无趣</title>
+  <title>基于 openstack 的 kubernetes(rancher RKE) 测试 | 无趣</title>
   
 
 
@@ -290,7 +292,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2018/08/26/heroku-twelve-factor/">
+    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2018/09/04/rancher-k8s-openstack/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnyISalIn">
@@ -307,7 +309,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Heroku Cloud Native Application Design Twelve Factor</h1>
+          <h1 class="post-title" itemprop="name headline">基于 openstack 的 kubernetes(rancher RKE) 测试</h1>
         
 
         <div class="post-meta">
@@ -319,7 +321,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-26T21:26:13+08:00">2018-08-26</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-04T10:21:01+08:00">2018-09-04</time>
             
 
             
@@ -337,9 +339,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/08/26/heroku-twelve-factor/#comments" itemprop="discussionUrl">
+                <a href="/2018/09/04/rancher-k8s-openstack/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/08/26/heroku-twelve-factor/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/09/04/rancher-k8s-openstack/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -361,7 +363,7 @@
                 
                   <span class="post-meta-item-text">Symbols count in article&#58;</span>
                 
-                <span title="Symbols count in article">740</span>
+                <span title="Symbols count in article">7.5k</span>
               
 
               
@@ -375,7 +377,7 @@
                 
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Reading time">0:01</span>
+                <span title="Reading time">0:08</span>
               
             </div>
           
@@ -395,10 +397,24 @@
       
 
       
-        <blockquote>
-<p><a href="https://rootsongjc.gitbooks.io/kubernetes-handbook/content/cloud-native/kubernetes-and-cloud-native-app-overview.html#12%E5%9B%A0%E7%B4%A0%E5%BA%94%E7%94%A8" target="_blank" rel="noopener">中文解释 Kubernetes Handbook</a></p>
-<p><a href="https://12factor.net/" target="_blank" rel="noopener">来源</a></p>
-<h2 id="I-Codebase"><a href="#I-Codebase" class="headerlink" title="I. Codebase"></a><a href="https://12factor.net/codebase" target="_blank" rel="noopener">I. Codebase</a></h2><h3 id="One-codebase-tracked-in-revision-control-many-deploys"><a href="#One-codebase-tracked-in-revision-control-many-deploys" class="headerlink" title="One codebase tracked in revision control, many deploys"></a>One codebase tracked in revision control, many deploys</h3><h2 id="II-Dependencies"><a href="#II-Dependencies" class="headerlink" title="II. Dependencies"></a><a href="https://12factor.net/dependencies" target="_blank" rel="noopener">II. Dependencies</a></h2><h3 id="Explicitly-declare-and-isolate-dependencies"><a href="#Explicitly-declare-and-isolate-dependencies" class="headerlink" title="Explicitly declare and isolate dependencies"></a>Explicitly declare and isolate dependencies</h3><h2 id="III-Config"><a href="#III-Config" class="headerlink" title="III. Config"></a><a href="https://12factor.net/config" target="_blank" rel="noopener">III. Config</a></h2><h3 id="Store-config-in-the-environment"><a href="#Store-config-in-the-environment" class="headerlink" title="Store config in the environment"></a>Store config in the environment</h3><h2 id="IV-Backing-services"><a href="#IV-Backing-services" class="headerlink" title="IV. Backing services"></a><a href="https://12factor.net/backing-services" target="_blank" rel="noopener">IV. Backing services</a></h2><h3 id="Treat-backing-services-as-attached-resources"><a href="#Treat-backing-services-as-attached-resources" class="headerlink" title="Treat backing services as attached resources"></a>Treat backing services as attached resources</h3><h2 id="V-Build-release-run"><a href="#V-Build-release-run" class="headerlink" title="V. Build, release, run"></a><a href="https://12factor.net/build-release-run" target="_blank" rel="noopener">V. Build, release, run</a></h2><h3 id="Strictly-separate-build-and-run-stages"><a href="#Strictly-separate-build-and-run-stages" class="headerlink" title="Strictly separate build and run stages"></a>Strictly separate build and run stages</h3><h2 id="VI-Processes"><a href="#VI-Processes" class="headerlink" title="VI. Processes"></a><a href="https://12factor.net/processes" target="_blank" rel="noopener">VI. Processes</a></h2><h3 id="Execute-the-app-as-one-or-more-stateless-processes"><a href="#Execute-the-app-as-one-or-more-stateless-processes" class="headerlink" title="Execute the app as one or more stateless processes"></a>Execute the app as one or more stateless processes</h3><h2 id="VII-Port-binding"><a href="#VII-Port-binding" class="headerlink" title="VII. Port binding"></a><a href="https://12factor.net/port-binding" target="_blank" rel="noopener">VII. Port binding</a></h2><h3 id="Export-services-via-port-binding"><a href="#Export-services-via-port-binding" class="headerlink" title="Export services via port binding"></a>Export services via port binding</h3><h2 id="VIII-Concurrency"><a href="#VIII-Concurrency" class="headerlink" title="VIII. Concurrency"></a><a href="https://12factor.net/concurrency" target="_blank" rel="noopener">VIII. Concurrency</a></h2><h3 id="Scale-out-via-the-process-model"><a href="#Scale-out-via-the-process-model" class="headerlink" title="Scale out via the process model"></a>Scale out via the process model</h3><h2 id="IX-Disposability"><a href="#IX-Disposability" class="headerlink" title="IX. Disposability"></a><a href="https://12factor.net/disposability" target="_blank" rel="noopener">IX. Disposability</a></h2><h3 id="Maximize-robustness-with-fast-startup-and-graceful-shutdown"><a href="#Maximize-robustness-with-fast-startup-and-graceful-shutdown" class="headerlink" title="Maximize robustness with fast startup and graceful shutdown"></a>Maximize robustness with fast startup and graceful shutdown</h3><h2 id="X-Dev-prod-parity"><a href="#X-Dev-prod-parity" class="headerlink" title="X. Dev/prod parity"></a><a href="https://12factor.net/dev-prod-parity" target="_blank" rel="noopener">X. Dev/prod parity</a></h2><h3 id="Keep-development-staging-and-production-as-similar-as-possible"><a href="#Keep-development-staging-and-production-as-similar-as-possible" class="headerlink" title="Keep development, staging, and production as similar as possible"></a>Keep development, staging, and production as similar as possible</h3><h2 id="XI-Logs"><a href="#XI-Logs" class="headerlink" title="XI. Logs"></a><a href="https://12factor.net/logs" target="_blank" rel="noopener">XI. Logs</a></h2><h3 id="Treat-logs-as-event-streams"><a href="#Treat-logs-as-event-streams" class="headerlink" title="Treat logs as event streams"></a>Treat logs as event streams</h3><h2 id="XII-Admin-processes"><a href="#XII-Admin-processes" class="headerlink" title="XII. Admin processes"></a><a href="https://12factor.net/admin-processes" target="_blank" rel="noopener">XII. Admin processes</a></h2><h3 id="Run-admin-management-tasks-as-one-off-processes"><a href="#Run-admin-management-tasks-as-one-off-processes" class="headerlink" title="Run admin/management tasks as one-off processes"></a>Run admin/management tasks as one-off processes</h3></blockquote>
+        <p>近日测试 <code>openstack</code> 作为 <code>kubernetes</code> 的基础设施平台为 <code>kubernetes</code> 提供基础服务(storage, loadbalancer)</p>
+<p>目标：</p>
+<ul>
+<li>为 <code>kubernetes</code> 提供 <code>cinder</code> 作为持久卷</li>
+<li>通过 <code>openstack</code> 的 LBAAS v2 为 <code>kubernetes</code> 提供 <code>LoadBalancer</code></li>
+</ul>
+<h2 id="集群架构"><a href="#集群架构" class="headerlink" title="集群架构"></a>集群架构</h2><p><img src="http://anyisalin1-1251720225.file.myqcloud.com/blog/k8s-rancher-ops-arch.png" alt="k8s-rancher-ops"></p>
+<a id="more"></a>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">x509: cannot validate certificate <span class="keyword">for</span> &lt;ipaddress&gt; because <span class="keyword">it</span> <span class="keyword">doesn't contain</span> any IP SANs</span><br></pre></td></tr></table></figure>
+<p>这个问题没有解决，最后通过创建一个新的 openstack region，让 cinder, neutron, compute 的接口都不走 https 来规避这个问题</p>
+<h2 id="cloud-config"><a href="#cloud-config" class="headerlink" title="cloud-config"></a>cloud-config</h2><p>由于是通过 <code>rancher</code> 进行管理，所以 cloud-config 直接写在 <code>rancher</code> 集群配置文件中即可</p>
+<p>如果是原始的 <code>kubernetes</code> 集群，需要在 kubelet 启动时指定 cloud-config 文件</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">cloud_provider:</span> </span><br><span class="line"><span class="attr">  name:</span> <span class="string">"openstack"</span></span><br><span class="line"><span class="attr">  openstackCloudProvider:</span> </span><br><span class="line"><span class="attr">    block_storage:</span> </span><br><span class="line"><span class="attr">      ignore-volume-az:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">      trust-device-path:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    global:</span> </span><br><span class="line"><span class="attr">      auth-url:</span> <span class="string">"http://10.10.23.100:45000/v3"</span></span><br><span class="line"><span class="attr">      domain-id:</span> <span class="string">"default"</span></span><br><span class="line"><span class="attr">      password:</span> <span class="string">"******"</span></span><br><span class="line"><span class="attr">      region:</span> <span class="string">"RegionTest"</span> <span class="comment"># 笔者创建所有 endpoints 走 http 的 region</span></span><br><span class="line"><span class="attr">      tenant-id:</span> <span class="string">"287da09439154ae7a00c5583fa28de4f"</span></span><br><span class="line"><span class="attr">      username:</span> <span class="string">"anyisalin"</span></span><br><span class="line"><span class="attr">    load_balancer:</span> </span><br><span class="line"><span class="attr">      create-monitor:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">      manage-security-groups:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">      monitor-delay:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">      monitor-max-retries:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">      monitor-timeout:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">      subnet-id:</span> <span class="string">"092e753f-cead-4af0-9200-cf779d0cdf04"</span> <span class="comment"># 这里是 private network 的 uuid</span></span><br><span class="line"><span class="attr">      use-octavia:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    metadata:</span> </span><br><span class="line"><span class="attr">      request-timeout:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">    route:</span> </span><br><span class="line"><span class="attr">      router-id:</span> <span class="string">"8c98f2a8-eec5-451d-9249-d9f2078f768d"</span></span><br></pre></td></tr></table></figure>
+<h2 id="cinder-storageclass"><a href="#cinder-storageclass" class="headerlink" title="cinder storageclass"></a>cinder storageclass</h2><p>cinder 作为持久卷要指定 volume type 作为参数</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">storage.k8s.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">StorageClass</span></span><br><span class="line"><span class="attr">parameters:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">RBD</span></span><br><span class="line"><span class="attr">provisioner:</span> <span class="string">kubernetes.io/cinder</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openstack volume list <span class="comment"># 持久卷在 openstack 中的展现</span></span></span><br><span class="line">+--------------------------------------+-------------------------------------------------------------+-----------+------+---------------------------------------------------------------+</span><br><span class="line">| ID                                   | Display Name                                                | Status    | Size | Attached to                                                   |</span><br><span class="line">+--------------------------------------+-------------------------------------------------------------+-----------+------+---------------------------------------------------------------+</span><br><span class="line">| e437f3b4-7f02-412a-b8ac-38d36d79c424 | kubernetes-dynamic-pvc-5bee62ff-aec6-11e8-868b-fa163efa03b6 | available |    1 |                                                               |</span><br><span class="line">| c360e7f0-4bfa-4424-a564-fdb7330f5fa2 | kubernetes-dynamic-pvc-404fe3e5-aec6-11e8-868b-fa163efa03b6 | available |    1 |                                                               |</span><br><span class="line">| 7e2347af-752c-42e3-a92a-c2565ab6b12c | kubernetes-dynamic-pvc-1193480a-aec6-11e8-b38a-fa163eccc6d3 | in-use    |    1 | Attached to worker3 on /dev/vdc                               |</span><br><span class="line">| 77d26e4e-40d1-4227-b605-5150559a5ccf | tst222                                                      | available |    2 |                                                               |</span><br><span class="line">| c40a48cd-c36e-4cf6-bc08-2c5f326794c4 | kubernetes-dynamic-pvc-d22e1c0e-aebf-11e8-868b-fa163efa03b6 | in-use    |   10 | Attached to worker3 on /dev/vdd                               |</span><br><span class="line">| b331a11a-c533-41fe-89aa-e4bca48484c7 | kubernetes-dynamic-pvc-d234bd67-aebf-11e8-868b-fa163efa03b6 | in-use    |   10 | Attached to worker2 on /dev/vdc                               |</span><br><span class="line">| 19bc473b-8215-45ef-b280-4e1d7c26dc56 | kubernetes-dynamic-pvc-d239d596-aebf-11e8-868b-fa163efa03b6 | in-use    |   10 | Attached to worker1 on /dev/vdc                               |</span><br><span class="line">| f03591f7-a69f-402d-9ab5-d6350d8078e9 | kubernetes-dynamic-pvc-5c4a5d33-aebf-11e8-868b-fa163efa03b6 | in-use    |    8 | Attached to worker3 on /dev/vdb                               |</span><br><span class="line">| a1383dde-bbc3-4148-a931-f86962d482a6 | kubernetes-dynamic-pvc-5c36d2c2-aebf-11e8-868b-fa163efa03b6 | in-use    |    8 | Attached to worker2 on /dev/vdb                               |</span><br><span class="line">| 568f72bc-6b74-4cd2-b795-ab109f753501 | kubernetes-dynamic-pvc-5c406970-aebf-11e8-868b-fa163efa03b6 | in-use    |    2 | Attached to worker1 on /dev/vdb                               |</span><br><span class="line">| 4e3d531e-3ea6-4f3f-a40b-3639548ed9bc | kubernetes-dynamic-pvc-0742b2bc-aebe-11e8-8fc8-fa163e64cc4c | available |    1 |                                                               |</span><br><span class="line">| 9528824a-35f0-47be-88b9-2108ba10e4cb | kubernetes-dynamic-pvc-1dae4606-acce-11e8-ad52-fa163eae37fd | in-use    |    2 | Attached to 1a5e3cee-ed4e-4a31-963f-2c7a96470c63 on /dev/vdb  |</span><br><span class="line">| f573db1e-2df1-48f9-b45f-237667b891fa | kubernetes-dynamic-pvc-1b7761b6-acc0-11e8-81f7-fa163ef239c4 | in-use    |    1 | Attached to 454551f2-5736-4b52-8c85-321f795e0cff on /dev/vdb  |</span><br><span class="line">| 2aa122b4-887b-4eaa-977e-7bbd6a001449 | kubernetes-dynamic-pvc-6a297820-ac29-11e8-b902-fa163e785cc9 | available |    1 |                                                               |</span><br><span class="line">| c6af8fc5-9c1e-4ae2-87c0-2798dbf80bc4 | kubernetes-dynamic-pvc-37419971-ac22-11e8-b864-fa163ecfcbd0 | available |    1 |                                                               |</span><br><span class="line">| 4eef9daa-3311-4787-afb8-2e41fd39c9ca | kubernetes-dynamic-pvc-b9f73456-ac18-11e8-b932-fa163e0fecaa | available |    8 |                                                               |</span><br><span class="line">| a0c0ad15-d674-4389-918f-d37126ffb59d | kubernetes-dynamic-pvc-b9fe461d-ac18-11e8-b932-fa163e0fecaa | available |   10 |                                                               |</span><br><span class="line">+--------------------------------------+-------------------------------------------------------------+-----------+------+---------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+<h2 id="LoadBalancer"><a href="#LoadBalancer" class="headerlink" title="LoadBalancer"></a>LoadBalancer</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> neutron lbaas-member-list  2e75b034-d291-4e87-b9bf-2421bce1fc3a <span class="comment"># LoadBalancer 服务在 openstack 中的展现</span></span></span><br><span class="line">neutron CLI is deprecated and will be removed in the future. Use openstack CLI instead.</span><br><span class="line">+--------------------------------------+-----------------------------------------------------+------------+---------------+--------+--------------------------------------+----------------+</span><br><span class="line">| id                                   | name                                                | address    | protocol_port | weight | subnet_id                            | admin_state_up |</span><br><span class="line">+--------------------------------------+-----------------------------------------------------+------------+---------------+--------+--------------------------------------+----------------+</span><br><span class="line">| 2b09be24-e6b8-4fa2-872a-7840691e3f74 | member_a11a75f2eaec611e8b38afa163eccc6d_0_worker3   | 13.20.0.16 |         31127 |      1 | 092e753f-cead-4af0-9200-cf779d0cdf04 | True           |</span><br><span class="line">| 34b22906-d794-4c10-976f-74e00dfdbb91 | member_a11a75f2eaec611e8b38afa163eccc6d_0_control-2 | 13.20.0.14 |         31127 |      1 | 092e753f-cead-4af0-9200-cf779d0cdf04 | True           |</span><br><span class="line">| 5a98c11c-544f-4414-9ec8-2991b7d123e8 | member_a11a75f2eaec611e8b38afa163eccc6d_0_worker2   | 13.20.0.9  |         31127 |      1 | 092e753f-cead-4af0-9200-cf779d0cdf04 | True           |</span><br><span class="line">| 68a65652-7c4f-4b68-82e4-4a2731542664 | member_a11a75f2eaec611e8b38afa163eccc6d_0_control-3 | 13.20.0.24 |         31127 |      1 | 092e753f-cead-4af0-9200-cf779d0cdf04 | True           |</span><br><span class="line">| 8fe6c1a0-c802-4eda-b3b7-ccef920500b6 | member_a11a75f2eaec611e8b38afa163eccc6d_0_worker1   | 13.20.0.22 |         31127 |      1 | 092e753f-cead-4af0-9200-cf779d0cdf04 | True           |</span><br><span class="line">| b3a05a40-7428-4d77-a773-bfec5f93544e | member_a11a75f2eaec611e8b38afa163eccc6d_0_control-1 | 13.20.0.20 |         31127 |      1 | 092e753f-cead-4af0-9200-cf779d0cdf04 | True           |</span><br><span class="line">+--------------------------------------+-----------------------------------------------------+------------+---------------+--------+--------------------------------------+----------------+</span><br></pre></td></tr></table></figure>
+<p><code>kubernetes</code> LoadBalancer 的原理就是通过外部服务对 service 的 NodePort 进行反代，NodePort 是通过 Kube-Proxy 做转发的，所以最终还是 4 层的代理，无法获取真实客户端的 IP 地址，最好还是通过 ingress 服务访问集群中的服务</p>
 
       
     </div>
@@ -421,9 +437,9 @@
           
             <a href="/tags/container/" rel="tag"># container</a>
           
-            <a href="/tags/cloudnative/" rel="tag"># cloudnative</a>
+            <a href="/tags/cloud/" rel="tag"># cloud</a>
           
-            <a href="/tags/microservice/" rel="tag"># microservice</a>
+            <a href="/tags/kubernetes/" rel="tag"># kubernetes</a>
           
         </div>
       
@@ -436,8 +452,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/21/nginx-reverse-proxy-pdf/" rel="next" title="Nginx Reverse Proxy Dynamic PDF URL and Online Preview">
-                <i class="fa fa-chevron-left"></i> Nginx Reverse Proxy Dynamic PDF URL and Online Preview
+              <a href="/2018/08/26/heroku-twelve-factor/" rel="next" title="Heroku Cloud Native Application Design Twelve Factor">
+                <i class="fa fa-chevron-left"></i> Heroku Cloud Native Application Design Twelve Factor
               </a>
             
           </div>
@@ -445,10 +461,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/09/04/rancher-k8s-openstack/" rel="prev" title="基于 openstack 的 kubernetes(rancher RKE) 测试">
-                基于 openstack 的 kubernetes(rancher RKE) 测试 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -665,7 +677,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-Codebase"><span class="nav-number">1.</span> <span class="nav-text">I. Codebase</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#One-codebase-tracked-in-revision-control-many-deploys"><span class="nav-number">1.1.</span> <span class="nav-text">One codebase tracked in revision control, many deploys</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-Dependencies"><span class="nav-number">2.</span> <span class="nav-text">II. Dependencies</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Explicitly-declare-and-isolate-dependencies"><span class="nav-number">2.1.</span> <span class="nav-text">Explicitly declare and isolate dependencies</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-Config"><span class="nav-number">3.</span> <span class="nav-text">III. Config</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Store-config-in-the-environment"><span class="nav-number">3.1.</span> <span class="nav-text">Store config in the environment</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IV-Backing-services"><span class="nav-number">4.</span> <span class="nav-text">IV. Backing services</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Treat-backing-services-as-attached-resources"><span class="nav-number">4.1.</span> <span class="nav-text">Treat backing services as attached resources</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V-Build-release-run"><span class="nav-number">5.</span> <span class="nav-text">V. Build, release, run</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Strictly-separate-build-and-run-stages"><span class="nav-number">5.1.</span> <span class="nav-text">Strictly separate build and run stages</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VI-Processes"><span class="nav-number">6.</span> <span class="nav-text">VI. Processes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Execute-the-app-as-one-or-more-stateless-processes"><span class="nav-number">6.1.</span> <span class="nav-text">Execute the app as one or more stateless processes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VII-Port-binding"><span class="nav-number">7.</span> <span class="nav-text">VII. Port binding</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Export-services-via-port-binding"><span class="nav-number">7.1.</span> <span class="nav-text">Export services via port binding</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VIII-Concurrency"><span class="nav-number">8.</span> <span class="nav-text">VIII. Concurrency</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Scale-out-via-the-process-model"><span class="nav-number">8.1.</span> <span class="nav-text">Scale out via the process model</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IX-Disposability"><span class="nav-number">9.</span> <span class="nav-text">IX. Disposability</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Maximize-robustness-with-fast-startup-and-graceful-shutdown"><span class="nav-number">9.1.</span> <span class="nav-text">Maximize robustness with fast startup and graceful shutdown</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#X-Dev-prod-parity"><span class="nav-number">10.</span> <span class="nav-text">X. Dev/prod parity</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Keep-development-staging-and-production-as-similar-as-possible"><span class="nav-number">10.1.</span> <span class="nav-text">Keep development, staging, and production as similar as possible</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XI-Logs"><span class="nav-number">11.</span> <span class="nav-text">XI. Logs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Treat-logs-as-event-streams"><span class="nav-number">11.1.</span> <span class="nav-text">Treat logs as event streams</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XII-Admin-processes"><span class="nav-number">12.</span> <span class="nav-text">XII. Admin processes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-admin-management-tasks-as-one-off-processes"><span class="nav-number">12.1.</span> <span class="nav-text">Run admin/management tasks as one-off processes</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#集群架构"><span class="nav-number">1.</span> <span class="nav-text">集群架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到的问题"><span class="nav-number">2.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cloud-config"><span class="nav-number">3.</span> <span class="nav-text">cloud-config</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cinder-storageclass"><span class="nav-number">4.</span> <span class="nav-text">cinder storageclass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LoadBalancer"><span class="nav-number">5.</span> <span class="nav-text">LoadBalancer</span></a></li></ol></div>
             
 
           </div>
@@ -844,9 +856,9 @@
   
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = 'https://anyisalin.github.io/2018/08/26/heroku-twelve-factor/';
-        this.page.identifier = '2018/08/26/heroku-twelve-factor/';
-        this.page.title = 'Heroku Cloud Native Application Design Twelve Factor';
+        this.page.url = 'https://anyisalin.github.io/2018/09/04/rancher-k8s-openstack/';
+        this.page.identifier = '2018/09/04/rancher-k8s-openstack/';
+        this.page.title = '基于 openstack 的 kubernetes(rancher RKE) 测试';
       };
       function loadComments () {
         var d = document, s = d.createElement('script');
