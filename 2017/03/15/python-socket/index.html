@@ -409,7 +409,7 @@
 </ul>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">构造函数接受的参数如下</span></span><br><span class="line"><span class="string">def __init__(self, family=AF_INET, type=SOCK_STREAM, proto=0, fileno=None)</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line">sock = socket()</span><br><span class="line">sock.bind((<span class="string">''</span>, <span class="number">5000</span>))	<span class="comment"># bind 方法接受一个元祖，包含监听地址和端口</span></span><br><span class="line">sock.listen(<span class="number">5</span>) <span class="comment">#监听指定地址，5 代表排队连接的最大数量，一般最大为5</span></span><br><span class="line">conn, addr = sock.accept() <span class="comment">#接受连接，如果没有连接会一直阻塞，建立连接后会返回 已经建立连接的 socket 对象和客户端地址</span></span><br><span class="line">print(conn, addr)</span><br></pre></td></tr></table></figure>
 <p>然后程序会阻塞，我们通过 nc 命令建立连接</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> nc localhost 5000</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> nc localhost 5000</span><br></pre></td></tr></table></figure>
 <p>中断并输出</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># output</span></span><br><span class="line">&lt;socket.socket fd=<span class="number">11</span>, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=<span class="number">0</span>, laddr=(<span class="string">'127.0.0.1'</span>, <span class="number">5000</span>), raddr=(<span class="string">'127.0.0.1'</span>, <span class="number">50686</span>)&gt; (<span class="string">'127.0.0.1'</span>, <span class="number">50686</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="一个简单的服务端例子"><a href="#一个简单的服务端例子" class="headerlink" title="一个简单的服务端例子"></a>一个简单的服务端例子</h3><p>这个简单的例子，会将客户端发送的信息原样返回，能够大致的了解 <code>socket</code> 服务端是怎么做的</p>
@@ -579,7 +579,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -644,7 +644,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -742,7 +744,7 @@
     
       <span class="post-meta-item-text">Symbols count total&#58;</span>
     
-    <span title="Symbols count total">99k</span>
+    <span title="Symbols count total">101k</span>
   
 
   
@@ -753,7 +755,7 @@
     
       <span class="post-meta-item-text">Reading time total&#58;</span>
     
-    <span title="Reading time total">1:39</span>
+    <span title="Reading time total">1:41</span>
   
 </div>
 
