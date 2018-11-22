@@ -115,15 +115,15 @@
 <meta property="og:site_name" content="无趣">
 <meta property="og:description" content="WireGuard ®是一种非常简单而现代，快捷的VPN，利用最先进的加密技术。它比IPSec 更快，更简单，更精简，更有用。它比OpenVPN更高效。WireGuard设计为通用VPN，适用于多种不同情况。它是跨平台的，可大规模部署。它已经被认为是业内最安全，最易于使用，最简单的VPN解决方案。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/legacy-openvpn.png">
+<meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/legacy-openvpn2.png">
 <meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/new-wireguard.png">
 <meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/wireguard-traning.png">
 <meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/my-wireguard-env.png">
-<meta property="og:updated_time" content="2018-11-21T10:14:03.196Z">
+<meta property="og:updated_time" content="2018-11-22T02:52:23.560Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="通过 Wireguard 构建 NAT to NAT VPN">
 <meta name="twitter:description" content="WireGuard ®是一种非常简单而现代，快捷的VPN，利用最先进的加密技术。它比IPSec 更快，更简单，更精简，更有用。它比OpenVPN更高效。WireGuard设计为通用VPN，适用于多种不同情况。它是跨平台的，可大规模部署。它已经被认为是业内最安全，最易于使用，最简单的VPN解决方案。">
-<meta name="twitter:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/legacy-openvpn.png">
+<meta name="twitter:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/legacy-openvpn2.png">
 
 
 
@@ -404,7 +404,7 @@
 <a id="more"></a>
 <h1 id="nat-to-nat-场景下-openvpn-vs-wireguard-架构"><a href="#nat-to-nat-场景下-openvpn-vs-wireguard-架构" class="headerlink" title="nat to nat 场景下 openvpn vs wireguard 架构"></a>nat to nat 场景下 openvpn vs wireguard 架构</h1><p>传统 vpn 在很难做到类似多个 nat 之间资源共享</p>
 <p>客户端如果想要同时访问多个 nat 只能像图中的 NAT C 客户端一样连接两个 vpn</p>
-<p><img src="http://anyisalin1-1251720225.file.myqcloud.com/blog/legacy-openvpn.png" alt="openvpn"></p>
+<p><img src="http://anyisalin1-1251720225.file.myqcloud.com/blog/legacy-openvpn2.png" alt="openvpn"></p>
 <p>得益于 wireguard 中没有 client/server 的概念，所有 nat 中的某台机器与 gateway 主机建立连接，即可实现共享所有节点的网络资源</p>
 <p><img src="http://anyisalin1-1251720225.file.myqcloud.com/blog/new-wireguard.png" alt="wireguard"></p>
 <h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><p>实验环境如下，Peer 指的是每个 wireguard 节点的出口网卡，类似 openvpn 连接生成的 tunnel 网卡</p>
@@ -433,9 +433,9 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[Peer]</span><br><span class="line">PublicKey = $&#123;NAT_A_PUBLIC_KEY&#125;</span><br><span class="line">AllowedIPs = 5.5.5.3/32,10.10.23.0/24</span><br></pre></td></tr></table></figure>
 <p>配置完成之后 <code>wg-quick down wg0 &amp;&amp; wg-quick up wg0</code> 尝试 ping NAT-A 网段的地址即可</p>
 <p>只要 gateway 能够访问 NAT-A 网段的之后，同理在其他的 wireguard 客户端配置 gateway <code>Peer</code> 的 <code>AllowedIPs</code> 之后，通过 gateway 进行一次转发也能够访问 NAT-A 网段了</p>
-<h2 id="日常使用"><a href="#日常使用" class="headerlink" title="日常使用"></a>日常使用</h2><p>由于工作原因，平时有很多不同的网络环境需要访问，常常需要 ssh 代理、openvpn 来切换各种网络环境，用了 wireguard 之后解决了我的痛点，目前我使用 wireguard 连接了五个 NAT 网络</p>
+<h1 id="日常使用"><a href="#日常使用" class="headerlink" title="日常使用"></a>日常使用</h1><p>由于工作原因，平时有很多不同的网络环境需要访问，常常需要 ssh 代理、openvpn 来切换各种网络环境，用了 wireguard 之后解决了我的痛点，目前我使用 wireguard 连接了五个 NAT 网络</p>
 <p><img src="http://anyisalin1-1251720225.file.myqcloud.com/blog/my-wireguard-env.png" alt="image-20181121175616327"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过 wireguard 可以迅速构建支持多平台的大规模复杂的 vpn 网络，并且 wireguard 的<a href="https://www.wireguard.com/performance/" target="_blank" rel="noopener">性能</a>高于 <code>openvpn</code>、<code>ipsec</code> 等常用 vpn 方案</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>通过 wireguard 可以迅速构建支持多平台的大规模复杂的 vpn 网络，并且 wireguard 的<a href="https://www.wireguard.com/performance/" target="_blank" rel="noopener">性能</a>高于 <code>openvpn</code>、<code>ipsec</code> 等常用 vpn 方案</p>
 <p>更多关于 wireguard 的资料</p>
 <p><a href="https://www.wireguard.com/" target="_blank" rel="noopener">https://www.wireguard.com/</a></p>
 <p><a href="https://staaldraad.github.io/2017/04/17/nat-to-nat-with-wireguard/" target="_blank" rel="noopener">https://staaldraad.github.io/2017/04/17/nat-to-nat-with-wireguard/</a></p>
@@ -706,7 +706,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#nat-to-nat-场景下-openvpn-vs-wireguard-架构"><span class="nav-number">1.</span> <span class="nav-text">nat to nat 场景下 openvpn vs wireguard 架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验"><span class="nav-number">2.</span> <span class="nav-text">实验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gateway-配置"><span class="nav-number">2.1.</span> <span class="nav-text">gateway 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAT-A-配置"><span class="nav-number">2.2.</span> <span class="nav-text">NAT-A 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAT-D-配置"><span class="nav-number">2.3.</span> <span class="nav-text">NAT-D 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAT-C-配置"><span class="nav-number">2.4.</span> <span class="nav-text">NAT-C 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gateway-添加-peer"><span class="nav-number">2.5.</span> <span class="nav-text">gateway 添加 peer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接测试"><span class="nav-number">2.6.</span> <span class="nav-text">连接测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共享-NAT"><span class="nav-number">2.7.</span> <span class="nav-text">共享 NAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日常使用"><span class="nav-number">2.8.</span> <span class="nav-text">日常使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.9.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#nat-to-nat-场景下-openvpn-vs-wireguard-架构"><span class="nav-number">1.</span> <span class="nav-text">nat to nat 场景下 openvpn vs wireguard 架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验"><span class="nav-number">2.</span> <span class="nav-text">实验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gateway-配置"><span class="nav-number">2.1.</span> <span class="nav-text">gateway 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAT-A-配置"><span class="nav-number">2.2.</span> <span class="nav-text">NAT-A 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAT-D-配置"><span class="nav-number">2.3.</span> <span class="nav-text">NAT-D 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAT-C-配置"><span class="nav-number">2.4.</span> <span class="nav-text">NAT-C 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gateway-添加-peer"><span class="nav-number">2.5.</span> <span class="nav-text">gateway 添加 peer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接测试"><span class="nav-number">2.6.</span> <span class="nav-text">连接测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共享-NAT"><span class="nav-number">2.7.</span> <span class="nav-text">共享 NAT</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日常使用"><span class="nav-number">3.</span> <span class="nav-text">日常使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
