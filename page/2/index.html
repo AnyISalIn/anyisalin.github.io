@@ -289,6 +289,169 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2018/08/15/django-aliyun-oss-plugin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnyISalIn">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="无趣">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/15/django-aliyun-oss-plugin/" itemprop="url">Django Aliyun OSS Plugin Example</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-15T13:59:59+08:00">2018-08-15</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/15/django-aliyun-oss-plugin/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/08/15/django-aliyun-oss-plugin/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article&#58;</span>
+                
+                <span title="Symbols count in article">1.3k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">0:01</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># project.storage.py</span></span><br><span class="line"><span class="keyword">import</span> oss2</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> django.core.files.storage <span class="keyword">import</span> Storage</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AliyunObjectStorage</span><span class="params">(Storage)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.access_key_id = settings.ALIYUN_OSS_KEY_ID</span><br><span class="line">        self.access_key_secret = settings.ALIYUN_OSS_KEY_SECRET</span><br><span class="line">        self.bucket_name = settings.ALIYUN_OSS_BUCKET_NAME</span><br><span class="line">        self.endpoint = settings.ALIYUN_OSS_ENDPOINT</span><br><span class="line">        self.access_url = settings.ALIYUN_OSS_ACCESS_URL</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bucket</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> oss2.Bucket(oss2.Auth(self.access_key_id, self.access_key_secret), self.endpoint, self.bucket_name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_open</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.bucket.get_object(name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_save</span><span class="params">(self, name, content)</span>:</span></span><br><span class="line">        self.bucket.put_object(name, content)</span><br><span class="line">        <span class="keyword">return</span> name</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.bucket.delete_object(name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">exists</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.bucket.object_exists(name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">listdir</span><span class="params">(self, path)</span>:</span></span><br><span class="line">        dirs, files = [], []</span><br><span class="line">        objects = self.bucket.list_objects(path).object_list</span><br><span class="line">        <span class="keyword">for</span> object <span class="keyword">in</span> objects:</span><br><span class="line">            files.append(object.key.split(path)[<span class="number">-1</span>])</span><br><span class="line">        <span class="keyword">return</span> dirs, files</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">size</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.bucket.get_object_meta(name).content_length</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">url</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'&#123;&#125;/&#123;&#125;'</span>.format(self.access_url, name)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2018/08/11/geetest-with-django/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1784,173 +1947,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2017/05/09/python-envoy-code-reading/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="AnyISalIn">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="无趣">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/09/python-envoy-code-reading/" itemprop="url">代码解析 - envoy</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-09T11:22:40+08:00">2017-05-09</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/05/09/python-envoy-code-reading/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/05/09/python-envoy-code-reading/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Symbols count in article&#58;</span>
-                
-                <span title="Symbols count in article">4.8k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">0:05</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><code>envoy</code> 是对 Python 标准库中 <code>subprocess</code> 模块的封装， 虽然功能对比原生 <code>subprocess</code> 来说少了很多，但是更易于使用，<a href="https://github.com/kennethreitz/envoy" target="_blank" rel="noopener">Github 项目地址</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/09/python-envoy-code-reading/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2002,7 +1998,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2075,7 +2071,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                    <span class="site-state-item-count">30</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -2157,7 +2155,7 @@
     
       <span class="post-meta-item-text">Symbols count total&#58;</span>
     
-    <span title="Symbols count total">108k</span>
+    <span title="Symbols count total">109k</span>
   
 
   
@@ -2168,7 +2166,7 @@
     
       <span class="post-meta-item-text">Reading time total&#58;</span>
     
-    <span title="Reading time total">1:48</span>
+    <span title="Reading time total">1:49</span>
   
 </div>
 
