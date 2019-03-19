@@ -435,7 +435,7 @@
 </ol>
 <p><img src="/images/image-20190103170847022-6570233.png" alt="image-20190103170847022"></p>
 <h2 id="StreamSets-DataCollector"><a href="#StreamSets-DataCollector" class="headerlink" title="StreamSets DataCollector"></a>StreamSets DataCollector</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>SDC 的安装包很大，全组件的二进制 6G 左右，安装好 JDK 之后，直接启动即可</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> streamsets-datacollector-3.6.1/bin/streamsets dc</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> streamsets-datacollector-3.6.1/bin/streamsets dc</span></span><br></pre></td></tr></table></figure>
 <p>默认端口是 18630，用户名密码为 admin/admin</p>
 <h3 id="创建-Producer-Pipeline"><a href="#创建-Producer-Pipeline" class="headerlink" title="创建 Producer Pipeline"></a>创建 Producer Pipeline</h3><p>我们创建一个名为 <code>user data producer</code> 的数据流，用来生产用户数据</p>
 <p><img src="/images/image-20190107104133176-6828893.png" alt="image-20190107104133176"></p>
@@ -480,7 +480,7 @@
 <p><img src="/images/image-20190107112739224-6831659.png" alt="image-20190107112739224"></p>
 <h4 id="Producer-测试-1"><a href="#Producer-测试-1" class="headerlink" title="Producer 测试"></a>Producer 测试</h4><p>最后我们启动这个 Pipeline 进行测试</p>
 <p>登录 mysql 服务器，查看是否有数据插入</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span> select count(*) from users;</span><br><span class="line">+----------+</span><br><span class="line">| count(*) |</span><br><span class="line">+----------+</span><br><span class="line">| 25255950 |</span><br><span class="line">+----------+</span><br><span class="line">1 row in set (1 min 22.44 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select count(*) from users;</span></span><br><span class="line">+----------+</span><br><span class="line">| count(*) |</span><br><span class="line">+----------+</span><br><span class="line">| 25255950 |</span><br><span class="line">+----------+</span><br><span class="line">1 row in set (1 min 22.44 sec)</span><br></pre></td></tr></table></figure>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>SDC 定义数据流没有 NiFi 那么灵活，缺少限流，但是界面风格相对 NiFi 好一些，监控图表也很直观</p>
 
       
