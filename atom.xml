@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>无趣</title>
+  
+  <subtitle>享受自由</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://anyisalin.github.io/"/>
+  <updated>2019-01-07T12:49:16.816Z</updated>
+  <id>https://anyisalin.github.io/</id>
+  
+  <author>
+    <name>AnyISalIn</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>NiFi vs StreamSets(SDC)</title>
+    <link href="https://anyisalin.github.io/2019/01/07/nifi-vs-streamsets/"/>
+    <id>https://anyisalin.github.io/2019/01/07/nifi-vs-streamsets/</id>
+    <published>2019-01-07T08:52:58.000Z</published>
+    <updated>2019-01-07T12:49:16.816Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前面几篇文章分别介绍了 NiFi 和 StreamSets Data Collector (以下简称 SDC) 在一些场景下的使用配置，本文从几个维度简单对比这两个开源的DFM (Data Flow Management) 产品&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>NiFi LDAP 集成</title>
+    <link href="https://anyisalin.github.io/2019/01/07/nifi-ldap/"/>
+    <id>https://anyisalin.github.io/2019/01/07/nifi-ldap/</id>
+    <published>2019-01-07T07:58:34.000Z</published>
+    <updated>2019-01-07T08:51:52.146Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;NiFi 默认是不开启用户和权限认证的，但在企业中多租户隔离是不可或缺的，NiFi 提供了多租户权限认证，支持 LDAP、Kerberos、OpenID、knox 多种外部认证方式，本文主要介绍 NiFi 与 OpenLDAP 的集成&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>StreamSets DataCollector Demo</title>
+    <link href="https://anyisalin.github.io/2019/01/07/streamsets-demo/"/>
+    <id>https://anyisalin.github.io/2019/01/07/streamsets-demo/</id>
+    <published>2019-01-07T01:56:47.000Z</published>
+    <updated>2019-01-07T12:46:42.555Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;StreamSets 有三个组件&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;StreamSets Edge：主要安装在物联网设备上，采集数据&lt;/li&gt;
+&lt;li&gt;StreamSets Data Collector：ETL、dataflow 工具&lt;/li&gt;
+&lt;li&gt;StreamSets Control Hub：管理 Data Collector 定义的 pipeline&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本文主要介绍通过 StreamSets Data Collector（以下简称 SDC） 定义数据流&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="dataflow" scheme="https://anyisalin.github.io/tags/dataflow/"/>
+    
+      <category term="streamsets" scheme="https://anyisalin.github.io/tags/streamsets/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NiFi Demo</title>
+    <link href="https://anyisalin.github.io/2019/01/03/nifi-demo/"/>
+    <id>https://anyisalin.github.io/2019/01/03/nifi-demo/</id>
+    <published>2019-01-03T03:11:25.000Z</published>
+    <updated>2019-01-07T12:47:06.052Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;很多情况下，需要从不同的数据源中提取数据，并将数据格式进行转换，定义不同的流程，传输到对应的系统中&lt;/p&gt;
+&lt;p&gt;需求较为简单的情况下，可以通过自己写代码实现，但在数据流比较复杂后，整个流程难以维护，扩展性很差&lt;/p&gt;
+&lt;p&gt;这时候就需要引入像 NiFi、StreamSets 这类的 DFM(Data Flow Management) 数据流处理平台，这篇文章主要介绍在 NiFi 中定义一个简单的数据流&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="dataflow" scheme="https://anyisalin.github.io/tags/dataflow/"/>
+    
+      <category term="nifi" scheme="https://anyisalin.github.io/tags/nifi/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>科技改生活 · 2018 败家记录</title>
+    <link href="https://anyisalin.github.io/2018/12/31/2018-buy/"/>
+    <id>https://anyisalin.github.io/2018/12/31/2018-buy/</id>
+    <published>2018-12-31T09:08:54.000Z</published>
+    <updated>2018-12-31T14:55:33.181Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;明天就是 2019 了，简单总结一下 2018 年买过的电子产品。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="game" scheme="https://anyisalin.github.io/tags/game/"/>
+    
+      <category term="buy" scheme="https://anyisalin.github.io/tags/buy/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>刺客信条·奥德赛 玩后感</title>
+    <link href="https://anyisalin.github.io/2018/12/06/assassin-s-creed-odyssey-overview/"/>
+    <id>https://anyisalin.github.io/2018/12/06/assassin-s-creed-odyssey-overview/</id>
+    <published>2018-12-06T09:03:42.000Z</published>
+    <updated>2018-12-07T10:11:12.048Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前几周花了 50 个小时把 刺客信条·起源 三条主线通关了，很多云玩家认为奥德赛只是起源换了一个皮肤，但是相信真正玩过奥德赛的人不会那么认为，起源是刺客信条 ARPG 和开放世界的初次尝试，而奥德赛增强 ARPG 元素则代表育碧在 ARPG 和开放世界下功夫的决心。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="game" scheme="https://anyisalin.github.io/tags/game/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一次京东售后掉件的经历</title>
+    <link href="https://anyisalin.github.io/2018/12/05/jd-airpods/"/>
+    <id>https://anyisalin.github.io/2018/12/05/jd-airpods/</id>
+    <published>2018-12-05T08:03:42.000Z</published>
+    <updated>2018-12-07T10:08:12.470Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;大约半个月前 AirPods 右耳没有声音，无论如何重连，重置，通过 Find My AirPods 播放声音都没用，但是右耳手势能够正常使用，确定耳机故障，于是准备预约 GeniusBar 维修，但是由于附近的 Apple Store
+        
+      
+    
+    </summary>
+    
+    
+      <category term="jd" scheme="https://anyisalin.github.io/tags/jd/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>通过 Wireguard 构建 NAT to NAT VPN</title>
+    <link href="https://anyisalin.github.io/2018/11/21/fast-flexible-nat-to-nat-vpn-wireguard/"/>
+    <id>https://anyisalin.github.io/2018/11/21/fast-flexible-nat-to-nat-vpn-wireguard/</id>
+    <published>2018-11-21T03:20:19.000Z</published>
+    <updated>2019-01-22T05:48:00.248Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;WireGuard ®是一种非常简单而现代，快捷的VPN，利用&lt;strong&gt;最先进的加密技术&lt;/strong&gt;。它比IPSec &lt;a href=&quot;https://www.wireguard.com/performance/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;更快&lt;/a&gt;，&lt;a href=&quot;https://www.wireguard.com/quickstart/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;更简单&lt;/a&gt;，更精简，更有用。它比OpenVPN更高效。WireGuard设计为通用VPN，适用于多种不同情况。它是跨平台的，可大规模部署。它已经被认为是业内最安全，最易于使用，最简单的VPN解决方案。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="vpn" scheme="https://anyisalin.github.io/tags/vpn/"/>
+    
+      <category term="wireguard" scheme="https://anyisalin.github.io/tags/wireguard/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>外出串流家里台式机玩 assassin&#39;s creed odyssey</title>
+    <link href="https://anyisalin.github.io/2018/10/25/moonlight-with-nvidia-shield-internet-streaming/"/>
+    <id>https://anyisalin.github.io/2018/10/25/moonlight-with-nvidia-shield-internet-streaming/</id>
+    <published>2018-10-25T03:18:33.000Z</published>
+    <updated>2018-11-21T10:13:30.745Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;由于长期出差，又想玩 刺客信条·奥德赛，所以这几天研究了一下 互联网串流的解决方案&lt;/p&gt;
+&lt;p&gt;最后选择了 &lt;a href=&quot;https://moonlight-stream.com/&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="game" scheme="https://anyisalin.github.io/tags/game/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>dnspod DDNS crontab</title>
+    <link href="https://anyisalin.github.io/2018/09/12/dnspod-ddns-crontab/"/>
+    <id>https://anyisalin.github.io/2018/09/12/dnspod-ddns-crontab/</id>
+    <published>2018-09-12T01:45:43.000Z</published>
+    <updated>2018-09-12T01:53:44.286Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;通过控制台获取 &lt;code&gt;TOKEN&lt;/code&gt; ，注意请求参数中的 &lt;code&gt;TOKEN&lt;/code&gt; 是 用户 ID + &lt;code&gt;TOKEN&lt;/code&gt; 组合&lt;/p&gt;
+&lt;p&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="router" scheme="https://anyisalin.github.io/tags/router/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>小米路由器端口转发 Internal Server Error</title>
+    <link href="https://anyisalin.github.io/2018/09/07/fix-miwifi-portforward/"/>
+    <id>https://anyisalin.github.io/2018/09/07/fix-miwifi-portforward/</id>
+    <published>2018-09-07T13:57:29.000Z</published>
+    <updated>2018-09-07T14:23:03.389Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天想给家里路由器 (XiaoMi R3D) 做个端口映射给同事演示做的东西，但是发现通过网页设置路由器端口映射直接返回 500 错误，查了下日志也看到什么错误，然后查看了一下相关代码，并通过 &lt;code&gt;lua&lt;/code&gt; 交互式客户端调试了一下&lt;/p&gt;
+&lt;figure class=&quot;highlight lua&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;local&lt;/span&gt; pf = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;xiaoqiang.module.XQPortForward&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    pf.setPortForward(&lt;span class=&quot;string&quot;&gt;&#39;test&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;192.168.231.204&#39;&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;6800&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;8000&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;tcp&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&amp;gt;&amp;gt; &amp;gt;&amp;gt; &amp;gt;&amp;gt; &amp;gt;&amp;gt; &amp;gt;&amp;gt; &amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;/usr/lib/lua/xiaoqiang/module/XQPortForward.lua:&lt;span class=&quot;number&quot;&gt;93&lt;/span&gt;: attempt to compare &lt;span class=&quot;literal&quot;&gt;nil&lt;/span&gt; with number&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;stack &lt;span class=&quot;built_in&quot;&gt;traceback&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        [C]: &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &#39;&lt;span class=&quot;title&quot;&gt;foreach&lt;/span&gt;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;        /&lt;span class=&quot;title&quot;&gt;usr&lt;/span&gt;/&lt;span class=&quot;title&quot;&gt;lib&lt;/span&gt;/&lt;span class=&quot;title&quot;&gt;lua&lt;/span&gt;/&lt;span class=&quot;title&quot;&gt;xiaoqiang&lt;/span&gt;/&lt;span class=&quot;title&quot;&gt;module&lt;/span&gt;/&lt;span class=&quot;title&quot;&gt;XQPortForward.lua&lt;/span&gt;:104: &lt;span class=&quot;title&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;function&lt;/span&gt; &#39;&lt;span class=&quot;title&quot;&gt;_portConflictCheck&lt;/span&gt;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;        /&lt;span class=&quot;title&quot;&gt;usr&lt;/span&gt;/&lt;span class=&quot;title&quot;&gt;lib&lt;/span&gt;/&lt;span class=&quot;title&quot;&gt;lua&lt;/span&gt;/&lt;span class=&quot;title&quot;&gt;xiaoqiang&lt;/span&gt;/&lt;span class=&quot;title&quot;&gt;module&lt;/span&gt;/&lt;span class=&quot;title&quot;&gt;XQPortForward.lua&lt;/span&gt;:181: &lt;span class=&quot;title&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;function&lt;/span&gt; &#39;&lt;span class=&quot;title&quot;&gt;setPortForward&lt;/span&gt;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;        &lt;span class=&quot;title&quot;&gt;stdin&lt;/span&gt;:6: &lt;span class=&quot;title&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;chunk&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;        [&lt;span class=&quot;title&quot;&gt;C&lt;/span&gt;]: ?&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="router" scheme="https://anyisalin.github.io/tags/router/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于 openstack 的 kubernetes(rancher RKE) 测试</title>
+    <link href="https://anyisalin.github.io/2018/09/04/rancher-k8s-openstack/"/>
+    <id>https://anyisalin.github.io/2018/09/04/rancher-k8s-openstack/</id>
+    <published>2018-09-04T02:21:01.000Z</published>
+    <updated>2018-09-04T03:13:10.152Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;近日测试 &lt;code&gt;openstack&lt;/code&gt; 作为 &lt;code&gt;kubernetes&lt;/code&gt; 的基础设施平台为 &lt;code&gt;kubernetes&lt;/code&gt; 提供基础服务(storage, loadbalancer)&lt;/p&gt;
+&lt;p&gt;目标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;为 &lt;code&gt;kubernetes&lt;/code&gt; 提供 &lt;code&gt;cinder&lt;/code&gt; 作为持久卷&lt;/li&gt;
+&lt;li&gt;通过 &lt;code&gt;openstack&lt;/code&gt; 的 LBAAS v2 为 &lt;code&gt;kubernetes&lt;/code&gt; 提供 &lt;code&gt;LoadBalancer&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;集群架构&quot;&gt;&lt;a href=&quot;#集群架构&quot; class=&quot;headerlink&quot; title=&quot;集群架构&quot;&gt;&lt;/a&gt;集群架构&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;http://anyisalin1-1251720225.file.myqcloud.com/blog/k8s-rancher-ops-arch.png&quot; alt=&quot;k8s-rancher-ops&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="container" scheme="https://anyisalin.github.io/tags/container/"/>
+    
+      <category term="cloud" scheme="https://anyisalin.github.io/tags/cloud/"/>
+    
+      <category term="kubernetes" scheme="https://anyisalin.github.io/tags/kubernetes/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Heroku Cloud Native Application Design Twelve Factor</title>
+    <link href="https://anyisalin.github.io/2018/08/26/heroku-twelve-factor/"/>
+    <id>https://anyisalin.github.io/2018/08/26/heroku-twelve-factor/</id>
+    <published>2018-08-26T13:26:13.000Z</published>
+    <updated>2018-08-26T13:38:45.368Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;blockquote&gt;
+&lt;p&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="container" scheme="https://anyisalin.github.io/tags/container/"/>
+    
+      <category term="cloudnative" scheme="https://anyisalin.github.io/tags/cloudnative/"/>
+    
+      <category term="microservice" scheme="https://anyisalin.github.io/tags/microservice/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx Reverse Proxy Dynamic PDF URL and Online Preview</title>
+    <link href="https://anyisalin.github.io/2018/08/21/nginx-reverse-proxy-pdf/"/>
+    <id>https://anyisalin.github.io/2018/08/21/nginx-reverse-proxy-pdf/</id>
+    <published>2018-08-21T05:10:43.000Z</published>
+    <updated>2018-08-21T05:14:06.510Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;location ~ /wlwxb/(?&amp;lt;aid&amp;gt;[0-9]+)/paper.pdf
+        
+      
+    
+    </summary>
+    
+    
+      <category term="ops" scheme="https://anyisalin.github.io/tags/ops/"/>
+    
+      <category term="nginx" scheme="https://anyisalin.github.io/tags/nginx/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Django Aliyun OSS Plugin Example</title>
+    <link href="https://anyisalin.github.io/2018/08/15/django-aliyun-oss-plugin/"/>
+    <id>https://anyisalin.github.io/2018/08/15/django-aliyun-oss-plugin/</id>
+    <published>2018-08-15T05:59:59.000Z</published>
+    <updated>2018-08-15T06:05:33.710Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#
+        
+      
+    
+    </summary>
+    
+    
+      <category term="python" scheme="https://anyisalin.github.io/tags/python/"/>
+    
+      <category term="development" scheme="https://anyisalin.github.io/tags/development/"/>
+    
+      <category term="web" scheme="https://anyisalin.github.io/tags/web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>极验 Django Example</title>
+    <link href="https://anyisalin.github.io/2018/08/11/geetest-with-django/"/>
+    <id>https://anyisalin.github.io/2018/08/11/geetest-with-django/</id>
+    <published>2018-08-11T07:43:48.000Z</published>
+    <updated>2018-08-11T07:54:26.900Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; user &lt;span
+        
+      
+    
+    </summary>
+    
+    
+      <category term="python" scheme="https://anyisalin.github.io/tags/python/"/>
+    
+      <category term="web" scheme="https://anyisalin.github.io/tags/web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>openvpn 中转 EasyConnect</title>
+    <link href="https://anyisalin.github.io/2018/04/12/openvpn-with-easyconnect/"/>
+    <id>https://anyisalin.github.io/2018/04/12/openvpn-with-easyconnect/</id>
+    <published>2018-04-12T05:59:11.000Z</published>
+    <updated>2019-01-07T03:35:25.826Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;国内大部分高校都使用 &lt;code&gt;easyconnect&lt;/code&gt; 这种傻逼的软件作为 &lt;code&gt;vpn&lt;/code&gt; 解决方案，最近需要频繁登入某高校 VPN(easyconnect)，由于手上只有一个账号，所以遇到了以下几个问题&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;同一账号最多只能在一个客户端登录(多人使用会被挤下线)&lt;/li&gt;
+&lt;li&gt;除了 Mac 和 Windows，Linux 下基本没法用&lt;/li&gt;
+&lt;li&gt;连接过程过于繁琐&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;同事给我提了一个方案，通过一台主机中转 &lt;code&gt;EasyConnect&lt;/code&gt; 连接，来解决上面的这些问题&lt;/p&gt;
+&lt;p&gt;大致拓扑图如下&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://anyisalin1-1251720225.file.myqcloud.com/blog/vpn-architecture.png&quot; alt=&quot;VPN Architecture&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="network" scheme="https://anyisalin.github.io/tags/network/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据结构 - 栈</title>
+    <link href="https://anyisalin.github.io/2017/11/28/data-structure-stack/"/>
+    <id>https://anyisalin.github.io/2017/11/28/data-structure-stack/</id>
+    <published>2017-11-28T07:56:29.000Z</published>
+    <updated>2018-02-20T11:43:03.204Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;栈是一种 LIFO(Last In First Out) 的数据结构，栈插入和删除都在 栈顶 操作&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="data-structure" scheme="https://anyisalin.github.io/tags/data-structure/"/>
+    
+      <category term="python" scheme="https://anyisalin.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>刺客信条·起源 玩后感</title>
+    <link href="https://anyisalin.github.io/2017/11/22/aco-overview/"/>
+    <id>https://anyisalin.github.io/2017/11/22/aco-overview/</id>
+    <published>2017-11-22T14:00:02.000Z</published>
+    <updated>2018-08-15T12:35:24.654Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这几天把起源玩了一遍，虽然没有刷满全部成就，但是也前前后后玩了 30 多个小时，浅谈一下我对起源的看法。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="game" scheme="https://anyisalin.github.io/tags/game/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Container Overview</title>
+    <link href="https://anyisalin.github.io/2017/10/27/container-overview/"/>
+    <id>https://anyisalin.github.io/2017/10/27/container-overview/</id>
+    <published>2017-10-27T02:45:53.000Z</published>
+    <updated>2018-02-20T11:43:03.196Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;总结了一些容器的知识，回答别人的问题&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="container" scheme="https://anyisalin.github.io/tags/container/"/>
+    
+      <category term="devops" scheme="https://anyisalin.github.io/tags/devops/"/>
+    
+  </entry>
+  
+</feed>

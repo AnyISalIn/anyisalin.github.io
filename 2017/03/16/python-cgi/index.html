@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="en">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -23,8 +23,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -43,7 +43,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -51,9 +51,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
@@ -104,7 +104,7 @@
 
 
   
-  <meta name="keywords" content="python,development,web," />
+  <meta name="keywords" content="python,development,web,">
 
 
 <meta name="description" content="所谓的动态网页就是会根据某些变量，渲染出不同的页面，曾经的 Web 后端开发主要就是通过服务端脚本生成 HTML 文档给用户，但是这已经过时了，现在流行前后端分离的架构，后端只提供 API，前端通过调用后端 API 获取数据，因为现在前端可以做很多事，是门大学问，坑也非常多，这里就不说了，本文主要介绍已经过时的 Web 开发的基础， CGI 协议 嗯，我在胡说八道">
@@ -131,10 +131,12 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="无趣" type="application/atom+xml">
 
 
 
-  <link rel="canonical" href="https://anyisalin.github.io/2017/03/16/python-cgi/"/>
+
+  <link rel="canonical" href="https://anyisalin.github.io/2017/03/16/python-cgi/">
 
 
 
@@ -208,7 +210,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">无趣</span>
         <span class="logo-line-after"><i></i></span>
@@ -237,25 +239,25 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
         </li>
       
         
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
         </li>
       
         
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
         </li>
       
 
@@ -303,7 +305,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnyISalIn">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
     </span>
 
@@ -347,8 +349,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/2017/03/16/python-cgi/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/03/16/python-cgi/" itemprop="commentCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/16/python-cgi/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -436,11 +437,11 @@
 <p>建一个 <code>args3.py</code> 的 cgi 脚本，简单的登录支持</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># args3.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cgi</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Content-type: text/html'</span>)</span><br><span class="line">print(<span class="string">''</span>)</span><br><span class="line"></span><br><span class="line">args = cgi.FieldStorage()</span><br><span class="line">print(<span class="string">'&lt;h1&gt;Hello &#123;&#125;, Website &#123;&#125;&lt;/h1&gt;'</span>.format(args.getvalue(<span class="string">'name'</span>), args.getvalue(<span class="string">'url'</span>)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> args.getvalue(<span class="string">'password'</span>) == <span class="string">'password'</span>:</span><br><span class="line">    print(<span class="string">'Login Pass'</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'Deny Login'</span>)</span><br></pre></td></tr></table></figure>
 <p>故意输错密码</p>
-<p><img src="/images/form3.png" alt=""></p>
+<p><img src="/images/form3.png" alt></p>
 <p>拒绝登录</p>
-<p><img src="/images/form4.png" alt=""></p>
+<p><img src="/images/form4.png" alt></p>
 <p>密码输入正确，登录成功</p>
-<p><img src="/images/form5.png" alt=""></p>
+<p><img src="/images/form5.png" alt></p>
 <h3 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h3><p>还是通过表单的方式上传文件</p>
 <p>文档路径为 <code>/var/www/html/form3.html</code></p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span> <span class="attr">action</span>=<span class="string">"/cgi-bin/upfile.py"</span> <span class="attr">method</span>=<span class="string">"POST"</span>&gt;</span></span><br><span class="line">    select file: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"file"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"submit"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -449,15 +450,15 @@
 <p>编写一个 <code>upfile.py</code> 的 cgi 脚本</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># upfile.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cgi, os</span><br><span class="line"></span><br><span class="line">args = cgi.FieldStorage()</span><br><span class="line"></span><br><span class="line">print(<span class="string">''</span>)</span><br><span class="line"></span><br><span class="line">fileitem = args[<span class="string">'file'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> fileitem.filename:</span><br><span class="line">    f = os.path.join(<span class="string">'upload'</span>, fileitem.filename)</span><br><span class="line">    <span class="keyword">with</span> open(f, <span class="string">'wb'</span>) <span class="keyword">as</span> fd:</span><br><span class="line">        fd.write(fileitem.file.read())</span><br><span class="line">    print(<span class="string">'upload success'</span>)</span><br></pre></td></tr></table></figure>
 <p>选择文件</p>
-<p><img src="/images/form6.png" alt=""></p>
+<p><img src="/images/form6.png" alt></p>
 <p>点击上传</p>
-<p><img src="/images/form7.png" alt=""></p>
+<p><img src="/images/form7.png" alt></p>
 <p>查看 <code>upload</code> 目录</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> ls upload/</span><br><span class="line">export.json</span><br></pre></td></tr></table></figure>
 <h2 id="异常捕获"><a href="#异常捕获" class="headerlink" title="异常捕获"></a>异常捕获</h2><p>如果我们的 cgi 脚本运行出错，一般情况下 HTTP Server 会抛出 500 错误，但是我们可能希望 HTTP Server 能够准确的抛出异常，供我们排错，这时候就要用到 <code>cgitb</code> 这个模块了</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># traceback.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cgi</span><br><span class="line"><span class="keyword">import</span> cgitb</span><br><span class="line"></span><br><span class="line">cgitb.enable()</span><br><span class="line"></span><br><span class="line">print(<span class="string">''</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'hello, world'</span>, aaaa) <span class="comment">#故意打错</span></span><br></pre></td></tr></table></figure>
 <p>请求一下页面试试</p>
-<p><img src="/images/traceback.png" alt=""></p>
+<p><img src="/images/traceback.png" alt></p>
 <h2 id="CGI-的一些问题"><a href="#CGI-的一些问题" class="headerlink" title="CGI 的一些问题"></a>CGI 的一些问题</h2><p>有几个比较关键的问题</p>
 <ul>
 <li>所有脚本都必须有执行权限</li>
@@ -595,9 +596,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png"
-                alt="AnyISalIn" />
+              <img class="site-author-image" itemprop="image" src="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png" alt="AnyISalIn">
             
               <p class="site-author-name" itemprop="name">AnyISalIn</p>
               <p class="site-description motion-element" itemprop="description">Life is short</p>
@@ -699,6 +698,13 @@
             </nav>
           
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
