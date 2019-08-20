@@ -399,7 +399,7 @@
         <p><code>envoy</code> 是对 Python 标准库中 <code>subprocess</code> 模块的封装， 虽然功能对比原生 <code>subprocess</code> 来说少了很多，但是更易于使用，<a href="https://github.com/kennethreitz/envoy" target="_blank" rel="noopener">Github 项目地址</a></p>
 <a id="more"></a>
 <h1 id="代码解析"><a href="#代码解析" class="headerlink" title="代码解析"></a>代码解析</h1><p><code>envoy</code> 只有一个文件，两百多行代码，非常的简单</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> tree envoy</span><br><span class="line">envoy</span><br><span class="line">├── __init__.py</span><br><span class="line">└── core.py</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tree envoy</span></span><br><span class="line">envoy</span><br><span class="line">├── __init__.py</span><br><span class="line">└── core.py</span><br></pre></td></tr></table></figure>
 <p><code>envoy</code> 可以非常轻松通过管道传递数据</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> envoy.core <span class="keyword">import</span> run</span><br><span class="line"></span><br><span class="line">r = run(<span class="string">'ifconfig|wc -l'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r</span><br><span class="line">&lt;Response [wc]&gt;</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r.command</span><br><span class="line">[<span class="string">'wc'</span>, <span class="string">'-l'</span>]</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r.std_out</span><br><span class="line"><span class="string">'      52\n'</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r.history</span><br><span class="line">[&lt;Response [ifconfig]&gt;]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者像这样</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>run(<span class="string">'wc -l'</span>, data=<span class="string">'1\n2\n3\n'</span>).std_out</span><br><span class="line"><span class="string">'       3\n'</span></span><br></pre></td></tr></table></figure>
 <p>我们先看看 <code>run</code> 函数</p>
@@ -554,7 +554,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -635,7 +635,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
