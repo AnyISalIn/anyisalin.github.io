@@ -104,21 +104,24 @@
 
 
   
-  <meta name="keywords" content="python,data-structure,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
-<meta name="description" content="栈是一种 LIFO(Last In First Out) 的数据结构，栈插入和删除都在 栈顶 操作">
-<meta name="keywords" content="python,data-structure">
+<meta name="description" content="最近有个 Zabbix 监控 Kong 的需求，查了一下网上并没有很多资料，遂研究官方文档，发现 Kong 支持把监控数据传到 Statsd 中，而 Statsd 可以将 Zabbix 作为 backend，所以大体的架构如下 Kong ---&amp;gt; Statsd ---&amp;gt; Zabbix 配置过于简单，这里就不写了">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据结构 - 栈">
-<meta property="og:url" content="https://anyisalin.github.io/2017/11/28/data-structure-stack/index.html">
+<meta property="og:title" content="Zabbix 基于 Statsd 实现对 Kong APIGateway 的监控">
+<meta property="og:url" content="https://anyisalin.github.io/2019/11/26/kong-monitoring-with-statsd-zabbix/index.html">
 <meta property="og:site_name" content="无趣">
-<meta property="og:description" content="栈是一种 LIFO(Last In First Out) 的数据结构，栈插入和删除都在 栈顶 操作">
+<meta property="og:description" content="最近有个 Zabbix 监控 Kong 的需求，查了一下网上并没有很多资料，遂研究官方文档，发现 Kong 支持把监控数据传到 Statsd 中，而 Statsd 可以将 Zabbix 作为 backend，所以大体的架构如下 Kong ---&amp;gt; Statsd ---&amp;gt; Zabbix 配置过于简单，这里就不写了">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-02-20T11:43:03.000Z">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20191126011530471.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20191126011545851.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20191126012047758.png">
+<meta property="og:updated_time" content="2019-11-25T17:37:35.728Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数据结构 - 栈">
-<meta name="twitter:description" content="栈是一种 LIFO(Last In First Out) 的数据结构，栈插入和删除都在 栈顶 操作">
+<meta name="twitter:title" content="Zabbix 基于 Statsd 实现对 Kong APIGateway 的监控">
+<meta name="twitter:description" content="最近有个 Zabbix 监控 Kong 的需求，查了一下网上并没有很多资料，遂研究官方文档，发现 Kong 支持把监控数据传到 Statsd 中，而 Statsd 可以将 Zabbix 作为 backend，所以大体的架构如下 Kong ---&amp;gt; Statsd ---&amp;gt; Zabbix 配置过于简单，这里就不写了">
+<meta name="twitter:image" content="https://anyisalin.github.io/images/image-20191126011530471.png">
 
 
 
@@ -127,7 +130,7 @@
 
 
 
-  <link rel="canonical" href="https://anyisalin.github.io/2017/11/28/data-structure-stack/">
+  <link rel="canonical" href="https://anyisalin.github.io/2019/11/26/kong-monitoring-with-statsd-zabbix/">
 
 
 
@@ -136,7 +139,7 @@
     sidebar: "",
   };
 </script>
-  <title>数据结构 - 栈 | 无趣</title>
+  <title>Zabbix 基于 Statsd 实现对 Kong APIGateway 的监控 | 无趣</title>
   
 
 
@@ -292,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2017/11/28/data-structure-stack/">
+    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2019/11/26/kong-monitoring-with-statsd-zabbix/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnyISalIn">
@@ -309,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">数据结构 - 栈</h1>
+          <h1 class="post-title" itemprop="name headline">Zabbix 基于 Statsd 实现对 Kong APIGateway 的监控</h1>
         
 
         <div class="post-meta">
@@ -321,7 +324,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-28T15:56:29+08:00">2017-11-28</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-26T00:19:38+08:00">2019-11-26</time>
             
 
             
@@ -339,8 +342,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/28/data-structure-stack/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/11/28/data-structure-stack/" itemprop="commentCount"></span>
+                <a href="/2019/11/26/kong-monitoring-with-statsd-zabbix/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/26/kong-monitoring-with-statsd-zabbix/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -362,7 +365,7 @@
                 
                   <span class="post-meta-item-text">Symbols count in article&#58;</span>
                 
-                <span title="Symbols count in article">932</span>
+                <span title="Symbols count in article">2.8k</span>
               
 
               
@@ -376,7 +379,7 @@
                 
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Reading time">0:01</span>
+                <span title="Reading time">0:03</span>
               
             </div>
           
@@ -396,14 +399,41 @@
       
 
       
-        <p>栈是一种 LIFO(Last In First Out) 的数据结构，栈插入和删除都在 栈顶 操作</p>
+        <p>最近有个 Zabbix 监控 Kong 的需求，查了一下网上并没有很多资料，遂研究官方文档，发现 Kong 支持把监控数据传到 Statsd 中，而 Statsd 可以将 Zabbix 作为 backend，所以大体的架构如下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Kong ---&gt; Statsd ---&gt; Zabbix</span><br></pre></td></tr></table></figure>
+<p>配置过于简单，这里就不写了</p>
 <a id="more"></a>
-<p>Python 中内置的数据结构 List 就可以实现栈的后进先出，只需要对其进行简单的封装</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self._stack = []</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self, item)</span>:</span></span><br><span class="line">        self._stack.append(item)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.is_empty:</span><br><span class="line">            <span class="keyword">return</span> self._stack.pop()</span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">'stack is empty'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">peek</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.is_empty:</span><br><span class="line">            <span class="keyword">return</span> self._stack[<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">'stack is empty'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">clear</span><span class="params">(self)</span>:</span></span><br><span class="line">        self._stack.clear()</span><br><span class="line">        </span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">size</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> len(self._stack)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_empty</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> len(self._stack) == <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<h2 id="栈的应用"><a href="#栈的应用" class="headerlink" title="栈的应用"></a>栈的应用</h2><p><strong>二进制转换</strong></p>
-<p>通过 “除二取余法” 将十进制转换为二进制，栈 这种数据结构再适合不过了。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">d2bin</span><span class="params">(number)</span>:</span></span><br><span class="line">  s = Stack()</span><br><span class="line">  <span class="keyword">while</span> number &gt; <span class="number">0</span>:</span><br><span class="line">    s.push(number % <span class="number">2</span>)</span><br><span class="line">    number = number // <span class="number">2</span></span><br><span class="line"></span><br><span class="line">  bin_string = str()</span><br><span class="line">  <span class="keyword">while</span> <span class="keyword">not</span> s.is_empty:</span><br><span class="line">    bin_string += str(s.pop())</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> bin_string</span><br></pre></td></tr></table></figure>
-<p>这样写只是为了距离，Python 内置数据结构和语法比较强大，完全没有必要这样写</p>
+<h2 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h2><p>但是当笔者将 Statsd 和 statsd-zabbix 插件部署好之后发现一些问题</p>
+<p>这是 zabbix-sender 报的错误，服务端并没有接收我们的监控指标，原因是在 Zabbix 中的 Host 并没有对应的 item key</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">26 Nov 01:02:49 - INFO: statsd-zabbix-backend: processed: 0; failed: 41; total: 41; seconds spent: 0.000768</span><br></pre></td></tr></table></figure>
+<p>监控指标都是是基于 Kong 中不同的 Service/Consumer，由于 Service 是动态的，没有办法写死 item key，只能定义好 Low-Level-Discovery 并结合 Item prototypes 自动生成对应的 item key</p>
+<p>那么先需要在 zabbix 中定义 Low-Level-Discovery 规则来自动发现 Kong 的 Service，这里笔者通过 Kong Admin API 实现</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span> /etc/zabbix/zabbix_agentd.d/kong_service_discovery.conf</span><br><span class="line">UserParameter=kong.service.discovery,curl localhost:8001/services 2&gt; /dev/null| jq '[.data[] | &#123;"&#123;#SERVICENAME&#125;": .name&#125;]'</span><br></pre></td></tr></table></figure>
+<p>这就算是实现了 Service 的发现，通过 zabbix_get 可以动态拿到当前所有的 Service</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># zabbix_get -s 127.0.0.1 -p 10050 -k kong.service.discovery</span><br><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"&#123;#SERVICENAME&#125;"</span>: <span class="string">"example-service"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"&#123;#SERVICENAME&#125;"</span>: <span class="string">"example2-service"</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>然后笔者发现新的问题，就是 Zabbix 的 item key 的宏只能定义在 <code>参数/[]</code> 中，无法定义在 item.key 本身</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span> 笔者想基于 zabbix 的宏定义这样的 item key</span><br><span class="line">kong.&#123;#SERVICENAME&#125;.request.count[total]</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 但事实上，zabbix 只支持以下格式的定义</span><br><span class="line">kong.request.count[&#123;#SERVICENAME&#125;,total]</span><br></pre></td></tr></table></figure>
+<p>Kong 传输给 Statsd 的数据格式为</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kong.&lt;service_name&gt;.request.count</span><br></pre></td></tr></table></figure>
+<p>而笔者期望得到的数据格式为</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kong.request.count[service_name]</span><br></pre></td></tr></table></figure>
+<p>所以我们还要对传输的数据进行转换，这里笔者经过调研决定单独修改 statsd-zabbix-backend 的代码，<a href="https://gist.github.com/AnyISalIn/b8f18eb744b9b489caec749b99121ea8" target="_blank" rel="noopener">修改过的代码</a></p>
+<p>最后 Statsd 传输给 Zabbix 的数据格式如下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.request.count[example-service,total] -&gt; 0</span><br><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.request.count[example-service,avg] -&gt; 0</span><br><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.request.status.500[example-service,total] -&gt; 0</span><br><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.request.status.500[example-service,avg] -&gt; 0</span><br><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.request.status.total[example-service,total] -&gt; 0</span><br><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.request.status.total[example-service,avg] -&gt; 0</span><br><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.latency[example-service,lower] -&gt; 0</span><br><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.latency[example-service,upper] -&gt; 0</span><br></pre></td></tr></table></figure>
+<p>最后我们只需要在 Zabbix Web 页面创建对应的规则即可，效果如下</p>
+<p><img src="/images/image-20191126011530471.png" alt="image-20191126011530471"></p>
+<p><img src="/images/image-20191126011545851.png" alt="image-20191126011545851"></p>
+<p><img src="/images/image-20191126012047758.png" alt="image-20191126012047758"></p>
+<p>后续继续定义 Trigger prototypes 就可以作为基础模板正常使用了</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>当然还有一些问题的，比如 <code>status_count_per_user</code> 这个指标是同时包含 Service 和 Consumer 的，笔者暂时还没有对所有 Consumer 进行 Low-Level Discovery，所以还没有支持。</p>
+<p>而 <code>upstream_latency</code> 这个指标从 Kong 发到 Statsd 就是有问题的。</p>
+<p>经过测试过后非常不建议使用 Zabbix 来监控 Kong，原因如下</p>
+<ol>
+<li>没有官方的支持</li>
+<li>引入 Statsd 会增加监控架构的复杂性</li>
+<li>statsd-zabbix 插件已经两年没更新了</li>
+</ol>
+<p>最后如果真的有 Zabbix 监控 Kong 的需求，建议还是单独开发插件，而不是使用本文的方案。</p>
 
       
     </div>
@@ -422,14 +452,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/python/" rel="tag"># python</a>
-          
-            <a href="/tags/data-structure/" rel="tag"># data-structure</a>
-          
-        </div>
-      
 
       
       
@@ -439,8 +461,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/22/aco-overview/" rel="next" title="刺客信条·起源 玩后感">
-                <i class="fa fa-chevron-left"></i> 刺客信条·起源 玩后感
+              <a href="/2019/08/20/xgimi-h3-experience/" rel="next" title="极米 H3 体验">
+                <i class="fa fa-chevron-left"></i> 极米 H3 体验
               </a>
             
           </div>
@@ -448,10 +470,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/12/openvpn-with-easyconnect/" rel="prev" title="openvpn 中转 EasyConnect">
-                openvpn 中转 EasyConnect <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -693,7 +711,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#栈的应用"><span class="nav-number">1.</span> <span class="nav-text">栈的应用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题排查"><span class="nav-number">1.</span> <span class="nav-text">问题排查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
@@ -872,9 +890,9 @@
   
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = 'https://anyisalin.github.io/2017/11/28/data-structure-stack/';
-        this.page.identifier = '2017/11/28/data-structure-stack/';
-        this.page.title = '数据结构 - 栈';
+        this.page.url = 'https://anyisalin.github.io/2019/11/26/kong-monitoring-with-statsd-zabbix/';
+        this.page.identifier = '2019/11/26/kong-monitoring-with-statsd-zabbix/';
+        this.page.title = 'Zabbix 基于 Statsd 实现对 Kong APIGateway 的监控';
       };
       function loadComments () {
         var d = document, s = d.createElement('script');

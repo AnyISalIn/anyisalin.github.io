@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="无趣">
 <meta property="og:description" content="Python 中有很多连接数据库的模块，pymysql、psycopg2、sqlite3 等，但是通常情况下我们都不会单独使用它们，因为程序可能需要支持多个数据库，而且直接通过调用 SQL 的方式去获取数据库中的数据会使得代码维护成本变高，这种情况下可能就要用到 ORM (数据关系映射, Object Relational Mapping)，而 Python 中最著名的 ORM 当属 SQLAlc">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-02-20T11:43:03.207Z">
+<meta property="og:updated_time" content="2018-02-20T11:43:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python - SQLAlchemy">
 <meta name="twitter:description" content="Python 中有很多连接数据库的模块，pymysql、psycopg2、sqlite3 等，但是通常情况下我们都不会单独使用它们，因为程序可能需要支持多个数据库，而且直接通过调用 SQL 的方式去获取数据库中的数据会使得代码维护成本变高，这种情况下可能就要用到 ORM (数据关系映射, Object Relational Mapping)，而 Python 中最著名的 ORM 当属 SQLAlc">
@@ -400,7 +400,7 @@
 <a id="more"></a>
 <p><code>SQLAlchemy</code> 的关系映射提供了 数据库中的表 与 Python 的类、实例之间的映射关系 一般个类对应一张表，一个实例对应一列</p>
 <h2 id="SQLAlchemy-基础"><a href="#SQLAlchemy-基础" class="headerlink" title="SQLAlchemy 基础"></a>SQLAlchemy 基础</h2><p>首先我们肯定得先安装 <code>SQLAlchemy</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> pip install sqlalchemy</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> pip install sqlalchemy</span></span><br></pre></td></tr></table></figure>
 <h3 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine </span><br><span class="line"></span><br><span class="line">engine = create_engine(<span class="string">'sqlite:///:memory:'</span>) <span class="comment">#通过 create_engine 连接数据库，这里我们使用 sqlite，并存储数据在内存中</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启 debug 模式</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">engine = create_engine('sqlite:///:memeory:', echo=True)</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
 <p>关于连接数据库的 url 可以看官方文档 <a href="http://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls" target="_blank" rel="noopener">database-url</a></p>
 <h3 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h3><p>如果我们需要一张 <code>users</code> 的表，那么我们可以通过一个 <code>User</code> 类来声明它的元数据，它继承自 <code>Base</code> 基类</p>
@@ -586,7 +586,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -776,7 +776,7 @@
     
       <span class="post-meta-item-text">Symbols count total&#58;</span>
     
-    <span title="Symbols count total">133k</span>
+    <span title="Symbols count total">136k</span>
   
 
   
@@ -787,7 +787,7 @@
     
       <span class="post-meta-item-text">Reading time total&#58;</span>
     
-    <span title="Reading time total">2:13</span>
+    <span title="Reading time total">2:16</span>
   
 </div>
 

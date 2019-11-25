@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="无趣">
 <meta property="og:description" content="Install Thrift$ yum groupinstall &apos;Development Tools&apos; # install package group on centos$ git clone https://github.com/apache/thrift.git$ cd thrift$ ./configure --with-lua=no$ make &amp;amp;&amp;amp; make insta">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-02-20T11:43:03.202Z">
+<meta property="og:updated_time" content="2018-02-20T11:43:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hbase Thrift API Test">
 <meta name="twitter:description" content="Install Thrift$ yum groupinstall &apos;Development Tools&apos; # install package group on centos$ git clone https://github.com/apache/thrift.git$ cd thrift$ ./configure --with-lua=no$ make &amp;amp;&amp;amp; make insta">
@@ -396,10 +396,10 @@
       
 
       
-        <h2 id="Install-Thrift"><a href="#Install-Thrift" class="headerlink" title="Install Thrift"></a>Install Thrift</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum groupinstall <span class="string">'Development Tools'</span> <span class="comment"># install package group on centos</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/apache/thrift.git</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> thrift</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./configure --with-lua=no</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> make &amp;&amp; make install</span></span><br></pre></td></tr></table></figure>
+        <h2 id="Install-Thrift"><a href="#Install-Thrift" class="headerlink" title="Install Thrift"></a>Install Thrift</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> yum groupinstall 'Development Tools' # install package group on centos</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> git clone https://github.com/apache/thrift.git</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> cd thrift</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> ./configure --with-lua=no</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h2 id="Build-Hbase-Client-Package"><a href="#Build-Hbase-Client-Package" class="headerlink" title="Build Hbase Client Package"></a>Build Hbase Client Package</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> thrift --gen py hbase-src/hbase-1.3.1/hbase-thrift/src/main/resources/org/apache/hadoop/hbase/thrift/Hbase.thrift</span></span><br></pre></td></tr></table></figure>
-<h2 id="Start-Hbase-Thrift-API"><a href="#Start-Hbase-Thrift-API" class="headerlink" title="Start Hbase Thrift API"></a>Start Hbase Thrift API</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bin/hbase thrift start</span></span><br></pre></td></tr></table></figure>
+<h2 id="Build-Hbase-Client-Package"><a href="#Build-Hbase-Client-Package" class="headerlink" title="Build Hbase Client Package"></a>Build Hbase Client Package</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> thrift --gen py hbase-src/hbase-1.3.1/hbase-thrift/src/main/resources/org/apache/hadoop/hbase/thrift/Hbase.thrift</span><br></pre></td></tr></table></figure>
+<h2 id="Start-Hbase-Thrift-API"><a href="#Start-Hbase-Thrift-API" class="headerlink" title="Start Hbase Thrift API"></a>Start Hbase Thrift API</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> bin/hbase thrift start</span><br></pre></td></tr></table></figure>
 <h2 id="Test-Hbase-Thrift-API"><a href="#Test-Hbase-Thrift-API" class="headerlink" title="Test Hbase Thrift API"></a>Test Hbase Thrift API</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> thrift.transport.TSocket <span class="keyword">import</span> TSocket</span><br><span class="line"><span class="keyword">from</span> thrift.transport.TTransport <span class="keyword">import</span> TBufferedTransport</span><br><span class="line"><span class="keyword">from</span> thrift.protocol <span class="keyword">import</span> TBinaryProtocol</span><br><span class="line"><span class="keyword">from</span> hbase <span class="keyword">import</span> Hbase</span><br><span class="line"><span class="keyword">from</span> hbase.ttypes <span class="keyword">import</span> ColumnDescriptor</span><br><span class="line"></span><br><span class="line">transport = TBufferedTransport(TSocket(<span class="string">'192.168.20.209'</span>, <span class="string">'9090'</span>))</span><br><span class="line">transport.open()</span><br><span class="line">protocol = TBinaryProtocol.TBinaryProtocol(transport)</span><br><span class="line"></span><br><span class="line">client = Hbase.Client(protocol)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">list_table</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'tables: &#123;&#125;'</span>.format(client.getTableNames()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_table</span><span class="params">(table_name, family_name)</span>:</span></span><br><span class="line">    c = ColumnDescriptor(family_name)</span><br><span class="line">    client.createTable(table_name, [c])</span><br><span class="line">    print(<span class="string">'create table &#123;&#125;'</span>.format(table_name.decode()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">disable_table</span><span class="params">(table_name)</span>:</span></span><br><span class="line">    client.disableTable(table_name)</span><br><span class="line">    print(<span class="string">'disaable table &#123;&#125;'</span>.format(table_name.decode()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delete_table</span><span class="params">(table_name)</span>:</span></span><br><span class="line">    client.deleteTable(table_name)</span><br><span class="line">    print(<span class="string">'delete table &#123;&#125;'</span>.format(table_name.decode()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># get all table</span></span><br><span class="line">    list_table()</span><br><span class="line">    <span class="comment"># create a tables</span></span><br><span class="line">    create_table(<span class="string">b'test_table'</span>, <span class="string">b'test_family'</span>)</span><br><span class="line">    list_table()</span><br><span class="line">    <span class="comment"># disable table</span></span><br><span class="line">    disable_table(<span class="string">b'test_table'</span>)</span><br><span class="line">    <span class="comment"># delete table</span></span><br><span class="line">    delete_table(<span class="string">b'test_table'</span>)</span><br><span class="line">    list_table()</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -531,7 +531,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -721,7 +721,7 @@
     
       <span class="post-meta-item-text">Symbols count total&#58;</span>
     
-    <span title="Symbols count total">133k</span>
+    <span title="Symbols count total">136k</span>
   
 
   
@@ -732,7 +732,7 @@
     
       <span class="post-meta-item-text">Reading time total&#58;</span>
     
-    <span title="Reading time total">2:13</span>
+    <span title="Reading time total">2:16</span>
   
 </div>
 

@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="无趣">
 <meta property="og:description" content="通过控制台获取 TOKEN ，注意请求参数中的 TOKEN 是 用户 ID + TOKEN 组合 dnspod 文档 $ cat /etc/ddns/ddns.shIP=$(/sbin/ifconfig pppoe-wan| grep &apos;inet addr&apos; | cut -d: -f2 | awk &apos;&amp;#123;print $1&amp;#125;&apos;) # 这里 pppoe-wan 指的是公网地址的接口/">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-12T01:53:44.286Z">
+<meta property="og:updated_time" content="2018-09-12T01:53:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dnspod DDNS crontab">
 <meta name="twitter:description" content="通过控制台获取 TOKEN ，注意请求参数中的 TOKEN 是 用户 ID + TOKEN 组合 dnspod 文档 $ cat /etc/ddns/ddns.shIP=$(/sbin/ifconfig pppoe-wan| grep &apos;inet addr&apos; | cut -d: -f2 | awk &apos;&amp;#123;print $1&amp;#125;&apos;) # 这里 pppoe-wan 指的是公网地址的接口/">
@@ -398,7 +398,7 @@
       
         <p>通过控制台获取 <code>TOKEN</code> ，注意请求参数中的 <code>TOKEN</code> 是 用户 ID + <code>TOKEN</code> 组合</p>
 <p><a href="http://www.dnspod.cn/docs/records.html#dns" target="_blank" rel="noopener">dnspod 文档</a></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat /etc/ddns/ddns.sh</span></span><br><span class="line">IP=$(/sbin/ifconfig pppoe-wan| grep 'inet addr' | cut -d: -f2 | awk '&#123;print $1&#125;') # 这里 pppoe-wan 指的是公网地址的接口</span><br><span class="line"></span><br><span class="line">/usr/bin/curl -X POST https://dnsapi.cn/Record.Ddns -d "login_token=$&#123;ACCOUNT_ID&#125;,$&#123;TOKEN&#125;&amp;record_line_id=0&amp;sub_domain=home&amp;value=$&#123;IP&#125;"</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat /etc/crontabs/root</span></span><br><span class="line">*****</span><br><span class="line">*/1 * * * * /etc/ddns/ddns.sh # 如果1小时之内，提交了超过5次没有任何变动的记录修改请求，该记录会被系统锁定1小时</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> cat /etc/ddns/ddns.sh</span><br><span class="line">IP=$(/sbin/ifconfig pppoe-wan| grep 'inet addr' | cut -d: -f2 | awk '&#123;print $1&#125;') # 这里 pppoe-wan 指的是公网地址的接口</span><br><span class="line"></span><br><span class="line">/usr/bin/curl -X POST https://dnsapi.cn/Record.Ddns -d "login_token=$&#123;ACCOUNT_ID&#125;,$&#123;TOKEN&#125;&amp;record_line_id=0&amp;sub_domain=home&amp;value=$&#123;IP&#125;"</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> cat /etc/crontabs/root</span><br><span class="line">*****</span><br><span class="line">*/1 * * * * /etc/ddns/ddns.sh # 如果1小时之内，提交了超过5次没有任何变动的记录修改请求，该记录会被系统锁定1小时</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -521,7 +521,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -695,7 +695,7 @@
     
       <span class="post-meta-item-text">Symbols count total&#58;</span>
     
-    <span title="Symbols count total">133k</span>
+    <span title="Symbols count total">136k</span>
   
 
   
@@ -706,7 +706,7 @@
     
       <span class="post-meta-item-text">Reading time total&#58;</span>
     
-    <span title="Reading time total">2:13</span>
+    <span title="Reading time total">2:16</span>
   
 </div>
 

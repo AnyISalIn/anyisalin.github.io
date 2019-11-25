@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="无趣">
 <meta property="og:description" content="总结了一些容器的知识，回答别人的问题">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-02-20T11:43:03.196Z">
+<meta property="og:updated_time" content="2018-02-20T11:43:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Container Overview">
 <meta name="twitter:description" content="总结了一些容器的知识，回答别人的问题">
@@ -403,11 +403,11 @@
 <h2 id="微服务"><a href="#微服务" class="headerlink" title="微服务"></a>微服务</h2><p>将大型应用解耦成若干个服务模块，各服务模块松耦合，独立部署，各服务模块通过 HTTP API/RPC 通信，这种架构使得每个服务皆可以实现横向扩展，故障转移，滚动更新等高级特性，不过对于微服务来说，容器技术只是辅助，最关键的还是服务的设计</p>
 <h1 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h1><h2 id="别人如何使用我的容器？"><a href="#别人如何使用我的容器？" class="headerlink" title="别人如何使用我的容器？"></a>别人如何使用我的容器？</h2><p>容器不是虚拟机，一般不会直接进入内部操作，打包一个镜像后，用户只需要最简单的 <code>docker run</code>，需要的时候提供一些环境变量用来初始化应用即可，并不需要进入内部！</p>
 <p>就比如 mysql 官方的镜像</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker pull mysql</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run -d -e MYSQL_ROOT_PASSWORD=passwd mysql <span class="comment"># 这样就可以了，直接通过外部去访问 mysql，不需要进入容器内部</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> docker pull mysql</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> docker run -d -e MYSQL_ROOT_PASSWORD=passwd mysql # 这样就可以了，直接通过外部去访问 mysql，不需要进入容器内部</span><br></pre></td></tr></table></figure>
 <p>相比与在 centos 上安装 mysql 需要做的步骤…</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum install mysql mysql-server -y</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> systemctl start mysqld</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> mysql_secure_installation</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> mysql</span></span><br><span class="line"></span><br><span class="line">GRANT ALL ....</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> yum install mysql mysql-server -y</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> systemctl start mysqld</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> mysql_secure_installation</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> mysql</span><br><span class="line"></span><br><span class="line">GRANT ALL ....</span><br></pre></td></tr></table></figure>
 <p>当然，这只是最简单的一个数据库安装，如果你的应用 前端用的是 nginx，后端是 mysql，还要部署 php 环境呢？假设你的应用叫做 <code>summer-blog</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker pull summer-blog</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run -tid -p 80:80 summer-blog</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> curl localhost:80</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> docker pull summer-blog</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> docker run -tid -p 80:80 summer-blog</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> curl localhost:80</span><br></pre></td></tr></table></figure>
 <p>将复杂的环境直接打包成一个镜像，用户直接通过 <code>docker run</code> 就可以得到和你一样的环境，直接运行你的应用，再也不需要 *** install… 操作了</p>
 <p>不过一般不推荐这么做，因为将那么多组件打包在一个镜像里面，无法追踪其状态</p>
 <p>推荐分别将 nginx, mysql, php 环境独立为一个容器，再通过一些编排工具 例如 <code>docker-compose</code>  将每个容器连接起来</p>
@@ -424,21 +424,21 @@
 </ul>
 <p>主要是 CMD 和 ENTRYPOINT 之间的差异，一个 Dockerfile 中，如果 CMD 和 ENTRYPOINT 同时存在，那么 CMD 的会传给 ENTRYPOINT，我们来看一个例子</p>
 <p><strong>通过 CMD 的方式输出字符串</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat Dockerfile</span></span><br><span class="line"></span><br><span class="line">from centos:7</span><br><span class="line"></span><br><span class="line">CMD ["echo", "hello world"]</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker build . -t <span class="built_in">test</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run <span class="built_in">test</span></span></span><br><span class="line"></span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> cat Dockerfile</span><br><span class="line"></span><br><span class="line">from centos:7</span><br><span class="line"></span><br><span class="line">CMD ["echo", "hello world"]</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> docker build . -t test</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> docker run test</span><br><span class="line"></span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
 <p>如果我们想自定义输出的字符串的，可以修改 Dockerfile 重新 build 镜像，或者手动传递执行的命令，像下面这样</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run <span class="built_in">test</span> <span class="built_in">echo</span> hello docker</span></span><br><span class="line"></span><br><span class="line">hello docker</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> docker run test echo hello docker</span><br><span class="line"></span><br><span class="line">hello docker</span><br></pre></td></tr></table></figure>
 <p>因为 CMD 是容器启动时候的默认命令，是会被 docker run image 后面的内容给覆盖的</p>
 <p><strong>通过 ENTRYPOINT 输出字符串</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat Dockerfile</span></span><br><span class="line"></span><br><span class="line">from centos:7</span><br><span class="line"></span><br><span class="line">ENTRYPOINT ["echo", "hello"]</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker build . -t <span class="built_in">test</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run <span class="built_in">test</span></span></span><br><span class="line"></span><br><span class="line">hello</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run <span class="built_in">test</span> world</span></span><br><span class="line">hello world</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run <span class="built_in">test</span> <span class="built_in">echo</span> hello world</span></span><br><span class="line"></span><br><span class="line">hello echo hello world</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> cat Dockerfile</span><br><span class="line"></span><br><span class="line">from centos:7</span><br><span class="line"></span><br><span class="line">ENTRYPOINT ["echo", "hello"]</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> docker build . -t test</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> docker run test</span><br><span class="line"></span><br><span class="line">hello</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> docker run test world</span><br><span class="line">hello world</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> docker run test echo hello world</span><br><span class="line"></span><br><span class="line">hello echo hello world</span><br></pre></td></tr></table></figure>
 <p>可以看出，使用 ENTRYPOINT 之后，docker run image 后面的内容就作为位置参数传递进去了，并没有覆盖原有的命令</p>
 <p><strong>CMD 和 ENTRYPOINT 同时存在</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat Dockerfile</span></span><br><span class="line"></span><br><span class="line">from centos:7</span><br><span class="line"></span><br><span class="line">ENTRYPOINT ["echo"]</span><br><span class="line"></span><br><span class="line">CMD ["hello world"]</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker build -t <span class="built_in">test</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run <span class="built_in">test</span></span></span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> cat Dockerfile</span><br><span class="line"></span><br><span class="line">from centos:7</span><br><span class="line"></span><br><span class="line">ENTRYPOINT ["echo"]</span><br><span class="line"></span><br><span class="line">CMD ["hello world"]</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> docker build -t test</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> docker run test</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
 <p>会看到 CMD 也作为参数传递到 ENTRYPOINT 后面了，因为 Dockerfile 中的 CMD 其实和命令行 docker run image 后面跟的内容是等价的，但是命令行的优先级更高</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run <span class="built_in">test</span> hello python</span></span><br><span class="line"></span><br><span class="line">hello python # 覆盖了 CMD</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> docker run test hello python</span><br><span class="line"></span><br><span class="line">hello python # 覆盖了 CMD</span><br></pre></td></tr></table></figure>
 <p><strong>实际使用</strong></p>
 <p>现在比较流行的做法是 ENTRYPOINT 和 CMD 混用，ENTRYPOINT 指定一个初始化容器的脚本，CMD 指定启动前台应用的命令，我们来看看 redis 官方镜像是怎么做的</p>
 <p><a href="https://github.com/docker-library/mysql/blob/master/5.7/Dockerfile" target="_blank" rel="noopener">MySQL 5.7 Dockerfile</a></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 省略前面</span></span><br><span class="line">COPY docker-entrypoint.sh /usr/local/bin/</span><br><span class="line">RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat</span><br><span class="line">ENTRYPOINT ["docker-entrypoint.sh"]</span><br><span class="line"></span><br><span class="line">EXPOSE 3306</span><br><span class="line">CMD ["mysqld"]</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span> 省略前面</span><br><span class="line">COPY docker-entrypoint.sh /usr/local/bin/</span><br><span class="line">RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat</span><br><span class="line">ENTRYPOINT ["docker-entrypoint.sh"]</span><br><span class="line"></span><br><span class="line">EXPOSE 3306</span><br><span class="line">CMD ["mysqld"]</span><br></pre></td></tr></table></figure>
 <p><a href="https://github.com/docker-library/mysql/blob/master/5.7/docker-entrypoint.sh" target="_blank" rel="noopener">docker-entrypoint.sh</a></p>
 <p>MySQL 的 docker-entrypoint 大概的意思就是，可以手动传递一些选项，或者通过 -e 设置类似 <code>MYSQL_ROOT_PASSWORD</code> 这样的环境变量来初始化 MySQL</p>
 
@@ -574,7 +574,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -764,7 +764,7 @@
     
       <span class="post-meta-item-text">Symbols count total&#58;</span>
     
-    <span title="Symbols count total">133k</span>
+    <span title="Symbols count total">136k</span>
   
 
   
@@ -775,7 +775,7 @@
     
       <span class="post-meta-item-text">Reading time total&#58;</span>
     
-    <span title="Reading time total">2:13</span>
+    <span title="Reading time total">2:16</span>
   
 </div>
 

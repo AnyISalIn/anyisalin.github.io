@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="无趣">
 <meta property="og:description" content="今天想给家里路由器 (XiaoMi R3D) 做个端口映射给同事演示做的东西，但是发现通过网页设置路由器端口映射直接返回 500 错误，查了下日志也看到什么错误，然后查看了一下相关代码，并通过 lua 交互式客户端调试了一下 &amp;gt; do    local pf = require(&quot;xiaoqiang.module.XQPortForward&quot;)    pf.setPortForward(&apos;t">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-07T14:23:03.389Z">
+<meta property="og:updated_time" content="2018-09-07T14:23:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小米路由器端口转发 Internal Server Error">
 <meta name="twitter:description" content="今天想给家里路由器 (XiaoMi R3D) 做个端口映射给同事演示做的东西，但是发现通过网页设置路由器端口映射直接返回 500 错误，查了下日志也看到什么错误，然后查看了一下相关代码，并通过 lua 交互式客户端调试了一下 &amp;gt; do    local pf = require(&quot;xiaoqiang.module.XQPortForward&quot;)    pf.setPortForward(&apos;t">
@@ -406,9 +406,9 @@
 <p>为什么 <code>range1.f</code> 会是 <code>nil</code> 呢，笔者看了一下前面的代码</p>
 <figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">uci:<span class="built_in">foreach</span>(<span class="string">"firewall"</span>, <span class="string">"redirect"</span>,</span><br><span class="line">    <span class="function"><span class="keyword">function</span><span class="params">(s)</span></span></span><br><span class="line">        <span class="keyword">if</span> _portRangeOverlap(port, s.src_dport) <span class="keyword">then</span></span><br><span class="line">            result = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <p>是对 uci (lua 统一配置接口) 中的 <code>firewall.redirect</code> 这部分内容进行迭代，与指定的目标端口进行对比，那么原因就出现在笔者环境中的 <code>firewall.redirect</code> 里面了，通过命令查看配置内容</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> uci show firewall.@redirect[1]</span></span><br><span class="line">firewall.cfg333837=redirect</span><br><span class="line">firewall.cfg333837.name=wan samba</span><br><span class="line">firewall.cfg333837.src=wan</span><br><span class="line">firewall.cfg333837.src_dport=137 139 445</span><br><span class="line">firewall.cfg333837.dest=lan</span><br><span class="line">firewall.cfg333837.proto=tcp udp</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> uci show firewall.@redirect[1]</span><br><span class="line">firewall.cfg333837=redirect</span><br><span class="line">firewall.cfg333837.name=wan samba</span><br><span class="line">firewall.cfg333837.src=wan</span><br><span class="line">firewall.cfg333837.src_dport=137 139 445</span><br><span class="line">firewall.cfg333837.dest=lan</span><br><span class="line">firewall.cfg333837.proto=tcp udp</span><br></pre></td></tr></table></figure>
 <p>可以看到这个配置里面的 dport 不是标准的格式，那么问题就是出现在这里了，通过以下命令删除对应的配置就搞定了</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> uci delete firewall.@redirect[1]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span> uci delete firewall.@redirect[1]</span><br></pre></td></tr></table></figure>
 <p>为什么会出现这个问题，笔者认为应该是之前配置 <code>smb</code> 外网访问导致的</p>
 
       
@@ -532,7 +532,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -706,7 +706,7 @@
     
       <span class="post-meta-item-text">Symbols count total&#58;</span>
     
-    <span title="Symbols count total">133k</span>
+    <span title="Symbols count total">136k</span>
   
 
   
@@ -717,7 +717,7 @@
     
       <span class="post-meta-item-text">Reading time total&#58;</span>
     
-    <span title="Reading time total">2:13</span>
+    <span title="Reading time total">2:16</span>
   
 </div>
 
