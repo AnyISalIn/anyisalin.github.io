@@ -119,7 +119,7 @@
 <meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/new-wireguard.png">
 <meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/wireguard-traning.png">
 <meta property="og:image" content="http://anyisalin1-1251720225.file.myqcloud.com/blog/my-wireguard-env.png">
-<meta property="og:updated_time" content="2019-01-22T05:48:00.000Z">
+<meta property="og:updated_time" content="2020-01-13T01:04:13.082Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="通过 Wireguard 构建 NAT to NAT VPN">
 <meta name="twitter:description" content="WireGuard ®是一种非常简单而现代，快捷的VPN，利用最先进的加密技术。它比IPSec 更快，更简单，更精简，更有用。它比OpenVPN更高效。WireGuard设计为通用VPN，适用于多种不同情况。它是跨平台的，可大规模部署。它已经被认为是业内最安全，最易于使用，最简单的VPN解决方案。">
@@ -431,7 +431,7 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ip route add 5.5.5.2/32 dev wg0</span><br></pre></td></tr></table></figure>
 <p>目前 gateway 节点只能够访问 5.5.5.0/24 网段的机器，但我们只需要将需要访问的 nat 网段添加到 对应的 <code>Peer</code> 下的 <code>AllowedIPs</code> 中就能够正常访问了</p>
 <p>例如，我们需要在 gateway 节点上访问 NAT-A(10.10.23.0/24) 网段，那么我们只需要修改 gateway 节点上 wireguard 配置文件中 NAT-A Peer 的配置即可</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[Peer]</span><br><span class="line">PublicKey = $&#123;NAT_A_PUBLIC_KEY&#125;</span><br><span class="line">AllowedIPs = 5.5.5.3/32,10.10.23.0/24</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[Peer]</span><br><span class="line">PublicKey = $&#123;NAT_A_PUBLIC_KEY&#125;</span><br><span class="line">AllowedIPs = 5.5.5.4/32,10.10.23.0/24</span><br></pre></td></tr></table></figure>
 <p>配置完成之后 <code>wg-quick down wg0 &amp;&amp; wg-quick up wg0</code> 尝试 ping NAT-A 网段的地址即可</p>
 <p>只要 gateway 能够访问 NAT-A 网段的之后，同理在其他的 wireguard 客户端配置 gateway <code>Peer</code> 的 <code>AllowedIPs</code> 之后，通过 gateway 进行一次转发也能够访问 NAT-A 网段了</p>
 <h1 id="日常使用"><a href="#日常使用" class="headerlink" title="日常使用"></a>日常使用</h1><p>由于工作原因，平时有很多不同的网络环境需要访问，常常需要 ssh 代理、openvpn 来切换各种网络环境，用了 wireguard 之后解决了我的痛点，目前我使用 wireguard 连接了五个 NAT 网络</p>
@@ -758,7 +758,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
