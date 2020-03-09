@@ -291,6 +291,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2018/08/11/geetest-with-django/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnyISalIn">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="无趣">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/11/geetest-with-django/" itemprop="url">极验 Django Example</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-11T15:43:48+08:00">2018-08-11</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/11/geetest-with-django/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/11/geetest-with-django/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article&#58;</span>
+                
+                <span title="Symbols count in article">3.7k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">0:04</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> user <span class="keyword">import</span> views</span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path</span><br><span class="line"></span><br><span class="line">app_name = <span class="string">'user'</span></span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">'register/'</span>, views.RegisterView.as_view(), name=<span class="string">'register'</span>),</span><br><span class="line">    path(<span class="string">'login/'</span>, views.LoginView.as_view(), name=<span class="string">'login'</span>),</span><br><span class="line">    path(<span class="string">'logout/'</span>, views.LogoutView.as_view(), name=<span class="string">'logout'</span>),</span><br><span class="line">    path(<span class="string">'pc-gt/'</span>, views.GtValidateView.as_view(), name=<span class="string">'gt-validate'</span>),</span><br><span class="line">    path(<span class="string">r'active/&lt;uidb64&gt;/&lt;token&gt;/'</span>, views.ActiveView.as_view(), name=<span class="string">'active'</span>),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> messages</span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> reverse_lazy</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth <span class="keyword">import</span> login, logout</span><br><span class="line"><span class="keyword">from</span> django.utils.http <span class="keyword">import</span> urlsafe_base64_decode</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.tokens <span class="keyword">import</span> default_token_generator</span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponseRedirect, HttpResponseBadRequest</span><br><span class="line"><span class="keyword">from</span> django.views.generic <span class="keyword">import</span> FormView, View, TemplateView, CreateView</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> geetest <span class="keyword">import</span> GeetestLib <span class="comment"># https://github.com/GeeTeam/gt-python-sdk</span></span><br><span class="line"><span class="keyword">from</span> user.forms <span class="keyword">import</span> UserRegisterForm, UserLoginForm</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GeeTestMixin</span><span class="params">(object)</span>:</span></span><br><span class="line">    gid = settings.GEETEST_ID <span class="comment"># 极验ID</span></span><br><span class="line">    gkey = settings.GEETEST_KEY <span class="comment"># 极验 Key</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">check_request</span><span class="params">(self, request)</span>:</span> <span class="comment"># 检查验证是否通过</span></span><br><span class="line">        gt = GeetestLib(self.gid, self.gkey)</span><br><span class="line">        challenge = request.POST.get(gt.FN_CHALLENGE, <span class="string">''</span>)</span><br><span class="line">        validate = request.POST.get(gt.FN_VALIDATE, <span class="string">''</span>)</span><br><span class="line">        seccode = request.POST.get(gt.FN_SECCODE, <span class="string">''</span>)</span><br><span class="line">        status = request.session[gt.GT_STATUS_SESSION_KEY]</span><br><span class="line">        user_id = request.session[<span class="string">"user_id"</span>]</span><br><span class="line">        <span class="keyword">if</span> status:</span><br><span class="line">            <span class="keyword">return</span> gt.success_validate(challenge, validate, seccode, user_id)</span><br><span class="line">        <span class="keyword">return</span> gt.failback_validate(challenge, validate, seccode)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RegisterView</span><span class="params">(CreateView, GeeTestMixin)</span>:</span></span><br><span class="line">    template_name = <span class="string">'login_and_register.html'</span></span><br><span class="line">    form_class = UserRegisterForm</span><br><span class="line">    success_url = reverse_lazy(<span class="string">'user:login'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_context_data</span><span class="params">(self, **kwargs)</span>:</span></span><br><span class="line">        context = super().get_context_data(**kwargs)</span><br><span class="line">        context.update(&#123;</span><br><span class="line">            <span class="string">'form_title'</span>: <span class="string">'注册'</span></span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">return</span> context</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">form_valid</span><span class="params">(self, form)</span>:</span></span><br><span class="line">        super().form_valid(form)</span><br><span class="line">        messages.add_message(self.request, messages.INFO, <span class="string">'激活邮件已发出，请检查您的邮箱'</span>)</span><br><span class="line">        <span class="keyword">return</span> HttpResponseRedirect(self.get_success_url())</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.check_request(request):</span><br><span class="line">            messages.add_message(request, messages.ERROR, <span class="string">'验证失败'</span>)</span><br><span class="line">            <span class="keyword">return</span> HttpResponseRedirect(reverse_lazy(<span class="string">'user:register'</span>))</span><br><span class="line">        <span class="keyword">return</span> super().post(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GtValidateView</span><span class="params">(View, GeeTestMixin)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request)</span>:</span></span><br><span class="line">        user_id = <span class="string">'test'</span></span><br><span class="line">        gt = GeetestLib(self.gid, self.gkey)</span><br><span class="line">        status = gt.pre_process(user_id)</span><br><span class="line">        request.session[gt.GT_STATUS_SESSION_KEY] = status</span><br><span class="line">        request.session[<span class="string">"user_id"</span>] = user_id</span><br><span class="line">        response_str = gt.get_response_str()</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(response_str)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">    url: <span class="string">"&#123;% url 'user:gt-validate' %&#125;"</span>,</span><br><span class="line">    type: <span class="string">"get"</span>,</span><br><span class="line">    dataType: <span class="string">"json"</span>,</span><br><span class="line">    success: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="comment">//请检测data的数据结构， 保证data.gt, data.challenge, data.success有值</span></span><br><span class="line">        initGeetest(&#123;</span><br><span class="line">                <span class="comment">// 以下配置参数来自服务端 SDK</span></span><br><span class="line">                gt: data.gt,</span><br><span class="line">                challenge: data.challenge,</span><br><span class="line">                offline: !data.success,</span><br><span class="line">                new_captcha: <span class="literal">true</span>,</span><br><span class="line">            &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">captchaObj</span>) </span>&#123;</span><br><span class="line">                captchaObj.appendTo(<span class="string">'#captchaBox'</span>)</span><br><span class="line"></span><br><span class="line">                captchaObj.onReady(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                &#125;).onSuccess(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                    $(<span class="string">'button[type=submit]'</span>).removeAttr(<span class="string">'disabled'</span>)</span><br><span class="line">                &#125;).onError(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2018/04/12/openvpn-with-easyconnect/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1779,172 +1943,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2017/03/24/git-log/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="AnyISalIn">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="无趣">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/24/git-log/" itemprop="url">Git - log</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-24T11:12:58+08:00">2017-03-24</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/03/24/git-log/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/24/git-log/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Symbols count in article&#58;</span>
-                
-                <span title="Symbols count in article">10k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">0:10</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><code>git</code> 是一款非常牛逼的分布式代码管理工具，<code>Linux</code> 之父 <code>linus torvalds</code> 所编写，是目前全世界最流行的代码管理工具，全世界最大的代码托管平台 <code>Github</code> 就是基于 <code>git</code> 做的，无数的开源项目使用 <code>git</code> ，如果不会 <code>git</code> 简直无法在开源世界立足，因为最近在看 <code>《pro git》</code> 这本书，所以我会写几篇 <code>git</code> 的文章，这篇文章主要介绍 <code>git log</code> 子命令的一些用法</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/03/24/git-log/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1994,7 +1992,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-count">42</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2087,7 +2085,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">38</span>
+                      
+                    
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -2176,7 +2176,7 @@
     
       <span class="post-meta-item-text">Symbols count total&#58;</span>
     
-    <span title="Symbols count total">150k</span>
+    <span title="Symbols count total">151k</span>
   
 
   
@@ -2187,7 +2187,7 @@
     
       <span class="post-meta-item-text">Reading time total&#58;</span>
     
-    <span title="Reading time total">2:30</span>
+    <span title="Reading time total">2:31</span>
   
 </div>
 
