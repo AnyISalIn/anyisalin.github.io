@@ -291,6 +291,172 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2018/12/31/2018-buy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnyISalIn">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="无趣">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/31/2018-buy/" itemprop="url">科技改生活 · 2018 败家记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-31T17:08:54+08:00">2018-12-31</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/31/2018-buy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/31/2018-buy/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article&#58;</span>
+                
+                <span title="Symbols count in article">1.2k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">0:01</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>明天就是 2019 了，简单总结一下 2018 年买过的电子产品。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/12/31/2018-buy/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2018/12/06/assassin-s-creed-odyssey-overview/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1235,7 +1401,7 @@
       
         
           <p>今天想给家里路由器 (XiaoMi R3D) 做个端口映射给同事演示做的东西，但是发现通过网页设置路由器端口映射直接返回 500 错误，查了下日志也看到什么错误，然后查看了一下相关代码，并通过 <code>lua</code> 交互式客户端调试了一下</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">&gt; <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">local</span> pf = <span class="built_in">require</span>(<span class="string">"xiaoqiang.module.XQPortForward"</span>)</span><br><span class="line">    pf.setPortForward(<span class="string">'test'</span>, <span class="string">'192.168.231.204'</span>, <span class="number">6800</span>, <span class="number">8000</span>, <span class="string">"tcp"</span>)</span><br><span class="line"><span class="keyword">end</span>&gt;&gt; &gt;&gt; &gt;&gt; &gt;&gt; &gt;&gt; &gt;&gt;</span><br><span class="line">/usr/lib/lua/xiaoqiang/module/XQPortForward.lua:<span class="number">93</span>: attempt to compare <span class="literal">nil</span> with number</span><br><span class="line">stack <span class="built_in">traceback</span>:</span><br><span class="line">        [C]: <span class="keyword">in</span> <span class="function"><span class="keyword">function</span> '<span class="title">foreach</span>'</span></span><br><span class="line"><span class="function">        /<span class="title">usr</span>/<span class="title">lib</span>/<span class="title">lua</span>/<span class="title">xiaoqiang</span>/<span class="title">module</span>/<span class="title">XQPortForward.lua</span>:104: <span class="title">in</span> <span class="title">function</span> '<span class="title">_portConflictCheck</span>'</span></span><br><span class="line"><span class="function">        /<span class="title">usr</span>/<span class="title">lib</span>/<span class="title">lua</span>/<span class="title">xiaoqiang</span>/<span class="title">module</span>/<span class="title">XQPortForward.lua</span>:181: <span class="title">in</span> <span class="title">function</span> '<span class="title">setPortForward</span>'</span></span><br><span class="line"><span class="function">        <span class="title">stdin</span>:6: <span class="title">in</span> <span class="title">main</span> <span class="title">chunk</span></span></span><br><span class="line"><span class="function">        [<span class="title">C</span>]: ?</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">&gt; <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">local</span> pf = <span class="built_in">require</span>(<span class="string">"xiaoqiang.module.XQPortForward"</span>)</span><br><span class="line">    pf.setPortForward(<span class="string">'test'</span>, <span class="string">'192.168.231.204'</span>, <span class="number">6800</span>, <span class="number">8000</span>, <span class="string">"tcp"</span>)</span><br><span class="line"><span class="keyword">end</span>&gt;&gt; &gt;&gt; &gt;&gt; &gt;&gt; &gt;&gt; &gt;&gt;</span><br><span class="line">/usr/lib/lua/xiaoqiang/module/XQPortForward.lua:<span class="number">93</span>: attempt to compare <span class="literal">nil</span> with number</span><br><span class="line">stack <span class="built_in">traceback</span>:</span><br><span class="line">        [C]: <span class="keyword">in</span> <span class="function"><span class="keyword">function</span> '<span class="title">foreach</span>'</span></span><br><span class="line"><span class="function">        /<span class="title">usr</span>/<span class="title">lib</span>/<span class="title">lua</span>/<span class="title">xiaoqiang</span>/<span class="title">module</span>/<span class="title">XQPortForward.lua</span>:104: <span class="title">in</span> <span class="title">function</span> '_portConflictCheck'</span></span><br><span class="line"><span class="function">        /<span class="title">usr</span>/<span class="title">lib</span>/<span class="title">lua</span>/<span class="title">xiaoqiang</span>/<span class="title">module</span>/<span class="title">XQPortForward.lua</span>:181: <span class="title">in</span> <span class="title">function</span> '<span class="title">setPortForward</span>'</span></span><br><span class="line"><span class="function">        <span class="title">stdin</span>:6: <span class="title">in</span> <span class="title">main</span> <span class="title">chunk</span></span></span><br><span class="line"><span class="function">        [<span class="title">C</span>]: ?</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/09/07/fix-miwifi-portforward/#more" rel="contents">
@@ -1778,168 +1944,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2018/08/15/django-aliyun-oss-plugin/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="AnyISalIn">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="无趣">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/15/django-aliyun-oss-plugin/" itemprop="url">Django Aliyun OSS Plugin Example</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-15T13:59:59+08:00">2018-08-15</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/08/15/django-aliyun-oss-plugin/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/15/django-aliyun-oss-plugin/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Symbols count in article&#58;</span>
-                
-                <span title="Symbols count in article">1.3k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">0:01</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># project.storage.py</span></span><br><span class="line"><span class="keyword">import</span> oss2</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> django.core.files.storage <span class="keyword">import</span> Storage</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AliyunObjectStorage</span><span class="params">(Storage)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.access_key_id = settings.ALIYUN_OSS_KEY_ID</span><br><span class="line">        self.access_key_secret = settings.ALIYUN_OSS_KEY_SECRET</span><br><span class="line">        self.bucket_name = settings.ALIYUN_OSS_BUCKET_NAME</span><br><span class="line">        self.endpoint = settings.ALIYUN_OSS_ENDPOINT</span><br><span class="line">        self.access_url = settings.ALIYUN_OSS_ACCESS_URL</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bucket</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> oss2.Bucket(oss2.Auth(self.access_key_id, self.access_key_secret), self.endpoint, self.bucket_name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_open</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.bucket.get_object(name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_save</span><span class="params">(self, name, content)</span>:</span></span><br><span class="line">        self.bucket.put_object(name, content)</span><br><span class="line">        <span class="keyword">return</span> name</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.bucket.delete_object(name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">exists</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.bucket.object_exists(name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">listdir</span><span class="params">(self, path)</span>:</span></span><br><span class="line">        dirs, files = [], []</span><br><span class="line">        objects = self.bucket.list_objects(path).object_list</span><br><span class="line">        <span class="keyword">for</span> object <span class="keyword">in</span> objects:</span><br><span class="line">            files.append(object.key.split(path)[<span class="number">-1</span>])</span><br><span class="line">        <span class="keyword">return</span> dirs, files</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">size</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.bucket.get_object_meta(name).content_length</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">url</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'&#123;&#125;/&#123;&#125;'</span>.format(self.access_url, name)</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1989,7 +1993,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">42</span>
+                    <span class="site-state-item-count">43</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2173,7 +2177,7 @@
     
       <span class="post-meta-item-text">Symbols count total&#58;</span>
     
-    <span title="Symbols count total">151k</span>
+    <span title="Symbols count total">153k</span>
   
 
   
@@ -2184,7 +2188,7 @@
     
       <span class="post-meta-item-text">Reading time total&#58;</span>
     
-    <span title="Reading time total">2:31</span>
+    <span title="Reading time total">2:33</span>
   
 </div>
 
