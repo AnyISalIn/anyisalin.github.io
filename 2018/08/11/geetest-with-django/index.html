@@ -1,35 +1,934 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="python,web,">
+
+
+<meta name="description" content="from user import viewsfrom django.urls import pathapp_name = &amp;#x27;user&amp;#x27;urlpatterns = [    path(&amp;#x27;register/&amp;#x27;, views.RegisterView.as_view(), name=&amp;#x27;register&amp;#x27;),    path(&amp;#x27;logi">
+<meta name="keywords" content="python,web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="极验 Django Example">
+<meta property="og:url" content="https://anyisalin.github.io/2018/08/11/geetest-with-django/index.html">
+<meta property="og:site_name" content="无趣">
+<meta property="og:description" content="from user import viewsfrom django.urls import pathapp_name = &amp;#x27;user&amp;#x27;urlpatterns = [    path(&amp;#x27;register/&amp;#x27;, views.RegisterView.as_view(), name=&amp;#x27;register&amp;#x27;),    path(&amp;#x27;logi">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-08-11T07:54:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="极验 Django Example">
+<meta name="twitter:description" content="from user import viewsfrom django.urls import pathapp_name = &amp;#x27;user&amp;#x27;urlpatterns = [    path(&amp;#x27;register/&amp;#x27;, views.RegisterView.as_view(), name=&amp;#x27;register&amp;#x27;),    path(&amp;#x27;logi">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="无趣" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="https://anyisalin.github.io/2018/08/11/geetest-with-django/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>极验 Django Example | 无趣</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-77446934-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-77446934-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">无趣</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">享受自由</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2018/08/11/geetest-with-django/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnyISalIn">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="无趣">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">极验 Django Example</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-11T15:43:48+08:00">2018-08-11</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/11/geetest-with-django/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/11/geetest-with-django/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article&#58;</span>
+                
+                <span title="Symbols count in article">4k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">0:04</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> user <span class="keyword">import</span> views</span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path</span><br><span class="line"></span><br><span class="line">app_name = <span class="string">&#x27;user&#x27;</span></span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;register/&#x27;</span>, views.RegisterView.as_view(), name=<span class="string">&#x27;register&#x27;</span>),</span><br><span class="line">    path(<span class="string">&#x27;login/&#x27;</span>, views.LoginView.as_view(), name=<span class="string">&#x27;login&#x27;</span>),</span><br><span class="line">    path(<span class="string">&#x27;logout/&#x27;</span>, views.LogoutView.as_view(), name=<span class="string">&#x27;logout&#x27;</span>),</span><br><span class="line">    path(<span class="string">&#x27;pc-gt/&#x27;</span>, views.GtValidateView.as_view(), name=<span class="string">&#x27;gt-validate&#x27;</span>),</span><br><span class="line">    path(<span class="string">r&#x27;active/&lt;uidb64&gt;/&lt;token&gt;/&#x27;</span>, views.ActiveView.as_view(), name=<span class="string">&#x27;active&#x27;</span>),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> messages</span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> reverse_lazy</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth <span class="keyword">import</span> login, logout</span><br><span class="line"><span class="keyword">from</span> django.utils.http <span class="keyword">import</span> urlsafe_base64_decode</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.tokens <span class="keyword">import</span> default_token_generator</span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponseRedirect, HttpResponseBadRequest</span><br><span class="line"><span class="keyword">from</span> django.views.generic <span class="keyword">import</span> FormView, View, TemplateView, CreateView</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> geetest <span class="keyword">import</span> GeetestLib <span class="comment"># https://github.com/GeeTeam/gt-python-sdk</span></span><br><span class="line"><span class="keyword">from</span> user.forms <span class="keyword">import</span> UserRegisterForm, UserLoginForm</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GeeTestMixin</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    gid = settings.GEETEST_ID <span class="comment"># 极验ID</span></span><br><span class="line">    gkey = settings.GEETEST_KEY <span class="comment"># 极验 Key</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">check_request</span>(<span class="params">self, request</span>):</span> <span class="comment"># 检查验证是否通过</span></span><br><span class="line">        gt = GeetestLib(self.gid, self.gkey)</span><br><span class="line">        challenge = request.POST.get(gt.FN_CHALLENGE, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        validate = request.POST.get(gt.FN_VALIDATE, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        seccode = request.POST.get(gt.FN_SECCODE, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        status = request.session[gt.GT_STATUS_SESSION_KEY]</span><br><span class="line">        user_id = request.session[<span class="string">&quot;user_id&quot;</span>]</span><br><span class="line">        <span class="keyword">if</span> status:</span><br><span class="line">            <span class="keyword">return</span> gt.success_validate(challenge, validate, seccode, user_id)</span><br><span class="line">        <span class="keyword">return</span> gt.failback_validate(challenge, validate, seccode)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RegisterView</span>(<span class="params">CreateView, GeeTestMixin</span>):</span></span><br><span class="line">    template_name = <span class="string">&#x27;login_and_register.html&#x27;</span></span><br><span class="line">    form_class = UserRegisterForm</span><br><span class="line">    success_url = reverse_lazy(<span class="string">&#x27;user:login&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_context_data</span>(<span class="params">self, **kwargs</span>):</span></span><br><span class="line">        context = <span class="built_in">super</span>().get_context_data(**kwargs)</span><br><span class="line">        context.update(&#123;</span><br><span class="line">            <span class="string">&#x27;form_title&#x27;</span>: <span class="string">&#x27;注册&#x27;</span></span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">return</span> context</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">form_valid</span>(<span class="params">self, form</span>):</span></span><br><span class="line">        <span class="built_in">super</span>().form_valid(form)</span><br><span class="line">        messages.add_message(self.request, messages.INFO, <span class="string">&#x27;激活邮件已发出，请检查您的邮箱&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> HttpResponseRedirect(self.get_success_url())</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span>(<span class="params">self, request, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.check_request(request):</span><br><span class="line">            messages.add_message(request, messages.ERROR, <span class="string">&#x27;验证失败&#x27;</span>)</span><br><span class="line">            <span class="keyword">return</span> HttpResponseRedirect(reverse_lazy(<span class="string">&#x27;user:register&#x27;</span>))</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>().post(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GtValidateView</span>(<span class="params">View, GeeTestMixin</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span>(<span class="params">self, request</span>):</span></span><br><span class="line">        user_id = <span class="string">&#x27;test&#x27;</span></span><br><span class="line">        gt = GeetestLib(self.gid, self.gkey)</span><br><span class="line">        status = gt.pre_process(user_id)</span><br><span class="line">        request.session[gt.GT_STATUS_SESSION_KEY] = status</span><br><span class="line">        request.session[<span class="string">&quot;user_id&quot;</span>] = user_id</span><br><span class="line">        response_str = gt.get_response_str()</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(response_str)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">    url: <span class="string">&quot;&#123;% url &#x27;user:gt-validate&#x27; %&#125;&quot;</span>,</span><br><span class="line">    type: <span class="string">&quot;get&quot;</span>,</span><br><span class="line">    dataType: <span class="string">&quot;json&quot;</span>,</span><br><span class="line">    success: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="comment">//请检测data的数据结构， 保证data.gt, data.challenge, data.success有值</span></span><br><span class="line">        initGeetest(&#123;</span><br><span class="line">                <span class="comment">// 以下配置参数来自服务端 SDK</span></span><br><span class="line">                gt: data.gt,</span><br><span class="line">                challenge: data.challenge,</span><br><span class="line">                offline: !data.success,</span><br><span class="line">                new_captcha: <span class="literal">true</span>,</span><br><span class="line">            &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">captchaObj</span>) </span>&#123;</span><br><span class="line">                captchaObj.appendTo(<span class="string">&#x27;#captchaBox&#x27;</span>)</span><br><span class="line"></span><br><span class="line">                captchaObj.onReady(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                &#125;).onSuccess(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                    $(<span class="string">&#x27;button[type=submit]&#x27;</span>).removeAttr(<span class="string">&#x27;disabled&#x27;</span>)</span><br><span class="line">                &#125;).onError(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/web/" rel="tag"># web</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/12/openvpn-with-easyconnect/" rel="next" title="openvpn 中转 EasyConnect">
+                <i class="fa fa-chevron-left"></i> openvpn 中转 EasyConnect
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/15/django-aliyun-oss-plugin/" rel="prev" title="Django Aliyun OSS Plugin Example">
+                Django Aliyun OSS Plugin Example <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png" alt="AnyISalIn">
+            
+              <p class="site-author-name" itemprop="name">AnyISalIn</p>
+              <p class="site-description motion-element" itemprop="description">Life is short</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/anyisalin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:anyisalin@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelop"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://flowsnow.net" title="Flowsnow" target="_blank">Flowsnow</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnyISalIn</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Symbols count total&#58;</span>
+    
+    <span title="Symbols count total">167k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Reading time total&#58;</span>
+    
+    <span title="Reading time total">2:47</span>
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://anyisalin.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://anyisalin.github.io/2018/08/11/geetest-with-django/';
+        this.page.identifier = '2018/08/11/geetest-with-django/';
+        this.page.title = '极验 Django Example';
+      };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://anyisalin.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        $(function () {
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          if (offsetTop <= 0) {
+            // load directly when there's no a scrollbar
+            loadComments();
+          } else {
+            $(window).on('scroll.disqus_scroll', function () {
+              var scrollTop = document.documentElement.scrollTop;
+              if (scrollTop >= offsetTop) {
+                $(window).off('.disqus_scroll');
+                loadComments();
+              }
+            });
+          }
+        });
+      
+    </script>
+  
+
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

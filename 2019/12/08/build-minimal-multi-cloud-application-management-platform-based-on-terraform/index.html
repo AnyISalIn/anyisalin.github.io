@@ -1,35 +1,1039 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="python,cloud,terraform,openstack,">
+
+
+<meta name="description" content="前言混合云管理平台 (简称 CMP) 前几年比较火，笔者工作生涯中接触的第一个项目就是 CMP，后面几年也有关注过其他 CMP 产品，但是大体都是完成 IaaS 资源整合后，在其之上再提供服务目录 Service Catalog 实现云资源的编排。 但是由于 CMP 需要对接很多云服务商 (简称 Provider)，所以大部分的 CMP 都非常的复杂，就算有类似 libcloud fog 之类的库">
+<meta name="keywords" content="python,cloud,terraform,openstack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="600 行代码构建混合云应用管理平台">
+<meta property="og:url" content="https://anyisalin.github.io/2019/12/08/build-minimal-multi-cloud-application-management-platform-based-on-terraform/index.html">
+<meta property="og:site_name" content="无趣">
+<meta property="og:description" content="前言混合云管理平台 (简称 CMP) 前几年比较火，笔者工作生涯中接触的第一个项目就是 CMP，后面几年也有关注过其他 CMP 产品，但是大体都是完成 IaaS 资源整合后，在其之上再提供服务目录 Service Catalog 实现云资源的编排。 但是由于 CMP 需要对接很多云服务商 (简称 Provider)，所以大部分的 CMP 都非常的复杂，就算有类似 libcloud fog 之类的库">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20191209123744637.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20191209123802762.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20191209123858059.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20191209124154424.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20191209124256521.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20191209124306934.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20191209124327860.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20191209124642733.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20191209124833024.png">
+<meta property="og:updated_time" content="2019-12-09T08:23:07.778Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="600 行代码构建混合云应用管理平台">
+<meta name="twitter:description" content="前言混合云管理平台 (简称 CMP) 前几年比较火，笔者工作生涯中接触的第一个项目就是 CMP，后面几年也有关注过其他 CMP 产品，但是大体都是完成 IaaS 资源整合后，在其之上再提供服务目录 Service Catalog 实现云资源的编排。 但是由于 CMP 需要对接很多云服务商 (简称 Provider)，所以大部分的 CMP 都非常的复杂，就算有类似 libcloud fog 之类的库">
+<meta name="twitter:image" content="https://anyisalin.github.io/images/image-20191209123744637.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="无趣" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="https://anyisalin.github.io/2019/12/08/build-minimal-multi-cloud-application-management-platform-based-on-terraform/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>600 行代码构建混合云应用管理平台 | 无趣</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-77446934-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-77446934-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">无趣</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">享受自由</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2019/12/08/build-minimal-multi-cloud-application-management-platform-based-on-terraform/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnyISalIn">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="无趣">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">600 行代码构建混合云应用管理平台</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-08T23:41:08+08:00">2019-12-08</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/08/build-minimal-multi-cloud-application-management-platform-based-on-terraform/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/08/build-minimal-multi-cloud-application-management-platform-based-on-terraform/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article&#58;</span>
+                
+                <span title="Symbols count in article">9.2k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">0:09</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>混合云管理平台 (简称 CMP) 前几年比较火，笔者工作生涯中接触的第一个项目就是 CMP，后面几年也有关注过其他 CMP 产品，但是大体都是完成 IaaS 资源整合后，在其之上再提供服务目录 <code>Service Catalog</code> 实现云资源的编排。</p>
+<p>但是由于 CMP 需要对接很多云服务商 (简称 Provider)，所以大部分的 CMP 都非常的复杂，就算有类似 <code>libcloud</code> <code>fog</code> 之类的库，大部分的开发时间也都会浪费在与不同 Provider 对接与状态管理上。</p>
+<p>笔者周末的时候发现 <code>Terraform</code> 基本已经支持所有常见的 Provider，并支持在其之上提供资源编排，功能及其强大，但是可惜 <code>Terraform</code>  并没有暴露出 API，社区也没有基于其开发的管理平台。</p>
+<p>笔者遂即想基于 <code>Terraform</code> 构建一个混合云应用管理平台，实现以下功能</p>
+<ul>
+<li>多云资源的管理</li>
+<li>提供服务模板，可定义参数，根据定义好的服务模板可部署实例</li>
+<li>实例的生命周期管理 (创建/升级/销毁/同步)</li>
+</ul>
+<a id="more"></a>
+<h2 id="Terraform-简介"><a href="#Terraform-简介" class="headerlink" title="Terraform 简介"></a>Terraform 简介</h2><blockquote>
+<p>Terraform是一种用于安全有效地构建、更改和版本化基础设施的工具。Terraform 可以管理现有的和流行的服务提供商以及定制的内部解决方案。</p>
+<p>Terraform 的配置文件描述了运行单个应用程序或复杂的应用架构所需的资源。通过配置文件，Terraform 生成一个执行计划，描述它将做什么来达到所需的状态，然后执行它来构建所描述的基础设施。当配置发生变化时，Terraform能够确定发生了什么变化，并创建可以应用的增量执行计划。</p>
+</blockquote>
+<p>我们来看一个最简单的 Terraform 例子，这里定义了一台 OpenStack 虚拟机</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> providers.tf</span></span><br><span class="line">provider &quot;openstack&quot; &#123;</span><br><span class="line">  region      = &quot;RegionOne&quot;</span><br><span class="line">  insecure = &quot;true&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> main.tf</span></span><br><span class="line">resource &quot;openstack_compute_instance_v2&quot; &quot;terraform&quot; &#123;</span><br><span class="line">  name            = &quot;$&#123;var.vm_name&#125;&quot;</span><br><span class="line">  image_name      = &quot;$&#123;var.image&#125;&quot;</span><br><span class="line">  flavor_name     = &quot;$&#123;var.flavor&#125;&quot;</span><br><span class="line">  key_pair        = &quot;terraform&quot;</span><br><span class="line">  security_groups = [&quot;terraform&quot;]</span><br><span class="line"></span><br><span class="line">  network &#123;</span><br><span class="line">    uuid = &quot;$&#123;var.network&#125;&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> variables.tf</span></span><br><span class="line">variable &quot;image&quot; &#123;</span><br><span class="line">  default = &quot;Ubuntu 16.04&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.... # 内容过长省略</span><br><span class="line"></span><br><span class="line">variable &quot;vm_name&quot; &#123;</span><br><span class="line"> default = &quot;terraform&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> outputs.tf</span></span><br><span class="line">output &quot;address&quot; &#123;</span><br><span class="line">  value = &quot;$&#123;openstack_networking_floatingip_v2.terraform.address&#125;&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">output &quot;power_state&quot; &#123;</span><br><span class="line">  value = &quot;$&#123;openstack_compute_instance_v2.terraform.power_state&#125;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Terraform 中管理这台虚拟机的生命周期只需要以下几个步骤</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> terraform plan <span class="comment"># 生成执行计划</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> terraform apply -var vm_name=<span class="string">&#x27;vm1&#x27;</span> <span class="comment"># 执行变更</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> terraform refresh <span class="comment"># 刷新资源状态</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> terraform show -json <span class="comment"># 查看资源状态</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> terraform destroy <span class="comment"># 销毁资源</span></span></span><br></pre></td></tr></table></figure>
+<p>回到我们想要构建的平台，我们需要完成实例的生命周期管理，Terraform 通过以上命令都能够做到</p>
+<p>服务模板参数的支持我们可以通过 Terraform 原生的 <code>variable</code> 定义来做</p>
+<p>多个云提供商也是 Terraform 原生支持的</p>
+<p>但是由于 Terraform 没有提供原生 API，所以我们只能通过拼接命令的方式去调用</p>
+<h2 id="资源抽象"><a href="#资源抽象" class="headerlink" title="资源抽象"></a>资源抽象</h2><p>要将 Terraform 进行封装成所期望的平台还要对 Terraform 的资源在进行一层抽象</p>
+<p>首先我们分析 Terraform 的配置文件，主要分为以下几块</p>
+<ul>
+<li>resources</li>
+<li>datasources</li>
+<li>variables</li>
+<li>outputs</li>
+<li>providers</li>
+</ul>
+<p>providers 毫无疑问是可以复用的，所以我们先定义一个 Provider 的模型</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Provider</span>:</span></span><br><span class="line">  name = StringField()</span><br><span class="line">  config = TextField()</span><br></pre></td></tr></table></figure>
+<p>然后定义服务模板，模板和 Provider 是一对多关系 (和 Terraform 原生保持一致)，分别包含了以上几种配置文件，但是基于 variables 之上我们在封装一层用户变量，这些变量限定了实例允许传入的参数，这些参数会被传递到 <code>terramform apply</code> 和 <code>plan</code> 命令的 <code>-var</code> 选项中</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Template</span>:</span></span><br><span class="line">  name = StringField()</span><br><span class="line">  providers = OneToMany(Provider)</span><br><span class="line"> 	resources = TextField()</span><br><span class="line">  outputs = TextField()</span><br><span class="line">  datasources = TextField()</span><br><span class="line">  variables = TextField()</span><br><span class="line">  user_variables = ListField()</span><br></pre></td></tr></table></figure>
+<p>最后我们定义实例，实例和模板是一对一关系，并包含很多状态和当前 terraform plan 的状态信息</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Instance</span>:</span></span><br><span class="line">  name = StringField()</span><br><span class="line">  template = OneToOne(Template)</span><br><span class="line">  variables = ListField()</span><br><span class="line">  stauts = StringField() <span class="comment"># [&#x27;INITIALIZATION&#x27;, &#x27;INITIALIZATION_ERROR&#x27;, &#x27;INITIALIZATION_SUCCEED&#x27;, &#x27;APPLYING&#x27;, &#x27;APPLY_ERROR&#x27;, &#x27;APPLY_SUCCEED&#x27;, &#x27;SYNCING&#x27;, &#x27;SYNC_ERROR&#x27;, &#x27;SYNC_SUCCEED&#x27;, &#x27;DESTROYING&#x27;, &#x27;DESTROY_ERROR&#x27;]</span></span><br><span class="line">  states = ListField()</span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+<h2 id="封装-Terraform"><a href="#封装-Terraform" class="headerlink" title="封装 Terraform"></a>封装 Terraform</h2><p>由于 Terraform 没有暴露出 API，笔者只能通过拼接命令的方式去封装</p>
+<p>首先我们定义一个类，<code>TerraformManagerService</code> 提供了基础命令的封装，但是只拼接命令，不执行</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TerraformManagerService</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, terraform_bin, plan_template_dir</span>):</span></span><br><span class="line">        self.terraform_bin = terraform_bin</span><br><span class="line">        self.plan_template_dir = pathlib.Path(plan_template_dir)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validate</span>(<span class="params">self, *args</span>):</span></span><br><span class="line">        <span class="keyword">return</span> [self.terraform_bin, <span class="string">&#x27;validate&#x27;</span>] + <span class="built_in">list</span>(args)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">apply</span>(<span class="params">self, *args</span>):</span></span><br><span class="line">        <span class="keyword">return</span> [self.terraform_bin, <span class="string">&#x27;apply&#x27;</span>, <span class="string">&#x27;-auto-approve&#x27;</span>] + <span class="built_in">list</span>(args)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init</span>(<span class="params">self, *args</span>):</span></span><br><span class="line">        <span class="keyword">return</span> [self.terraform_bin, <span class="string">&#x27;init&#x27;</span>] + <span class="built_in">list</span>(args)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">show</span>(<span class="params">self, *args</span>):</span></span><br><span class="line">        <span class="keyword">return</span> [self.terraform_bin, <span class="string">&#x27;show&#x27;</span>, <span class="string">&#x27;-json&#x27;</span>] + <span class="built_in">list</span>(args)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">refresh</span>(<span class="params">self, *args</span>):</span></span><br><span class="line">        <span class="keyword">return</span> [self.terraform_bin, <span class="string">&#x27;refresh&#x27;</span>] + <span class="built_in">list</span>(args)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">destroy</span>(<span class="params">self, *args</span>):</span></span><br><span class="line">        <span class="keyword">return</span> [self.terraform_bin, <span class="string">&#x27;destroy&#x27;</span>, <span class="string">&#x27;-auto-approve&#x27;</span>] + <span class="built_in">list</span>(args)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">graph</span>(<span class="params">self, *args</span>):</span></span><br><span class="line">        <span class="keyword">return</span> [self.terraform_bin, <span class="string">&#x27;graph&#x27;</span>] + <span class="built_in">list</span>(args)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">plan</span>(<span class="params">self, *args</span>):</span></span><br><span class="line">        <span class="keyword">return</span> [self.terraform_bin, <span class="string">&#x27;plan&#x27;</span>] + <span class="built_in">list</span>(args)</span><br></pre></td></tr></table></figure>
+<p>然后我们把 resources、outputs、datasources、varaiables 的配置封装到 <code>Template</code> 里</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Template</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, providers, resources, outputs, datasources, variables, user_variables</span>):</span></span><br><span class="line">    self.providers = providers</span><br><span class="line">    self.resources = resources</span><br><span class="line">    self.outputs = outputs</span><br><span class="line">    self.datasources = datasources</span><br><span class="line">    self.variables = variables</span><br><span class="line">    self.user_variables = variables</span><br></pre></td></tr></table></figure>
+<p>最后定义 <code>Instance</code> 类，提供了实例 <code>init</code>、 <code>apply</code>、 <code>show</code>、 <code>refresh</code> 等方法</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> delegator</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Instance</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name, template, variables=<span class="literal">None</span></span>):</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.template = template</span><br><span class="line">        self.variables = variables <span class="keyword">or</span> <span class="built_in">dict</span>()</span><br><span class="line">        self.states = <span class="literal">None</span></span><br><span class="line">        self.status = <span class="literal">None</span></span><br><span class="line">        self.terraform_service = TerraformManagerService()</span><br><span class="line">        self.shell_output = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="meta"> 	@property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">path</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.terraform_service.plan_template_dir.joinpath(self.name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">generate_plan_files</span>(<span class="params">path, providers, resources, outputs, variables, datasources</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(path):</span><br><span class="line">            os.mkdir(path)</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(os.path.join(path, <span class="string">&#x27;providers.tf&#x27;</span>), <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        data = <span class="string">&#x27;\n&#x27;</span>.join([_.config <span class="keyword">for</span> _ <span class="keyword">in</span> self.template.providers])</span><br><span class="line">        f.write(data.encode())</span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(os.path.join(path, <span class="string">&#x27;resources.tf&#x27;</span>), <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(self.template.resources.encode())</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 内容过长省略写入 datasources 和 variables 的代码</span></span><br><span class="line">            </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.status = <span class="string">&#x27;INITIALIZATION&#x27;</span></span><br><span class="line">        self.save()</span><br><span class="line">        self.generate_plan_files()</span><br><span class="line">        init_cmd = self.terraform_service.init()</span><br><span class="line">        cmd = delegator.run(<span class="string">&#x27; &#x27;</span>.join(init_cmd), cwd=<span class="built_in">str</span>(self.path))</span><br><span class="line">        self.shell_output = cmd.err <span class="keyword">or</span> cmd.out</span><br><span class="line">        <span class="keyword">if</span> cmd.return_code != <span class="number">0</span>:</span><br><span class="line">            self.status = <span class="string">&#x27;INITIALIZATION_ERROR&#x27;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.status = <span class="string">&#x27;INITIALIZATION_SUCCEED&#x27;</span></span><br><span class="line">   </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">apply</span>(<span class="params">self</span>):</span></span><br><span class="line">       <span class="comment"># 代码太长省略，和 init 方法基本一致</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">show</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 代码太长省略，和 init 方法基本一致</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+<p>完整代码笔者放在 <a href="https://gist.github.com/AnyISalIn/7a66c5d08228da0402d19fa3eea6614c">https://gist.github.com/AnyISalIn/7a66c5d08228da0402d19fa3eea6614c</a> </p>
+<h2 id="功能验证"><a href="#功能验证" class="headerlink" title="功能验证"></a>功能验证</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> models <span class="keyword">import</span> Template, Instance, Provider</span><br><span class="line"><span class="keyword">from</span> service <span class="keyword">import</span> TerraformManagerService</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">provider, resources, variables, datasources, outputs = get_data()</span><br><span class="line"></span><br><span class="line">openstack_provider = Provider(config=provider)</span><br><span class="line">template = Template(providers=[openstack_provider], </span><br><span class="line">                    resources=resources,</span><br><span class="line">                    datasources=datasources,</span><br><span class="line">                    outputs=outputs,</span><br><span class="line">                    variables=variables,</span><br><span class="line">                    user_variables=[</span><br><span class="line">                        &#123;<span class="string">&#x27;key&#x27;</span>: <span class="string">&#x27;vm_name&#x27;</span>, <span class="string">&#x27;default&#x27;</span>: <span class="string">&#x27;test&#x27;</span>, <span class="string">&#x27;required&#x27;</span>: <span class="literal">False</span>&#125;</span><br><span class="line">                        ]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">instance = Instance(name=<span class="string">&#x27;instance-test&#x27;</span>, template=template, variables=[&#123;<span class="string">&#x27;key&#x27;</span>: <span class="string">&#x27;vm_name&#x27;</span>, <span class="string">&#x27;value&#x27;</span>: <span class="string">&#x27;instance1&#x27;</span>&#125;])</span><br><span class="line"></span><br><span class="line">instance2 = Instance(name=<span class="string">&#x27;instance-test2&#x27;</span>, template=template, variables=[&#123;<span class="string">&#x27;key&#x27;</span>: <span class="string">&#x27;vm_name&#x27;</span>, <span class="string">&#x27;value&#x27;</span>: <span class="string">&#x27;instance2&#x27;</span>&#125;])</span><br><span class="line"></span><br><span class="line">instance.init()</span><br><span class="line">instance.apply()</span><br><span class="line"></span><br><span class="line">instance2.init()</span><br><span class="line">instance2.apply()</span><br><span class="line">instance.refresh()</span><br><span class="line">instance2.refresh()</span><br><span class="line">  </span><br><span class="line">print(instance.shell_output)</span><br><span class="line"><span class="comment"># output </span></span><br><span class="line"><span class="comment"># openstack_compute_instance_v2.terraform: Creating...</span></span><br><span class="line"><span class="comment"># openstack_compute_instance_v2.terraform: Still creating... [10s elapsed]</span></span><br><span class="line"><span class="comment"># openstack_compute_instance_v2.terraform: Creation complete after 14s [id=16c05ba1-a589-# 441c-b221-fdb1a8fd3f87]</span></span><br><span class="line"><span class="comment"># Apply complete! Resources: 1 added, 0 changed, 0 destroyed.</span></span><br><span class="line"></span><br><span class="line">instance.states[<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;root_module&#x27;</span>][<span class="string">&#x27;resources&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line"><span class="comment"># &#x27;instance1&#x27;</span></span><br><span class="line"></span><br><span class="line">instance2.states[<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;root_module&#x27;</span>][<span class="string">&#x27;resources&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line"><span class="comment"># &#x27;instance2&#x27;</span></span><br><span class="line"></span><br><span class="line">instance1.states[<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;root_module&#x27;</span>][<span class="string">&#x27;resources&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;network&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;fixed_ip_v4&#x27;</span>]</span><br><span class="line"><span class="comment"># &#x27;10.0.0.9&#x27;</span></span><br><span class="line"></span><br><span class="line">instance2.states[<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;root_module&#x27;</span>][<span class="string">&#x27;resources&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;values&#x27;</span>][<span class="string">&#x27;network&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;fixed_ip_v4&#x27;</span>]</span><br><span class="line"><span class="comment"># &#x27;10.0.0.13&#x27;</span></span><br><span class="line">  </span><br><span class="line">instance2.destroy()</span><br></pre></td></tr></table></figure>
+<p>可以看到已经完成了最初的设想，通过 Template 创建多个 Instance，并且对 Instance 进行生命周期的管理</p>
+<h3 id="封装-Web-Application"><a href="#封装-Web-Application" class="headerlink" title="封装 Web Application"></a>封装 Web Application</h3><p>笔者这里花了一天时间通过 Flask + flask_restful + MongoDB + VueJS 构建了一个基础的 Web 应用，简单的做了一些权限控制</p>
+<p>代码放在 <a href="http://github.com/anyisalin/mcam">http://github.com/anyisalin/mcam</a></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> quick started</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/anyisalin/mcam</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> mcam</span> </span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker-compose up --build</span></span><br></pre></td></tr></table></figure>
+<h2 id="平台测试"><a href="#平台测试" class="headerlink" title="平台测试"></a>平台测试</h2><h3 id="创建模板"><a href="#创建模板" class="headerlink" title="创建模板"></a>创建模板</h3><p><img src="/images/image-20191209123744637.png" alt="image-20191209123744637"></p>
+<h3 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h3><p><img src="/images/image-20191209123802762.png" alt="image-20191209123802762"></p>
+<p><img src="/images/image-20191209123858059.png" alt="image-20191209123858059"></p>
+<h3 id="实例生命周期管理"><a href="#实例生命周期管理" class="headerlink" title="实例生命周期管理"></a>实例生命周期管理</h3><h4 id="Apply"><a href="#Apply" class="headerlink" title="Apply"></a>Apply</h4><p><img src="/images/image-20191209124154424.png" alt="image-20191209124154424"></p>
+<h4 id="Refresh"><a href="#Refresh" class="headerlink" title="Refresh"></a>Refresh</h4><p><img src="/images/image-20191209124256521.png" alt="image-20191209124256521"></p>
+<p><img src="/images/image-20191209124306934.png" alt="image-20191209124306934"></p>
+<h4 id="Upgrade"><a href="#Upgrade" class="headerlink" title="Upgrade"></a>Upgrade</h4><p><img src="/images/image-20191209124327860.png" alt="image-20191209124327860"></p>
+<p><img src="/images/image-20191209124642733.png" alt="image-20191209124642733"></p>
+<h4 id="destroy"><a href="#destroy" class="headerlink" title="destroy"></a>destroy</h4><p><img src="/images/image-20191209124833024.png" alt="image-20191209124833024"></p>
+<h2 id="需要改进"><a href="#需要改进" class="headerlink" title="需要改进"></a>需要改进</h2><p>虽然功能基本都已经完成了，但是目前整个平台还是存在一些问题，如果能把下面这些功能实现平台会更加的健壮</p>
+<ul>
+<li>对 Terraform 配置文件的解析，提供更优雅的配置方式</li>
+<li>Instance 没有和 Template 完全隔离，所以目前不支持 Template 中配置的更改</li>
+<li>实例每次 Upgrade 后 Plan 的版本控制，如果实现了这个功能，就可以针对每次变更记录进行回滚了</li>
+<li>目前 Terraform state 存储到本地，需要用更好的方式管理 Terraform state</li>
+<li>支持 Terraform module</li>
+<li>使用 <a href="https://github.com/gruntwork-io/terragrunt">terragrunt</a> 让 Terraform 变得更加强大</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这个平台花了笔者一个周末的时间，在技术上并没有什么难度，牛逼的是 Terraform，但是通过简单的封装解决了 Terraform Plan 重用的问题，并且构建成一个可以使用的最小平台还是很有意思的。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/cloud/" rel="tag"># cloud</a>
+          
+            <a href="/tags/terraform/" rel="tag"># terraform</a>
+          
+            <a href="/tags/openstack/" rel="tag"># openstack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/26/kong-monitoring-with-statsd-zabbix/" rel="next" title="Zabbix 基于 Statsd 实现对 Kong APIGateway 的监控">
+                <i class="fa fa-chevron-left"></i> Zabbix 基于 Statsd 实现对 Kong APIGateway 的监控
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/27/build-infrastructure-network-dependency-based-graph-database/" rel="prev" title="基于图数据库构建基础设施网络通信拓扑图">
+                基于图数据库构建基础设施网络通信拓扑图 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png" alt="AnyISalIn">
+            
+              <p class="site-author-name" itemprop="name">AnyISalIn</p>
+              <p class="site-description motion-element" itemprop="description">Life is short</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/anyisalin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:anyisalin@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelop"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://flowsnow.net" title="Flowsnow" target="_blank">Flowsnow</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Terraform-简介"><span class="nav-number">2.</span> <span class="nav-text">Terraform 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源抽象"><span class="nav-number">3.</span> <span class="nav-text">资源抽象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#封装-Terraform"><span class="nav-number">4.</span> <span class="nav-text">封装 Terraform</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能验证"><span class="nav-number">5.</span> <span class="nav-text">功能验证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#封装-Web-Application"><span class="nav-number">5.1.</span> <span class="nav-text">封装 Web Application</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平台测试"><span class="nav-number">6.</span> <span class="nav-text">平台测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建模板"><span class="nav-number">6.1.</span> <span class="nav-text">创建模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建实例"><span class="nav-number">6.2.</span> <span class="nav-text">创建实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例生命周期管理"><span class="nav-number">6.3.</span> <span class="nav-text">实例生命周期管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Apply"><span class="nav-number">6.3.1.</span> <span class="nav-text">Apply</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Refresh"><span class="nav-number">6.3.2.</span> <span class="nav-text">Refresh</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Upgrade"><span class="nav-number">6.3.3.</span> <span class="nav-text">Upgrade</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#destroy"><span class="nav-number">6.3.4.</span> <span class="nav-text">destroy</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需要改进"><span class="nav-number">7.</span> <span class="nav-text">需要改进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnyISalIn</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Symbols count total&#58;</span>
+    
+    <span title="Symbols count total">167k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Reading time total&#58;</span>
+    
+    <span title="Reading time total">2:47</span>
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://anyisalin.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://anyisalin.github.io/2019/12/08/build-minimal-multi-cloud-application-management-platform-based-on-terraform/';
+        this.page.identifier = '2019/12/08/build-minimal-multi-cloud-application-management-platform-based-on-terraform/';
+        this.page.title = '600 行代码构建混合云应用管理平台';
+      };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://anyisalin.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        $(function () {
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          if (offsetTop <= 0) {
+            // load directly when there's no a scrollbar
+            loadComments();
+          } else {
+            $(window).on('scroll.disqus_scroll', function () {
+              var scrollTop = document.documentElement.scrollTop;
+              if (scrollTop >= offsetTop) {
+                $(window).off('.disqus_scroll');
+                loadComments();
+              }
+            });
+          }
+        });
+      
+    </script>
+  
+
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

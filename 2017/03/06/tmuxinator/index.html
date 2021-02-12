@@ -1,35 +1,990 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="tmux,tmuxinator,">
+
+
+<meta name="description" content="重度依赖 tmux 的朋友可能会有这样的一个问题, 每次重新打开 tmux, 都需要重新手动创建 window, pane, 并运行各种程序, tmuxinator 就是为了解决这个问题而诞生的。">
+<meta name="keywords" content="tmux,tmuxinator">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tmuxinator - 轻松管理复杂 tmux 会话">
+<meta property="og:url" content="https://anyisalin.github.io/2017/03/06/tmuxinator/index.html">
+<meta property="og:site_name" content="无趣">
+<meta property="og:description" content="重度依赖 tmux 的朋友可能会有这样的一个问题, 每次重新打开 tmux, 都需要重新手动创建 window, pane, 并运行各种程序, tmuxinator 就是为了解决这个问题而诞生的。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://anyisalin.github.io/images/demo.gif">
+<meta property="og:updated_time" content="2018-02-20T11:43:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tmuxinator - 轻松管理复杂 tmux 会话">
+<meta name="twitter:description" content="重度依赖 tmux 的朋友可能会有这样的一个问题, 每次重新打开 tmux, 都需要重新手动创建 window, pane, 并运行各种程序, tmuxinator 就是为了解决这个问题而诞生的。">
+<meta name="twitter:image" content="https://anyisalin.github.io/images/demo.gif">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="无趣" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="https://anyisalin.github.io/2017/03/06/tmuxinator/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>Tmuxinator - 轻松管理复杂 tmux 会话 | 无趣</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-77446934-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-77446934-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">无趣</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">享受自由</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2017/03/06/tmuxinator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnyISalIn">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="无趣">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Tmuxinator - 轻松管理复杂 tmux 会话</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-06T15:01:12+08:00">2017-03-06</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/06/tmuxinator/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/06/tmuxinator/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article&#58;</span>
+                
+                <span title="Symbols count in article">2.3k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">0:02</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>重度依赖 tmux 的朋友可能会有这样的一个问题, 每次重新打开 tmux, 都需要重新手动创建 window, pane, 并运行各种程序, tmuxinator 就是为了解决这个问题而诞生的。</p>
+<a id="more"></a>
+<blockquote>
+<p> 项目地址: <a href="https://github.com/tmuxinator/tmuxinator">https://github.com/tmuxinator/tmuxinator</a></p>
+<p> tmux 的版本建议 &gt;= 1.8, 否则可能会出现诡异的错误</p>
+<p> 我的 tmuxinator 配置: <a href="https://github.com/AnyISalIn/hacker_files/tree/master/tmuxinator">https://github.com/AnyISalIn/hacker_files/tree/master/tmuxinator</a></p>
+</blockquote>
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p>快速配置工作环境</p>
+<p><img src="/images/demo.gif" alt="demo"></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>tmuxinator 是 ruby 的一个 gem 包, 首先要安装 gem</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> apt-get install gem	<span class="comment"># ubuntu</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> yum install -y rubygems <span class="comment"># centos/rhel</span></span></span><br></pre></td></tr></table></figure>
+<p>通过 gem 来安装 tmuxinator</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> gem install tmuxinator</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>tmuxinator 通过 yaml 格式的配置文件来定义一个 project</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tmuxinator new demo <span class="comment">#通过 new demo 命令来创建一个 demo 配置文件</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">cat</span> <span class="string">~/.tmuxinator/demo.yml</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ~/.tmuxinator/demo.yml</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">demo</span> <span class="comment">#tmux 会话名称</span></span><br><span class="line"><span class="attr">root:</span> <span class="string">~/</span> <span class="comment">#全局根目录</span></span><br><span class="line"></span><br><span class="line"><span class="attr">windows:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">editor:</span> <span class="comment">#window 名称</span></span><br><span class="line">      <span class="attr">layout:</span> <span class="string">main-vertical</span> <span class="comment">#布局方式</span></span><br><span class="line">      <span class="attr">panes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">vim</span> <span class="comment">#pane 执行的命令</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">guard</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">server:</span> <span class="string">bundle</span> <span class="string">exec</span> <span class="string">rails</span> <span class="string">s</span> <span class="comment">#window没有多个pane, 执行的命令</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">logs:</span> <span class="string">tail</span> <span class="string">-f</span> <span class="string">log/development.log</span></span><br></pre></td></tr></table></figure>
+<p>通过 <code>ls</code> 命令可以列出所有的 project</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tmuxinator ls</span></span><br><span class="line">tmuxinator projects:</span><br><span class="line">demo   flask  hexo   work</span><br></pre></td></tr></table></figure>
+<p>可以通过 <code>edit</code> 命令编辑指定的 project, 但是得先指定 <code>$EDITOR</code> 环境变量</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> EDITOR=<span class="string">&#x27;vim&#x27;</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tmuxinator edit demo</span></span><br></pre></td></tr></table></figure>
+<h3 id="自定义-project"><a href="#自定义-project" class="headerlink" title="自定义 project"></a>自定义 project</h3><p>默认的 project 肯定无法满足我们的需求, 我们需要自己定义 project, 首先我们需要了解 tmuxinator 配置文件中的选项</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">custom_tmux</span> <span class="comment">#默认会话名称</span></span><br><span class="line"><span class="attr">root:</span> <span class="string">~/codes/flask-blog</span> <span class="comment">#全局根目录</span></span><br><span class="line"></span><br><span class="line"><span class="attr">socket_name:</span> <span class="string">foo</span> <span class="comment"># tmux socket 名称</span></span><br><span class="line"><span class="attr">pre:</span> <span class="string">systemctl</span> <span class="string">start</span> <span class="string">mysqld</span> <span class="comment"># 启动项目前运行的命令</span></span><br><span class="line"><span class="attr">pre_window:</span> <span class="string">pyenv</span> <span class="string">local</span> <span class="number">3.5</span><span class="number">.3</span> <span class="comment"># 启动 window 前运行的命令</span></span><br><span class="line"><span class="attr">tmux_options:</span> <span class="string">-f</span> <span class="string">~/.tmux.conf.local</span> <span class="comment"># tmux 运行的参数</span></span><br><span class="line"><span class="attr">tmux_command:</span> <span class="string">byobu</span> <span class="comment"># 调用 tmux 的命令, 适用于 tmux 的衍生品/封装</span></span><br><span class="line"><span class="attr">startup_window:</span> <span class="string">logs</span> <span class="comment"># 启动时所在的 window</span></span><br><span class="line"></span><br><span class="line"><span class="attr">windows:</span> <span class="comment"># 定义所有的window</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">editor:</span> <span class="comment"># window 名称</span></span><br><span class="line">    <span class="attr">root:</span> <span class="string">~/</span> <span class="comment"># 可以单独为 window 指定目录</span></span><br><span class="line">    <span class="attr">layout:</span> <span class="string">main-vertical</span> <span class="comment"># 布局</span></span><br><span class="line">    <span class="attr">panes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">vim</span> <span class="comment"># 命令</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">guard</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">server:</span> <span class="string">python</span> <span class="string">manage.py</span> <span class="string">runserver</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">logs:</span> <span class="string">tail</span> <span class="string">-f</span> <span class="string">log/flask.log</span></span><br></pre></td></tr></table></figure>
+<h3 id="传递变量"><a href="#传递变量" class="headerlink" title="传递变量"></a>传递变量</h3><p>通过上面的配置虽然可以实现功能, 但是并不够通用, 如果项目的目录变了, 那就得重新修改项目配置文件</p>
+<h4 id="位置参数"><a href="#位置参数" class="headerlink" title="位置参数"></a>位置参数</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tmuxinator project /var/www/foo</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">project</span></span><br><span class="line"><span class="attr">root:</span> &lt;%=<span class="ruby"> <span class="variable">@args</span>[<span class="number">0</span>] </span>%&gt; <span class="comment"># 根目录通过 arg1 传入</span></span><br></pre></td></tr></table></figure>
+<h4 id="键值参数"><a href="#键值参数" class="headerlink" title="键值参数"></a>键值参数</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tmuxinator project2 workspace=/var/www/foo2</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">project2</span></span><br><span class="line"><span class="attr">root:</span> &lt;%=<span class="ruby"> <span class="variable">@settings</span>[<span class="string">&quot;workspace&quot;</span>] </span>%&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Flask-项目配置示例"><a href="#Flask-项目配置示例" class="headerlink" title="Flask 项目配置示例"></a>Flask 项目配置示例</h3><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ~/.tmuxinator/flask.yml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">name:</span> <span class="string">flask-dev</span></span><br><span class="line"><span class="attr">root:</span> &lt;%=<span class="ruby"> <span class="variable">@args</span>[<span class="number">0</span>] </span>%&gt;</span><br><span class="line"></span><br><span class="line"><span class="attr">windows:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">debug:</span></span><br><span class="line">        <span class="attr">layout:</span> <span class="string">even-horizontal</span></span><br><span class="line">        <span class="attr">panes:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">vim</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">ipython</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">server:</span> <span class="string">python</span> <span class="string">manage.py</span> <span class="string">runserver</span></span><br></pre></td></tr></table></figure>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>我们可以通过 <code>start</code> 命令来启动一个 project</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tmuxinator start flask ~/codes/flask-blog</span></span><br></pre></td></tr></table></figure>
+<p>但是需要注意一个问题, 如果一个 window 中有多个 pane 的情况下, tmux 需要增加以下两条参数, 不然无法正常执行命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">set -g base-index 1</span><br><span class="line">set -g pane-base-index 1</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tmux/" rel="tag"># tmux</a>
+          
+            <a href="/tags/tmuxinator/" rel="tag"># tmuxinator</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/06/reborn/" rel="next" title="痛改前非, 重新做人">
+                <i class="fa fa-chevron-left"></i> 痛改前非, 重新做人
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/06/python-decorator/" rel="prev" title="Python - 装饰器">
+                Python - 装饰器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png" alt="AnyISalIn">
+            
+              <p class="site-author-name" itemprop="name">AnyISalIn</p>
+              <p class="site-description motion-element" itemprop="description">Life is short</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/anyisalin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:anyisalin@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelop"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://flowsnow.net" title="Flowsnow" target="_blank">Flowsnow</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo"><span class="nav-number">1.</span> <span class="nav-text">Demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义-project"><span class="nav-number">3.1.</span> <span class="nav-text">自定义 project</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传递变量"><span class="nav-number">3.2.</span> <span class="nav-text">传递变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#位置参数"><span class="nav-number">3.2.1.</span> <span class="nav-text">位置参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#键值参数"><span class="nav-number">3.2.2.</span> <span class="nav-text">键值参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Flask-项目配置示例"><span class="nav-number">3.3.</span> <span class="nav-text">Flask 项目配置示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动"><span class="nav-number">4.</span> <span class="nav-text">启动</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnyISalIn</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Symbols count total&#58;</span>
+    
+    <span title="Symbols count total">167k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Reading time total&#58;</span>
+    
+    <span title="Reading time total">2:47</span>
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://anyisalin.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://anyisalin.github.io/2017/03/06/tmuxinator/';
+        this.page.identifier = '2017/03/06/tmuxinator/';
+        this.page.title = 'Tmuxinator - 轻松管理复杂 tmux 会话';
+      };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://anyisalin.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        $(function () {
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          if (offsetTop <= 0) {
+            // load directly when there's no a scrollbar
+            loadComments();
+          } else {
+            $(window).on('scroll.disqus_scroll', function () {
+              var scrollTop = document.documentElement.scrollTop;
+              if (scrollTop >= offsetTop) {
+                $(window).off('.disqus_scroll');
+                loadComments();
+              }
+            });
+          }
+        });
+      
+    </script>
+  
+
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

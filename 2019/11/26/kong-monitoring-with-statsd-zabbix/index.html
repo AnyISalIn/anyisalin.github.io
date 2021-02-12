@@ -1,35 +1,986 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Hexo, NexT">
+
+
+<meta name="description" content="最近有个 Zabbix 监控 Kong 的需求，查了一下网上并没有很多资料，遂研究官方文档，发现 Kong 支持把监控数据传到 Statsd 中，而 Statsd 可以将 Zabbix 作为 backend，所以大体的架构如下 Kong ---&amp;gt; Statsd ---&amp;gt; Zabbix 配置过于简单，这里就不写了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zabbix 基于 Statsd 实现对 Kong APIGateway 的监控">
+<meta property="og:url" content="https://anyisalin.github.io/2019/11/26/kong-monitoring-with-statsd-zabbix/index.html">
+<meta property="og:site_name" content="无趣">
+<meta property="og:description" content="最近有个 Zabbix 监控 Kong 的需求，查了一下网上并没有很多资料，遂研究官方文档，发现 Kong 支持把监控数据传到 Statsd 中，而 Statsd 可以将 Zabbix 作为 backend，所以大体的架构如下 Kong ---&amp;gt; Statsd ---&amp;gt; Zabbix 配置过于简单，这里就不写了">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20191126011530471.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20191126011545851.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20191126012047758.png">
+<meta property="og:updated_time" content="2019-11-25T17:37:35.728Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zabbix 基于 Statsd 实现对 Kong APIGateway 的监控">
+<meta name="twitter:description" content="最近有个 Zabbix 监控 Kong 的需求，查了一下网上并没有很多资料，遂研究官方文档，发现 Kong 支持把监控数据传到 Statsd 中，而 Statsd 可以将 Zabbix 作为 backend，所以大体的架构如下 Kong ---&amp;gt; Statsd ---&amp;gt; Zabbix 配置过于简单，这里就不写了">
+<meta name="twitter:image" content="https://anyisalin.github.io/images/image-20191126011530471.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="无趣" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="https://anyisalin.github.io/2019/11/26/kong-monitoring-with-statsd-zabbix/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>Zabbix 基于 Statsd 实现对 Kong APIGateway 的监控 | 无趣</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-77446934-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-77446934-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">无趣</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">享受自由</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2019/11/26/kong-monitoring-with-statsd-zabbix/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnyISalIn">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="无趣">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Zabbix 基于 Statsd 实现对 Kong APIGateway 的监控</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-26T00:19:38+08:00">2019-11-26</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/11/26/kong-monitoring-with-statsd-zabbix/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/26/kong-monitoring-with-statsd-zabbix/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article&#58;</span>
+                
+                <span title="Symbols count in article">2.9k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">0:03</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近有个 Zabbix 监控 Kong 的需求，查了一下网上并没有很多资料，遂研究官方文档，发现 Kong 支持把监控数据传到 Statsd 中，而 Statsd 可以将 Zabbix 作为 backend，所以大体的架构如下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Kong ---&gt; Statsd ---&gt; Zabbix</span><br></pre></td></tr></table></figure>
+<p>配置过于简单，这里就不写了</p>
+<a id="more"></a>
+<h2 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h2><p>但是当笔者将 Statsd 和 statsd-zabbix 插件部署好之后发现一些问题</p>
+<p>这是 zabbix-sender 报的错误，服务端并没有接收我们的监控指标，原因是在 Zabbix 中的 Host 并没有对应的 item key</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">26 Nov 01:02:49 - INFO: statsd-zabbix-backend: processed: 0; failed: 41; total: 41; seconds spent: 0.000768</span><br></pre></td></tr></table></figure>
+<p>监控指标都是是基于 Kong 中不同的 Service/Consumer，由于 Service 是动态的，没有办法写死 item key，只能定义好 Low-Level-Discovery 并结合 Item prototypes 自动生成对应的 item key</p>
+<p>那么先需要在 zabbix 中定义 Low-Level-Discovery 规则来自动发现 Kong 的 Service，这里笔者通过 Kong Admin API 实现</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> /etc/zabbix/zabbix_agentd.d/kong_service_discovery.conf</span></span><br><span class="line">UserParameter=kong.service.discovery,curl localhost:8001/services 2&gt; /dev/null| jq &#x27;[.data[] | &#123;&quot;&#123;#SERVICENAME&#125;&quot;: .name&#125;]&#x27;</span><br></pre></td></tr></table></figure>
+<p>这就算是实现了 Service 的发现，通过 zabbix_get 可以动态拿到当前所有的 Service</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># zabbix_get -s 127.0.0.1 -p 10050 -k kong.service.discovery</span><br><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;&#123;#SERVICENAME&#125;&quot;</span>: <span class="string">&quot;example-service&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;&#123;#SERVICENAME&#125;&quot;</span>: <span class="string">&quot;example2-service&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>然后笔者发现新的问题，就是 Zabbix 的 item key 的宏只能定义在 <code>参数/[]</code> 中，无法定义在 item.key 本身</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 笔者想基于 zabbix 的宏定义这样的 item key</span></span><br><span class="line">kong.&#123;#SERVICENAME&#125;.request.count[total]</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 但事实上，zabbix 只支持以下格式的定义</span></span><br><span class="line">kong.request.count[&#123;#SERVICENAME&#125;,total]</span><br></pre></td></tr></table></figure>
+<p>Kong 传输给 Statsd 的数据格式为</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kong.&lt;service_name&gt;.request.count</span><br></pre></td></tr></table></figure>
+<p>而笔者期望得到的数据格式为</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kong.request.count[service_name]</span><br></pre></td></tr></table></figure>
+<p>所以我们还要对传输的数据进行转换，这里笔者经过调研决定单独修改 statsd-zabbix-backend 的代码，<a href="https://gist.github.com/AnyISalIn/b8f18eb744b9b489caec749b99121ea8">修改过的代码</a></p>
+<p>最后 Statsd 传输给 Zabbix 的数据格式如下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.request.count[example-service,total] -&gt; 0</span><br><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.request.count[example-service,avg] -&gt; 0</span><br><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.request.status.500[example-service,total] -&gt; 0</span><br><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.request.status.500[example-service,avg] -&gt; 0</span><br><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.request.status.total[example-service,total] -&gt; 0</span><br><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.request.status.total[example-service,avg] -&gt; 0</span><br><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.latency[example-service,lower] -&gt; 0</span><br><span class="line">26 Nov 01:14:09 - DEBUG: statsd-zabbix-backend: Zabbix server -&gt; kong.latency[example-service,upper] -&gt; 0</span><br></pre></td></tr></table></figure>
+<p>最后我们只需要在 Zabbix Web 页面创建对应的规则即可，效果如下</p>
+<p><img src="/images/image-20191126011530471.png" alt="image-20191126011530471"></p>
+<p><img src="/images/image-20191126011545851.png" alt="image-20191126011545851"></p>
+<p><img src="/images/image-20191126012047758.png" alt="image-20191126012047758"></p>
+<p>后续继续定义 Trigger prototypes 就可以作为基础模板正常使用了</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>当然还有一些问题的，比如 <code>status_count_per_user</code> 这个指标是同时包含 Service 和 Consumer 的，笔者暂时还没有对所有 Consumer 进行 Low-Level Discovery，所以还没有支持。</p>
+<p>而 <code>upstream_latency</code> 这个指标从 Kong 发到 Statsd 就是有问题的。</p>
+<p>经过测试过后非常不建议使用 Zabbix 来监控 Kong，原因如下</p>
+<ol>
+<li>没有官方的支持</li>
+<li>引入 Statsd 会增加监控架构的复杂性</li>
+<li>statsd-zabbix 插件已经两年没更新了</li>
+</ol>
+<p>最后如果真的有 Zabbix 监控 Kong 的需求，建议还是单独开发插件，而不是使用本文的方案。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/20/xgimi-h3-experience/" rel="next" title="极米 H3 体验">
+                <i class="fa fa-chevron-left"></i> 极米 H3 体验
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/08/build-minimal-multi-cloud-application-management-platform-based-on-terraform/" rel="prev" title="600 行代码构建混合云应用管理平台">
+                600 行代码构建混合云应用管理平台 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png" alt="AnyISalIn">
+            
+              <p class="site-author-name" itemprop="name">AnyISalIn</p>
+              <p class="site-description motion-element" itemprop="description">Life is short</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/anyisalin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:anyisalin@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelop"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://flowsnow.net" title="Flowsnow" target="_blank">Flowsnow</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题排查"><span class="nav-number">1.</span> <span class="nav-text">问题排查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnyISalIn</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Symbols count total&#58;</span>
+    
+    <span title="Symbols count total">167k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Reading time total&#58;</span>
+    
+    <span title="Reading time total">2:47</span>
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://anyisalin.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://anyisalin.github.io/2019/11/26/kong-monitoring-with-statsd-zabbix/';
+        this.page.identifier = '2019/11/26/kong-monitoring-with-statsd-zabbix/';
+        this.page.title = 'Zabbix 基于 Statsd 实现对 Kong APIGateway 的监控';
+      };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://anyisalin.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        $(function () {
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          if (offsetTop <= 0) {
+            // load directly when there's no a scrollbar
+            loadComments();
+          } else {
+            $(window).on('scroll.disqus_scroll', function () {
+              var scrollTop = document.documentElement.scrollTop;
+              if (scrollTop >= offsetTop) {
+                $(window).off('.disqus_scroll');
+                loadComments();
+              }
+            });
+          }
+        });
+      
+    </script>
+  
+
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

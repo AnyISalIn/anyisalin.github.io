@@ -1,35 +1,1079 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="dataflow,nifi,">
+
+
+<meta name="description" content="很多情况下，需要从不同的数据源中提取数据，并将数据格式进行转换，定义不同的流程，传输到对应的系统中 需求较为简单的情况下，可以通过自己写代码实现，但在数据流比较复杂后，整个流程难以维护，扩展性很差 这时候就需要引入像 NiFi、StreamSets 这类的 DFM(Data Flow Management) 数据流处理平台，这篇文章主要介绍在 NiFi 中定义一个简单的数据流">
+<meta name="keywords" content="dataflow,nifi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NiFi Demo">
+<meta property="og:url" content="https://anyisalin.github.io/2019/01/03/nifi-demo/index.html">
+<meta property="og:site_name" content="无趣">
+<meta property="og:description" content="很多情况下，需要从不同的数据源中提取数据，并将数据格式进行转换，定义不同的流程，传输到对应的系统中 需求较为简单的情况下，可以通过自己写代码实现，但在数据流比较复杂后，整个流程难以维护，扩展性很差 这时候就需要引入像 NiFi、StreamSets 这类的 DFM(Data Flow Management) 数据流处理平台，这篇文章主要介绍在 NiFi 中定义一个简单的数据流">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190103170847022-6570233.png">
+<meta property="og:image" content="https://nifi.apache.org/docs/nifi-docs/html/images/zero-master-cluster.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104101245046.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104101828670.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104102234538.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104103115028.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104103643971.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104103836337.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104103902591.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104104302166.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104104510785.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104104600684.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104105243452-6570363.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104110620459-6571180.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104123520294-6576520.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104125536816-6577736.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104125940747-6577980.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104130509688-6578309.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104130758360-6578478.png">
+<meta property="og:image" content="https://anyisalin.github.io/images/image-20190104140848748-6582128.png">
+<meta property="og:updated_time" content="2019-01-07T12:47:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NiFi Demo">
+<meta name="twitter:description" content="很多情况下，需要从不同的数据源中提取数据，并将数据格式进行转换，定义不同的流程，传输到对应的系统中 需求较为简单的情况下，可以通过自己写代码实现，但在数据流比较复杂后，整个流程难以维护，扩展性很差 这时候就需要引入像 NiFi、StreamSets 这类的 DFM(Data Flow Management) 数据流处理平台，这篇文章主要介绍在 NiFi 中定义一个简单的数据流">
+<meta name="twitter:image" content="https://anyisalin.github.io/images/image-20190103170847022-6570233.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="无趣" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="https://anyisalin.github.io/2019/01/03/nifi-demo/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>NiFi Demo | 无趣</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-77446934-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-77446934-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">无趣</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">享受自由</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://anyisalin.github.io/2019/01/03/nifi-demo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnyISalIn">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="无趣">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">NiFi Demo</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-03T11:11:25+08:00">2019-01-03</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/01/03/nifi-demo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/03/nifi-demo/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article&#58;</span>
+                
+                <span title="Symbols count in article">11k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">0:11</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>很多情况下，需要从不同的数据源中提取数据，并将数据格式进行转换，定义不同的流程，传输到对应的系统中</p>
+<p>需求较为简单的情况下，可以通过自己写代码实现，但在数据流比较复杂后，整个流程难以维护，扩展性很差</p>
+<p>这时候就需要引入像 NiFi、StreamSets 这类的 DFM(Data Flow Management) 数据流处理平台，这篇文章主要介绍在 NiFi 中定义一个简单的数据流</p>
+<a id="more"></a>
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p>我们需要定义以下数据流，从数据的生产到消费，主要有以下步骤</p>
+<p>生产</p>
+<ol>
+<li>通过 randomuser api 获取用户数据</li>
+<li>处理返回的数据</li>
+<li>将处理过后的数据发送给 kafka</li>
+</ol>
+<p>消费</p>
+<ol>
+<li>从 kafka 获取用户数据</li>
+<li>展开 json 数据 <code>&#123;&quot;login&quot;: &#123;&quot;username&quot;: &quot;anyisalin&quot;&#125;&#125; -&gt; &#123;&quot;login.username&quot;: &quot;anyisalin&quot;&#125;</code></li>
+<li>将展开后的 json 数据转化为 SQL 语句</li>
+<li>执行 SQL</li>
+</ol>
+<p><img src="/images/image-20190103170847022-6570233.png" alt="image-20190103170847022"></p>
+<h2 id="NiFi"><a href="#NiFi" class="headerlink" title="NiFi"></a>NiFi</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>NiFi 安装很简单，在 Linux 系统上安装好 JDK 环境，<a href="https://nifi.apache.org/download.html">https://nifi.apache.org/download.html</a> 下载并解压对应版本的二进制安装包，执行以下命令即可</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> nifi-&lt;VERSION&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> bin/nifi.sh start</span></span><br></pre></td></tr></table></figure>
+<p>等待启动完成后访问对应 IP 的 8080 端口即可</p>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p>Flowfile 是NiFi及其基于流的设计的核心，流文件是一个数据记录，它由指向其内容的指针和属性组成，并与相关事件进行关联</p>
+<p>NiFi 架构如下，由几个组件组成</p>
+<ul>
+<li><p>Web Server：NiFi 的 http 接口</p>
+</li>
+<li><p>Flow Controller：对 Processor 的流程控制、资源调度</p>
+</li>
+<li><p>FlowFile Repository：存储 Flowfile 元数据(attribute、指向内容的指针)</p>
+</li>
+<li><p>Content Repository：存储 Flowfile 内容</p>
+</li>
+<li><p>Provenance Repository：存储 Flowfile 运行时状态</p>
+</li>
+</ul>
+<p>  <img src="https://nifi.apache.org/docs/nifi-docs/html/images/zero-master-cluster.png" alt="NiFi Cluster Architecture Diagram"></p>
+<h3 id="创建数据流"><a href="#创建数据流" class="headerlink" title="创建数据流"></a>创建数据流</h3><h4 id="invoke-http"><a href="#invoke-http" class="headerlink" title="invoke http"></a>invoke http</h4><p>首选我们要定义调用 randomuser api 获取用户数据，NiFi 中通过 <code>Invoke HTTP</code> 这个 Processor 发起 HTTP 请求</p>
+<p><img src="/images/image-20190104101245046.png" alt="image-20190104101245046"></p>
+<p>这个 HTTP Endpoint 返回的资源格式如下 <a href="https://randomuser.me/api?results=50">https://randomuser.me/api?results=50</a></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;results&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;gender&quot;</span>: <span class="string">&quot;male&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;mr&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;first&quot;</span>: <span class="string">&quot;آرسین&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;last&quot;</span>: <span class="string">&quot;رضایی&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">&quot;location&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;street&quot;</span>: <span class="string">&quot;6802 فلسطین&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;city&quot;</span>: <span class="string">&quot;خمینیشهر&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;state&quot;</span>: <span class="string">&quot;هرمزگان&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;postcode&quot;</span>: <span class="number">87162</span>,</span><br><span class="line">                <span class="attr">&quot;coordinates&quot;</span>: &#123;</span><br><span class="line">                    <span class="attr">&quot;latitude&quot;</span>: <span class="string">&quot;31.5995&quot;</span>,</span><br><span class="line">                    <span class="attr">&quot;longitude&quot;</span>: <span class="string">&quot;-64.0100&quot;</span></span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">&quot;timezone&quot;</span>: &#123;</span><br><span class="line">                    <span class="attr">&quot;offset&quot;</span>: <span class="string">&quot;-12:00&quot;</span>,</span><br><span class="line">                    <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;Eniwetok, Kwajalein&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">&quot;email&quot;</span>: <span class="string">&quot;آرسین.رضایی@example.com&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;login&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;uuid&quot;</span>: <span class="string">&quot;120a95ad-7626-481e-a8d7-deeb86260ff3&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;username&quot;</span>: <span class="string">&quot;ticklishkoala843&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;password&quot;</span>: <span class="string">&quot;lakeside&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;salt&quot;</span>: <span class="string">&quot;EykxGh6P&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;md5&quot;</span>: <span class="string">&quot;ccd83cf95763b0f4a04e78b0aaf16f08&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;sha1&quot;</span>: <span class="string">&quot;3f78b70a952d75e4567d52c5b3967c5975c1323d&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;sha256&quot;</span>: <span class="string">&quot;e7f0bec78b81937aec798c4455ea0f91b7440192faa149ab031156cae46266ea&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">&quot;dob&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;date&quot;</span>: <span class="string">&quot;1992-04-17T00:59:50Z&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;age&quot;</span>: <span class="number">26</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">&quot;registered&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;date&quot;</span>: <span class="string">&quot;2017-05-06T00:12:16Z&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;age&quot;</span>: <span class="number">1</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">&quot;phone&quot;</span>: <span class="string">&quot;054-14099232&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;cell&quot;</span>: <span class="string">&quot;0937-683-3855&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;id&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;value&quot;</span>: <span class="literal">null</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">&quot;picture&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;large&quot;</span>: <span class="string">&quot;https://randomuser.me/api/portraits/men/69.jpg&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;medium&quot;</span>: <span class="string">&quot;https://randomuser.me/api/portraits/med/men/69.jpg&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;thumbnail&quot;</span>: <span class="string">&quot;https://randomuser.me/api/portraits/thumb/men/69.jpg&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">&quot;nat&quot;</span>: <span class="string">&quot;IR&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;info&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;seed&quot;</span>: <span class="string">&quot;4203aa4638365efa&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;results&quot;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">&quot;page&quot;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;1.2&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="SplitJson"><a href="#SplitJson" class="headerlink" title="SplitJson"></a>SplitJson</h4><p>我们只需要 results 里面的数据，所以需要进行切分</p>
+<p>NiFi 中通过 <code>SplitJson</code> 来切分 JSON 数据</p>
+<p><img src="/images/image-20190104101828670.png" alt="image-20190104101828670"></p>
+<p>定义完这两个 Processor ，可以先测试一下</p>
+<p>将两个 Processer 连接起来</p>
+<p>这里的 Relationships 是根据 Processor 中 Flowfile 的状态，需要定义对应状态下的 Flowfile 应该路由到哪一个 Processor</p>
+<p>我们这里定义 Relationships，Response 数据流路由到 SplitJson</p>
+<p><img src="/images/image-20190104102234538.png" alt="image-20190104102234538"></p>
+<p>但是在 NiFi 中，所有的 Relationships 都得定义，所以对应的 Failure、No Retry、Original、Retry 也得路由到对应的 Processor，我们这里使用 DebugFlow 来接收这些错误的数据</p>
+<p>Automatically Terminate Relationships 指的是数据流路由到这个 Processor 后，特定状态下会被删除，一般在 Endpoint Processor 配置，因为数据流不需要再被继续路由了</p>
+<p><img src="/images/image-20190104103115028.png" alt="image-20190104103115028"></p>
+<p>最后我们这个简单的数据流如下</p>
+<p><img src="/images/image-20190104103643971.png" alt="image-20190104103643971"></p>
+<p>启动数据流之后，通过 NiFi Data Provenance 可以看到数据流的状态</p>
+<p><img src="/images/image-20190104103836337.png" alt="image-20190104103836337"></p>
+<p>可以看到 JSON 数据已经被切分了</p>
+<p><img src="/images/image-20190104103902591.png" alt="image-20190104103902591"></p>
+<h4 id="kafka-producer"><a href="#kafka-producer" class="headerlink" title="kafka producer"></a><strong>kafka producer</strong></h4><p>完成 JSON 数据的切分过后就可以将数据存储到 Kafka 中了</p>
+<p>我们需要创建 PublishKafka Processor，由于 Kafka 不同版本的 API 不兼容，所以 NiFi 提供了多个版本的 Processor</p>
+<p><img src="/images/image-20190104104302166.png" alt="image-20190104104302166"></p>
+<p>我们这里使用的是 2.1.2 版本的 Kafka，所以用 PublishKafka_2_0 即可</p>
+<p>配置好 Kafka 的连接参数</p>
+<p><img src="/images/image-20190104104510785.png" alt="image-20190104104510785"></p>
+<p>由于 Kafka 在这个数据流中是 Endpoint Processor，数据流不需要再被路由了，所以 Automatically Terminate Relationships 都勾选上</p>
+<p><img src="/images/image-20190104104600684.png" alt="image-20190104104600684"></p>
+<p>将 SplitJson 与 PublishKafka 连接，整个数据流就构建好了</p>
+<p><img src="/images/image-20190104105243452-6570363.png" alt="image-20190104105243452"></p>
+<h4 id="kafka-consumer-测试"><a href="#kafka-consumer-测试" class="headerlink" title="kafka consumer 测试"></a><strong>kafka consumer 测试</strong></h4><p>能够从 kafka 消费数据</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <span class="built_in">test</span> --from-beginning</span></span><br><span class="line"></span><br><span class="line">&#123;&quot;gender&quot;:&quot;female&quot;,&quot;name&quot;:&#123;&quot;title&quot;:&quot;ms&quot;,&quot;first&quot;:&quot;charlie&quot;,&quot;last&quot;:&quot;smith&quot;&#125;,&quot;location&quot;:&#123;&quot;street&quot;:&quot;2802 george st&quot;,&quot;city&quot;:&quot;trout lake&quot;,&quot;state&quot;:&quot;northwest territories&quot;,&quot;postcode&quot;:&quot;M5K 7B1&quot;,&quot;coordinates&quot;:&#123;&quot;latitude&quot;:&quot;-66.5974&quot;,&quot;longitude&quot;:&quot;162.8858&quot;&#125;,&quot;timezone&quot;:&#123;&quot;offset&quot;:&quot;-3:00&quot;,&quot;description&quot;:&quot;Brazil, Buenos Aires, Georgetown&quot;&#125;&#125;,&quot;email&quot;:&quot;charlie.smith@example.com&quot;,&quot;login&quot;:&#123;&quot;uuid&quot;:&quot;4de548e6-102f-4e57-bb03-8850da99ad55&quot;,&quot;username&quot;:&quot;bluelion557&quot;,&quot;password&quot;:&quot;555666&quot;,&quot;salt&quot;:&quot;bi96vEBT&quot;,&quot;md5&quot;:&quot;3526a37c16429aadd417953550b09a45&quot;,&quot;sha1&quot;:&quot;acddea2bdea1eb17bd9c24bd74fff5de84a9af31&quot;,&quot;sha256&quot;:&quot;9d2b53a41ea2cc6a235c540475b95d97ff9f875ab37fb71d627e86e98d137dfc&quot;&#125;,&quot;dob&quot;:&#123;&quot;date&quot;:&quot;1961-11-18T05:30:31Z&quot;,&quot;age&quot;:57&#125;,&quot;registered&quot;:&#123;&quot;date&quot;:&quot;2003-01-20T03:57:43Z&quot;,&quot;age&quot;:15&#125;,&quot;phone&quot;:&quot;666-683-3176&quot;,&quot;cell&quot;:&quot;297-613-3978&quot;,&quot;id&quot;:&#123;&quot;name&quot;:&quot;&quot;,&quot;value&quot;:null&#125;,&quot;picture&quot;:&#123;&quot;large&quot;:&quot;https://randomuser.me/api/portraits/women/83.jpg&quot;,&quot;medium&quot;:&quot;https://randomuser.me/api/portraits/med/women/83.jpg&quot;,&quot;thumbnail&quot;:&quot;https://randomuser.me/api/portraits/thumb/women/83.jpg&quot;&#125;,&quot;nat&quot;:&quot;CA&quot;&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ConsumerKafka"><a href="#ConsumerKafka" class="headerlink" title="ConsumerKafka"></a>ConsumerKafka</h4><p>创建 ConsumerKafka Processor</p>
+<p>配置 Kafka 连接参数</p>
+<p><img src="/images/image-20190104110620459-6571180.png" alt="image-20190104110620459"></p>
+<h4 id="FlattenJson"><a href="#FlattenJson" class="headerlink" title="FlattenJson"></a>FlattenJson</h4><p>创建 FlattenJson Processor</p>
+<p>配置 Separator 为下划线 _</p>
+<p><img src="/images/image-20190104123520294-6576520.png" alt="image-20190104123520294"></p>
+<p>展开的格式如下</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&#123;&#x27;gender&#x27;: &#x27;male&#x27;,</span><br><span class="line"> &#x27;name_title&#x27;: &#x27;mr&#x27;,</span><br><span class="line"> &#x27;name_first&#x27;: &#x27;lucas&#x27;,</span><br><span class="line"> &#x27;name_last&#x27;: &#x27;olsen&#x27;,</span><br><span class="line"> &#x27;location_street&#x27;: &#x27;7882 mariagervej&#x27;,</span><br><span class="line"> &#x27;location_city&#x27;: &#x27;saltum&#x27;,</span><br><span class="line"> &#x27;location_state&#x27;: &#x27;midtjylland&#x27;,</span><br><span class="line"> &#x27;location_postcode&#x27;: 52010,</span><br><span class="line"> &#x27;location_coordinates_latitude&#x27;: &#x27;66.7960&#x27;,</span><br><span class="line"> &#x27;location_coordinates_longitude&#x27;: &#x27;169.3742&#x27;,</span><br><span class="line"> &#x27;location_timezone_offset&#x27;: &#x27;+8:00&#x27;,</span><br><span class="line"> &#x27;location_timezone_description&#x27;: &#x27;Beijing, Perth, Singapore, Hong Kong&#x27;,</span><br><span class="line"> &#x27;email&#x27;: &#x27;lucas.olsen@example.com&#x27;,</span><br><span class="line"> &#x27;login_uuid&#x27;: &#x27;7e1f3118-a6aa-4ee9-a2a1-0a51ff05e210&#x27;,</span><br><span class="line"> &#x27;login_username&#x27;: &#x27;smalllion212&#x27;,</span><br><span class="line"> &#x27;login_password&#x27;: &#x27;oscar&#x27;,</span><br><span class="line"> &#x27;login_salt&#x27;: &#x27;X06x1uIC&#x27;,</span><br><span class="line"> &#x27;login_md5&#x27;: &#x27;cede0ee5c6da51ab45f30d443c0bce87&#x27;,</span><br><span class="line"> &#x27;login_sha1&#x27;: &#x27;65ae36af8670df9f5aaba7aa6ada24466f01c6a0&#x27;,</span><br><span class="line"> &#x27;login_sha256&#x27;: &#x27;14a363b54ae02f62e1e1a6a1f38e81f771ac57c0e10cbe931af332d52deea9ac&#x27;,</span><br><span class="line"> &#x27;dob_date&#x27;: &#x27;1990-12-30T04:11:02Z&#x27;,</span><br><span class="line"> &#x27;dob_age&#x27;: 28,</span><br><span class="line"> &#x27;registered_date&#x27;: &#x27;2009-07-24T19:30:29Z&#x27;,</span><br><span class="line"> &#x27;registered_age&#x27;: 9,</span><br><span class="line"> &#x27;phone&#x27;: &#x27;84828860&#x27;,</span><br><span class="line"> &#x27;cell&#x27;: &#x27;74092531&#x27;,</span><br><span class="line"> &#x27;id_name&#x27;: &#x27;CPR&#x27;,</span><br><span class="line"> &#x27;id_value&#x27;: &#x27;819452-4601&#x27;,</span><br><span class="line"> &#x27;picture_large&#x27;: &#x27;https://randomuser.me/api/portraits/men/84.jpg&#x27;,</span><br><span class="line"> &#x27;picture_medium&#x27;: &#x27;https://randomuser.me/api/portraits/med/men/84.jpg&#x27;,</span><br><span class="line"> &#x27;picture_thumbnail&#x27;: &#x27;https://randomuser.me/api/portraits/thumb/men/84.jpg&#x27;,</span><br><span class="line"> &#x27;nat&#x27;: &#x27;DK&#x27;&#125;</span><br></pre></td></tr></table></figure>
+<p>连接 FlattenJson 和 ConsumerKafka</p>
+<h4 id="ConvertJSONToSQL"><a href="#ConvertJSONToSQL" class="headerlink" title="ConvertJSONToSQL"></a>ConvertJSONToSQL</h4><p>首先在 MySQL 中创建库和表</p>
+<p>表结构如下</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> users (</span><br><span class="line">`gender` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`name_title` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`name_first` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`name_last` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`location_street` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`location_city` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`location_state` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`location_postcode` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`location_coordinates_latitude` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`location_coordinates_longitude` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`location_timezone_offset` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`location_timezone_description` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`email` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`login_uuid` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`login_username` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`login_password` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`login_salt` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`login_md5` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`login_sha1` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`login_sha256` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`dob_date` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`dob_age` <span class="type">int</span>,</span><br><span class="line">`registered_date` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`registered_age` <span class="type">int</span>,</span><br><span class="line">`phone` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`cell` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`id_name` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`id_value` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`picture_large` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`picture_medium` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`picture_thumbnail` <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">`nat` <span class="type">varchar</span>(<span class="number">255</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>创建 ConvertJSONToSQL Processor</p>
+<p>在 NiFi 中创建并配置 MySQL service，需要指定 Connector Driver 的路径和类名(这里使用的是 MariaDB)，并填写 用户名、连接地址等参数</p>
+<p><img src="/images/image-20190104125536816-6577736.png" alt="image-20190104125536816"></p>
+<p>创建好 MySQL Service 后在 ConvertJSONToSQL 中配置对应的参数</p>
+<p><img src="/images/image-20190104125940747-6577980.png" alt="image-20190104125940747"></p>
+<p>连接 ConvertJSONToSQL 和 FlattenJson</p>
+<h4 id="ExecuteSQL"><a href="#ExecuteSQL" class="headerlink" title="ExecuteSQL"></a>ExecuteSQL</h4><p>创建 ExecuteSQL Processor</p>
+<p>配置对应的数据库连接池，这里可以复用上一步创建的 MySQLConnection Service</p>
+<p><img src="/images/image-20190104130509688-6578309.png" alt="image-20190104130509688"></p>
+<p>连接 ExecuteSQL 和 ConvertJSONToSQL</p>
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p>最后我们的数据流如下</p>
+<p><img src="/images/image-20190104130758360-6578478.png" alt="image-20190104130758360"></p>
+<p>查询数据库，不断的有数据插入</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="built_in">count</span>(login_username) <span class="keyword">from</span> users;</span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------------+</span></span><br><span class="line"><span class="operator">|</span> <span class="built_in">count</span>(login_username) <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------------+</span></span><br><span class="line"><span class="operator">|</span>                <span class="number">108154</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------------+</span></span><br></pre></td></tr></table></figure>
+<h3 id="限流"><a href="#限流" class="headerlink" title="限流"></a>限流</h3><p>当 上游数据生产的过快，无法及时消费，就需要限流，限制上游的连接数，防止数据过载对整个数据流的影响</p>
+<p>NiFi 可以对每一个连接的队列设置阈值</p>
+<p>默认是 1000 个 flowfile 或者 1G 大小</p>
+<p><img src="/images/image-20190104140848748-6582128.png" alt="image-20190104140848748"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>了解了 Processor 和 Flowfile 的状态和流程，在 NiFi 中定义 数据流还是很容易的，NiFi 自带的 Processor 种类也非常丰富，也支持自己写对应的 Processor</p>
+<p>在 NiFi 中定义了数据流之后，就可以很清晰的看到流式数据的路由，状态，也很容易地对现有的数据流进行扩展</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/dataflow/" rel="tag"># dataflow</a>
+          
+            <a href="/tags/nifi/" rel="tag"># nifi</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/31/2018-buy/" rel="next" title="科技改生活 · 2018 败家记录">
+                <i class="fa fa-chevron-left"></i> 科技改生活 · 2018 败家记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/07/streamsets-demo/" rel="prev" title="StreamSets DataCollector Demo">
+                StreamSets DataCollector Demo <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://o7mt5n76t.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160508095222.png" alt="AnyISalIn">
+            
+              <p class="site-author-name" itemprop="name">AnyISalIn</p>
+              <p class="site-description motion-element" itemprop="description">Life is short</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/anyisalin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:anyisalin@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelop"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://flowsnow.net" title="Flowsnow" target="_blank">Flowsnow</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo"><span class="nav-number">1.</span> <span class="nav-text">Demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NiFi"><span class="nav-number">2.</span> <span class="nav-text">NiFi</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构"><span class="nav-number">2.2.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建数据流"><span class="nav-number">2.3.</span> <span class="nav-text">创建数据流</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-http"><span class="nav-number">2.3.1.</span> <span class="nav-text">invoke http</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SplitJson"><span class="nav-number">2.3.2.</span> <span class="nav-text">SplitJson</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#kafka-producer"><span class="nav-number">2.3.3.</span> <span class="nav-text">kafka producer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#kafka-consumer-测试"><span class="nav-number">2.3.4.</span> <span class="nav-text">kafka consumer 测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConsumerKafka"><span class="nav-number">2.3.5.</span> <span class="nav-text">ConsumerKafka</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FlattenJson"><span class="nav-number">2.3.6.</span> <span class="nav-text">FlattenJson</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConvertJSONToSQL"><span class="nav-number">2.3.7.</span> <span class="nav-text">ConvertJSONToSQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ExecuteSQL"><span class="nav-number">2.3.8.</span> <span class="nav-text">ExecuteSQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试"><span class="nav-number">2.3.9.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#限流"><span class="nav-number">2.4.</span> <span class="nav-text">限流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnyISalIn</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Symbols count total&#58;</span>
+    
+    <span title="Symbols count total">167k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Reading time total&#58;</span>
+    
+    <span title="Reading time total">2:47</span>
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://anyisalin.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://anyisalin.github.io/2019/01/03/nifi-demo/';
+        this.page.identifier = '2019/01/03/nifi-demo/';
+        this.page.title = 'NiFi Demo';
+      };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://anyisalin.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        $(function () {
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          if (offsetTop <= 0) {
+            // load directly when there's no a scrollbar
+            loadComments();
+          } else {
+            $(window).on('scroll.disqus_scroll', function () {
+              var scrollTop = document.documentElement.scrollTop;
+              if (scrollTop >= offsetTop) {
+                $(window).off('.disqus_scroll');
+                loadComments();
+              }
+            });
+          }
+        });
+      
+    </script>
+  
+
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
